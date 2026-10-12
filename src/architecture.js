@@ -90,7 +90,7 @@ function referenceStairs(height, count, run) {
   });
 }
 
-function externalPorts(input, spaces, openings) {
+export function realizeExternalPorts(input, spaces, openings) {
   const ports = [], reserved = new Set(openings.flatMap(o => o.hosts.map(h => `${h.spaceId}/${h.edgeIndex}`)));
   for (const requirement of input.portRequirements) {
     let found;
@@ -98,7 +98,7 @@ function externalPorts(input, spaces, openings) {
       for (let edgeIndex = 0; edgeIndex < s.footprint.outer.length; edgeIndex++) {
         const edge = s.footprint.outer[edgeIndex];
         if (edge.kind !== 'line' || reserved.has(`${s.id}/${edgeIndex}`) || distance(edge.from, edge.to) < requirement.width + .4) continue;
-        const center = at(edge, .5), approach = approachFor(edge, center, requirement.width, requirement.approachDepth);
+        const center = point(...at(edge, .5)), approach = approachFor(edge, center, requirement.width, requirement.approachDepth);
         if (!footprintSubset(s.footprint, approach.footprint) || localCeiling(s, approach.footprint) - s.elevation < requirement.height - EPS) continue;
         const outward = approachFor(line(edge.to, edge.from), center, requirement.width, .8).footprint;
         if (spaces.some(other => other.id !== s.id && other.floorIndex === s.floorIndex && interiorsOverlap(outward, other.footprint))) continue;
@@ -136,7 +136,7 @@ export function generateArchitecture(raw = {}) {
     protectedVoids: [{ id: 'void:foyer', type: 'double-height', footprint: rectAt(2, 2, 4, 4), minZ: q(height - .2), maxZ: q(2 * height - .2) }, ...shafts.map((footprint, index) => ({ id: `void:stair:${index}`, type: 'stair-shaft', footprint, minZ: q(index * height), maxZ: q((index + 1) * height + 2.1) }))],
     externalPorts: [], walls: [], guards: [], localConnections: []
   };
-  plan.externalPorts = externalPorts(input, spaces, openings);
+  plan.externalPorts = realizeExternalPorts(input, spaces, openings);
   plan.walls = deriveWalls(plan); plan.guards = deriveGuards(plan);
   // Physical validation derives connections; cached claims are then checked by
   // a second validation pass, so no intended edge can create reachability.

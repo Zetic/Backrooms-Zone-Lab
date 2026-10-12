@@ -24,6 +24,17 @@ export function hostAt(space, center, width) {
   return { spaceId: space.id, edgeIndex, ring: 'outer' };
 }
 
+export function flightFrame(from, to) {
+  const run = distance(from, to), direction = [(to[0] - from[0]) / run, (to[1] - from[1]) / run];
+  return { run, direction, right: [direction[1], -direction[0]] };
+}
+
+export function flightRect(center, width, depth, direction) {
+  const right = [direction[1], -direction[0]], half = width / 2;
+  const a = point(center[0] - right[0] * half, center[1] - right[1] * half), b = point(center[0] + right[0] * half, center[1] + right[1] * half);
+  return polygon([a, b, point(b[0] + direction[0] * depth, b[1] + direction[1] * depth), point(a[0] + direction[0] * depth, a[1] + direction[1] * depth)]);
+}
+
 export function deriveWalls(plan) {
   return plan.spaces.flatMap(space => space.footprint.outer.map((edge, edgeIndex) => {
     const p = at(edge, .5), v = tangent(edge, .5), length = Math.hypot(...v);
@@ -44,7 +55,8 @@ export function deriveGuards(plan) {
     }
   }
   for (const stair of plan.verticalTraversals) for (const side of [-1, 1]) {
-    guards.push({ id: `guard:${stair.id}:${side}`, kind: 'stair-rail', traversalId: stair.id, path: [stair.source.position, stair.target.position].map(p => [q(p[0] + side * stair.width / 2), p[1], p[2]]), height: 1.1 });
+    const { right } = flightFrame(stair.source.position, stair.target.position);
+    guards.push({ id: `guard:${stair.id}:${side}`, kind: 'stair-rail', traversalId: stair.id, path: [stair.source.position, stair.target.position].map(p => [q(p[0] + side * stair.width / 2 * right[0]), q(p[1] + side * stair.width / 2 * right[1]), p[2]]), height: 1.1 });
   }
   return guards;
 }

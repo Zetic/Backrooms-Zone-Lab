@@ -13,6 +13,7 @@ export const escapeHtml = text => String(text).replace(/[&<>"']/g, char => ({ '&
 
 export function floorSvg(plan, floorIndex, options) {
   const spaces = plan.spaces.filter(s => s.floorIndex === floorIndex), boxes = spaces.map(s => bounds(s.footprint));
+  if (!spaces.length) return '<svg class="floor-map" viewBox="0 0 10 5"><text x="1" y="2" fill="#9baeb5" font-size=".3">No complete spaces on this floor.</text></svg>';
   const minX = Math.min(...boxes.map(b => b.minX)) - 2, maxX = Math.max(...boxes.map(b => b.maxX)) + 2;
   const minY = Math.min(...boxes.map(b => b.minY)) - 2, maxY = Math.max(...boxes.map(b => b.maxY)) + 2;
   const grid = `grid-${floorIndex}`, hatch = `hatch-${floorIndex}`;
@@ -20,21 +21,29 @@ export function floorSvg(plan, floorIndex, options) {
   const vertices = options.vertices ? spaces.map(s => [s.footprint.outer, ...s.footprint.holes].flat().map(e => { const p = at(e, 0); return `<circle cx="${p[0]}" cy="${p[1]}" r=".07" fill="#e7ca80"/>`; }).join('')).join('') : '';
   const labels = options.labels ? spaces.map(s => {
     const b = bounds(s.footprint), x = s.labelAnchor?.[0] ?? (b.minX + b.maxX) / 2, y = s.labelAnchor?.[1] ?? (s.role === 'gallery' ? b.minY + (b.maxY - b.minY) * .15 : (b.minY + b.maxY) / 2);
-    const narrow = b.maxX - b.minX < 4;
-    return `<text class="space-label" x="${x}" y="${-y}" ${narrow ? `transform="rotate(-90 ${x} ${-y})"` : ''}>${escapeHtml(s.label)}</text>`;
+    const straight = s.footprint.outer.filter(edge => edge.kind === 'line');
+    const labelEdge = s.role === 'gallery' ? straight[0] : straight.reduce((best, edge) => !best || Math.hypot(edge.to[0] - edge.from[0], edge.to[1] - edge.from[1]) > Math.hypot(best.to[0] - best.from[0], best.to[1] - best.from[1]) ? edge : best, null);
+    let rotation = labelEdge ? -Math.atan2(labelEdge.to[1] - labelEdge.from[1], labelEdge.to[0] - labelEdge.from[0]) * 180 / Math.PI : 0;
+    if (rotation < -90) rotation += 180; if (rotation > 90) rotation -= 180;
+    return `<text class="space-label" x="${x}" y="${-y}" transform="rotate(${rotation} ${x} ${-y})">${escapeHtml(s.label)}</text>`;
   }).join('') : '';
   const ports = plan.externalPorts.filter(p => p.floorIndex === floorIndex);
   const approaches = options.clearance ? ports.map(p => `<path class="approach" d="${footprintPath(p.approach)}"/>`).join('') : '';
   const openings = ports.map(p => { const o = plan.openings.find(o => o.id === p.openingId), [x, y] = o.center, [ux, uy] = o.tangent; return `<line class="port-line" x1="${x - ux * o.width / 2}" y1="${y - uy * o.width / 2}" x2="${x + ux * o.width / 2}" y2="${y + uy * o.width / 2}"/>`; }).join('');
   const portLabels = options.labels ? ports.map(p => { const [x, y] = p.anchor.position, f = p.anchor.forward; return `<text class="port-label" x="${x + f[0] * .65}" y="${-(y + f[1] * .65)}">${escapeHtml(p.role)} · ${escapeHtml(p.portId)}</text>`; }).join('') : '';
   const voids = options.voids ? plan.protectedVoids.filter(v => plan.floors[floorIndex].elevation >= v.minZ && plan.floors[floorIndex].elevation < v.maxZ).map(v => `<path class="void-path" fill="url(#${hatch})" d="${footprintPath(v.footprint)}"/>`).join('') : '';
-  const localOpenings = plan.kind === 'architecture-reference' ? plan.openings.filter(o => o.type === 'local-passage' && o.center[2] === plan.floors[floorIndex].elevation).map(o => {
+  const localOpenings = Array.isArray(plan.walls) ? plan.openings.filter(o => o.type === 'local-passage' && o.center[2] === plan.floors[floorIndex].elevation).map(o => {
     const [x, y] = o.center, [ux, uy] = o.tangent, w = o.width / 2;
     return `<line class="door-gap" x1="${x - ux * w}" y1="${y - uy * w}" x2="${x + ux * w}" y2="${y + uy * w}"/><line class="local-door" x1="${x - ux * w}" y1="${y - uy * w}" x2="${x + ux * w}" y2="${y + uy * w}"/>`;
   }).join('') : '';
   const stairs = plan.verticalTraversals.filter(stair => plan.spaces.find(s => s.id === stair.source?.spaceId)?.floorIndex === floorIndex || plan.spaces.find(s => s.id === stair.target?.spaceId)?.floorIndex === floorIndex);
   const stairShapes = stairs.map(stair => stair.treads.map(tread => `<path class="stair-tread" d="${footprintPath(tread.footprint)}"/>`).join('')).join('');
-  const stairLabels = options.labels ? stairs.map(stair => `<text class="stair-label" x="${stair.source.position[0]}" y="${-(stair.source.position[1] + stair.target.position[1]) / 2}" transform="rotate(-90 ${stair.source.position[0]} ${-(stair.source.position[1] + stair.target.position[1]) / 2})">${plan.spaces.find(s => s.id === stair.source.spaceId).floorIndex === floorIndex ? 'UP' : 'DOWN'} · ${stair.riserCount} risers</text>`).join('') : '';
+  const stairLabels = options.labels ? stairs.map(stair => {
+    const x = (stair.source.position[0] + stair.target.position[0]) / 2, y = -(stair.source.position[1] + stair.target.position[1]) / 2;
+    let rotation = -Math.atan2(stair.target.position[1] - stair.source.position[1], stair.target.position[0] - stair.source.position[0]) * 180 / Math.PI;
+    if (rotation < -90) rotation += 180; if (rotation > 90) rotation -= 180;
+    return `<text class="stair-label" x="${x}" y="${y}" transform="rotate(${rotation} ${x} ${y})">${plan.spaces.find(s => s.id === stair.source.spaceId).floorIndex === floorIndex ? 'UP' : 'DOWN'} · ${stair.riserCount} risers</text>`;
+  }).join('') : '';
   const guardLines = plan.guards?.filter(g => g.kind === 'slab-edge' && plan.surfaces.find(s => s.id === g.surfaceId)?.elevation === plan.floors[floorIndex].elevation).map(g => `<path class="guard-line" d="${ringPath([g.edge]).replace(/ Z$/, '')}"/>`).join('') ?? '';
   const navPaths = options.navigation && plan.diagnostics.navigation ? plan.diagnostics.navigation.spacePaths.filter(p => spaces.some(s => s.id === p.spaceId)).flatMap(p => p.paths.filter(w => w.reachable && w.points.length > 1).map(w => `<path class="nav-path" d="M ${w.points.map(pt => `${pt[0]} ${pt[1]}`).join(' L ')}"/>`)).join('') : '';
   const crossings = options.navigation && plan.diagnostics.navigation ? plan.diagnostics.navigation.connections.filter(c => c.kind === 'opening').map(connection => {

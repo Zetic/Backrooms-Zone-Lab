@@ -16,4 +16,5 @@ jobs:
       - run: npm test
       - run: npm run batch -- 200
       - run: npm run batch:architecture
+      - run: npm run batch:houses
       - run: npm run build
