@@ -1,0 +1,12 @@
+{
+  "name": "backrooms-zone-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "batch": "node scripts/batch.mjs"
+  },
+  "engines": { "node": ">=22" }
+}
