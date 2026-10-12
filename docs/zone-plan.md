@@ -57,3 +57,37 @@ Only the **local interior approach** is checked. Remote arrival geometry and wor
 `diagnostics.status` is `geometry-valid` or `invalid`. It does not certify a navigable building. Errors carry a code, entity reference, and readable message; warnings identify unimplemented navigation. Metrics include floor/space/arc counts, requested/realized ports, and net footprint area.
 
 `localConnections` and `verticalTraversals` are empty arrays in this version. Consumers must not infer connections from touching specimens, identical floor indices, or a successful geometry status. Future physically validated transitions will populate these fields.
+
+---
+
+# Architecture reference extension — br.zone/0.2
+
+Version 0.1 above remains unchanged for Phase 1 geometry studies. The designed house exports `schemaVersion: br.zone/0.2`, `kind: architecture-reference`, profile `reference-house`, and generator version 2. Topology is fixed in this phase; see [physical architecture](physical-architecture.md).
+
+## New and extended entities
+
+| Field | Meaning |
+| --- | --- |
+| `walker` | Validated body radius 0.3 m and headroom 2.1 m |
+| `spaces[].clearVolumes` | Exact footprint and `[minZ,maxZ)` patches; high foyer patch reserves two-storey air |
+| `spaces[].playable` | True for the 17 reference spaces |
+| `spaces[].labelAnchor` | Optional zone-local 2D inspection label position; not renderer geometry |
+| `surfaces[]` | Actual floor/ceiling footprints and elevations; floor slabs include thickness below elevation |
+| `walls[]` | Stable owning boundary edge, vertical range, and actual opening IDs; semantic zero-thickness boundary surfaces |
+| `openings[].hosts` | One outer boundary host for external doors, two opposite hosts for local passages |
+| `openings[].approachDepth` | Required inward depth on each owning side |
+| `verticalTraversals[]` | Actual source/target space and surface IDs, endpoint XYZ, direction, width/headroom, riser count/height, tread depth, landings, and every tread footprint/elevation |
+| `guards[]` | Slab-hole boundary with surface/elevation/height, or stair-rail base path with traversal ID/height |
+| `protectedVoids[]` | Double-height or stair-shaft reserves with canonical footprints and vertical ranges |
+| `localConnections[]` | Verified transition identity, geometry reference, source/target spaces, kind, and traversal direction |
+| `diagnostics.navigation` | Rebuilt physical edges, arrival, reachable/returnable/unreachable spaces, and safe intra-space path witnesses |
+
+Openings use `hosts` rather than the v1 single `spaceId`/`host` representation. Each host is `{spaceId, ring: outer, edgeIndex}`. Door width, height, center XYZ, and tangent retain geometric meaning. External ports reference their actual aperture, owning space, role/direction, anchor, and approach. Required floors may be 0, 1, or 2.
+
+The local transition direction is `reversible`, `forward-only`, or `reverse-only`. External direction remains `reversible`, `entrance-only`, or `exit-only`; role remains descriptive. At least one realized incoming port is required to validate arrival. A primary incoming port is preferred; otherwise the first valid incoming port is used. No remote pairing or destination geometry is claimed.
+
+Stair treads and landings are semantic spatial data, not triangle meshes. Source/target positions lie at the landing/flight thresholds. The current reference supports straight stairs increasing in Y and Z; arbitrary stair direction, switchbacks, ramps, and spirals require later implementations. Actual floor surfaces retain shaft holes rather than rendering stair reservations as full slabs.
+
+`diagnostics.status` is `architecture-valid` or `invalid`; `reachability` is `validated` or `failed` for this physical contract. `navigation.connections` is rebuilt from actual geometric transitions and body-width floor witnesses. Exported `localConnections` must match it exactly. Empty/stale intended edges cannot certify a layout.
+
+Canonical serialization and fingerprint calculation follow v1 rules. Geometry and deterministic path diagnostics participate in the fingerprint; camera/view selections and timing do not. The exporter does not include meshes, UVs, engine objects, collision components, or portal render targets.
