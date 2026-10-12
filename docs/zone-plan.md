@@ -119,3 +119,13 @@ V3 reuses the physical v2 entities. Its straight stairs can point in any horizon
 `diagnostics.status` remains `architecture-valid` or `invalid`. Validation checks physical transitions, safe room paths and returnability, functional program consistency/minimum areas, signature correspondence, required semantic adjacencies, at least one circulation loop, realized configuration, and coherent attempt reporting. `GENERATION_EXHAUSTED` marks bounded failure alongside the last candidate's physical errors. Unsupported input syntax rejects before candidate generation.
 
 A valid candidate's stored `localConnections` is copied from physical reconstruction. Consumers can replay `validateHouse` to check those stored edges against geometry. Layout metadata and generation success do not replace physical evidence. Fingerprints include canonical geometry, normalized request, composition/attempt reports, and deterministic diagnostics; timing and renderer view state remain excluded.
+
+---
+
+# Solid-wall extension — br.zone/0.4
+
+Default generated houses now use generator 4, explicit `wallThickness`, and clear usable room footprints. `usableFloor` identifies the actual floor and its net area. `wallBodies` contains exact line/arc solid extrusions outside those footprints; `walls` retains room-boundary aperture semantics. `materials` and exposed side records provide independent room-side texture slots and metre-scaled UVs.
+
+Openings retain a primary room-side `center` and add per-host threshold centers. `passages` spans the separated wall faces with actual width/height and supporting slab geometry. External port anchors move to the outer wall face, while room approaches stay on the inner face. Geometry predicates for v4 wall tangencies use the declared distance tolerance.
+
+Validation reconstructs the wall union and aperture cuts, verifies side bindings and clear area claims, and derives physical navigation through supported passages. Full conventions, bounded construction, compatibility, and renderer behavior are documented in [solid walls](solid-walls.md). V1–v3 canonical examples remain unchanged.

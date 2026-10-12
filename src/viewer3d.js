@@ -70,7 +70,8 @@ export class Viewer3D {
     if (this.plan) {
       const { min, max } = sceneBounds(this.plan);
       this.camera.target = min.map((v, i) => (v + max[i]) / 2);
-      if (this.options?.scope !== 'all' && this.options?.scope !== 'top') this.camera.target[2] = this.options?.scope === 'ground' ? 1 : ((this.plan.layout?.signature.upperFloorIndex ?? 1) * this.plan.input.config.floorHeight + 1.3) / 2;
+      if (this.options?.scope === 'floor') this.camera.target[2] = this.options.floorIndex * this.plan.input.config.floorHeight + 1.3;
+      if (this.options?.scope !== 'floor' && this.options?.scope !== 'all' && this.options?.scope !== 'top') this.camera.target[2] = this.options?.scope === 'ground' ? 1 : ((this.plan.layout?.signature.upperFloorIndex ?? 1) * this.plan.input.config.floorHeight + 1.3) / 2;
       this.camera.extent = Math.max((max[0] - min[0]) * .4, (max[1] - min[1]) * .65);
     }
     this.camera.yaw = -.8; this.camera.pitch = .8; this.camera.zoom = 1; this.invalidate();

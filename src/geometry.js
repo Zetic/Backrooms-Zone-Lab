@@ -69,8 +69,8 @@ export function edgeDistance(edge, p) {
 }
 
 // Returns isolated intersection points and whether boundaries overlap in length.
-export function intersections(a, b) {
-  if (a.kind === 'arc' && b.kind === 'line') return intersections(b, a);
+export function intersections(a, b, stableTangencies = false) {
+  if (a.kind === 'arc' && b.kind === 'line') return intersections(b, a, stableTangencies);
   let points = [], overlap = false;
   if (a.kind === 'line' && b.kind === 'line') {
     const r = sub(a.to, a.from), s = sub(b.to, b.from), d = sub(b.from, a.from);
@@ -91,6 +91,10 @@ export function intersections(a, b) {
     const d = sub(a.to, a.from), f = sub(a.from, b.center);
     const A = dot(d, d), B = 2 * dot(f, d), C = dot(f, f) - b.radius ** 2;
     let discriminant = B * B - 4 * A * C;
+    // Quantized tangent joins can produce two artificial roots farther apart
+    // than EPS. Apply the published distance tolerance before solving roots.
+    const closest = at(a, -B / (2 * A));
+    if (stableTangencies && Math.abs(distance(closest, b.center) - b.radius) <= EPS) discriminant = 0;
     const tolerance = EPS ** 2 * A;
     if (discriminant >= -tolerance) {
       discriminant = Math.max(0, discriminant);
@@ -175,7 +179,7 @@ export function contains(footprint, p) {
   return 'inside';
 }
 
-export function validateFootprint(footprint) {
+export function validateFootprint(footprint, { stableTangencies = false } = {}) {
   const errors = [];
   if (!footprint || !Array.isArray(footprint.outer) || !Array.isArray(footprint.holes)) return ['Footprint requires outer and holes arrays.'];
   const rings = [footprint.outer, ...footprint.holes];
@@ -187,7 +191,7 @@ export function validateFootprint(footprint) {
     for (let i = 0; i < ring.length; i++) {
       if (distance(at(ring[i], 1), at(ring[(i + 1) % ring.length], 0)) > EPS) errors.push(`${label}: edge ${i} is disconnected.`);
       for (let j = i + 1; j < ring.length; j++) {
-        const hit = intersections(ring[i], ring[j]);
+        const hit = intersections(ring[i], ring[j], stableTangencies);
         const shared = [];
         if (j === i + 1) shared.push(at(ring[i], 1));
         if (i === 0 && j === ring.length - 1) shared.push(at(ring[i], 0));
@@ -201,7 +205,7 @@ export function validateFootprint(footprint) {
   for (let i = 1; i < rings.length; i++) {
     if (ringContains(rings[0], at(rings[i][0], 0)) !== 'inside') errors.push(`Hole ${i}: outside outer boundary.`);
     for (let j = 0; j < i; j++) {
-      if (rings[i].some(a => rings[j].some(b => { const h = intersections(a, b); return h.overlap || h.points.length; }))) errors.push(`Hole ${i}: touches/intersects ring ${j}.`);
+      if (rings[i].some(a => rings[j].some(b => { const h = intersections(a, b, stableTangencies); return h.overlap || h.points.length; }))) errors.push(`Hole ${i}: touches/intersects ring ${j}.`);
       if (j > 0 && (ringContains(rings[j], at(rings[i][0], 0)) !== 'outside' || ringContains(rings[i], at(rings[j][0], 0)) !== 'outside')) errors.push(`Holes ${i}/${j}: nested or overlapping.`);
     }
   }

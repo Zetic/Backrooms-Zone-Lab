@@ -1,4 +1,5 @@
-import { at, bounds } from './geometry.js';
+import { at, bounds, edgeDistance } from './geometry.js';
+import { differenceUnion, edgeLength, edgeParameter } from './solid-geometry.js';
 
 export const COLORS = { public: [.44, .56, .6], private: [.49, .52, .68], service: [.59, .52, .38], circulation: [.38, .57, .53], gallery: [.42, .65, .55], specimen: [.4, .5, .56] };
 export const sampleRing = ring => ring.flatMap(edge => Array.from({ length: edge.kind === 'arc' ? Math.ceil(Math.abs(edge.sweepDeg) / 3) : 1 }, (_, i) => at(edge, i / (edge.kind === 'arc' ? Math.ceil(Math.abs(edge.sweepDeg) / 3) : 1))));
@@ -29,7 +30,7 @@ export function triangulate(footprint) {
 export function buildMesh(plan, options = {}) {
   const faces = [], { scope = 'gallery', lowWalls = true, ceilings = false, walls = true, guards = true, selected } = options;
   const topFloor = plan.floors.length - 1, galleryFloor = plan.layout?.signature.upperFloorIndex ?? 1;
-  const visible = index => scope === 'all' || (scope === 'top' ? index === topFloor : index <= (scope === 'ground' ? 0 : galleryFloor));
+  const visible = index => scope === 'floor' ? index === options.floorIndex : scope === 'all' || (scope === 'top' ? index === topFloor : index <= (scope === 'ground' ? 0 : galleryFloor));
   const getSpace = id => plan.spaces.find(s => s.id === id);
   const baseColor = id => id === selected ? [.89, .75, .43] : COLORS[getSpace(id)?.role] ?? COLORS.specimen;
   function face(points, spaceId, category, color = baseColor(spaceId)) {
@@ -46,11 +47,19 @@ export function buildMesh(plan, options = {}) {
     triangles.forEach(tri => face([...tri].reverse().map(p => [...p, elevation - thickness]), id, `${category}-underside`, baseColor(id).map(c => c * .75)));
     for (const ring of [footprint.outer, ...footprint.holes]) {
       const sampled = sampleRing(ring);
-      sampled.forEach((a, i) => { const b = sampled[(i + 1) % sampled.length]; quad([[...a, elevation], [...b, elevation], [...b, elevation - thickness], [...a, elevation - thickness]], id, `${category}-edge`, baseColor(id).map(c => c * .8)); });
+      sampled.forEach((a, i) => {
+        const b = sampled[(i + 1) % sampled.length], segment = { kind: 'line', from: a, to: b }, cuts = [0, 1], joined = [];
+        for (const passage of plan.passages ?? []) if (passage.floor.elevation === elevation) for (const edge of passage.footprint.outer) {
+          if (edgeDistance(segment, edge.from) <= 1e-5 && edgeDistance(segment, edge.to) <= 1e-5) { const range = [edgeParameter(segment, edge.from), edgeParameter(segment, edge.to)].sort((x,y)=>x-y); cuts.push(...range); joined.push(range); }
+        }
+        if (category === 'door-floor') for (const space of plan.spaces.filter(s => s.elevation === elevation)) if (space.footprint.outer.some(edge => edgeDistance(edge,a)<=1e-5 && edgeDistance(edge,b)<=1e-5)) joined.push([0,1]);
+        cuts.sort((x,y)=>x-y);
+        for(let j=1;j<cuts.length;j++) { const lo=cuts[j-1],hi=cuts[j],mid=(lo+hi)/2;if(hi-lo<1e-9||joined.some(r=>mid>=r[0]&&mid<=r[1]))continue;const c=at(segment,lo),d=at(segment,hi);quad([[...c,elevation],[...d,elevation],[...d,elevation-thickness],[...c,elevation-thickness]],id,`${category}-edge`,baseColor(id).map(c=>c*.8)); }
+      });
     }
   }
   for (const surface of plan.surfaces) if (visible(getSpace(surface.spaceId)?.floorIndex) && (surface.kind === 'floor' || ceilings)) floor(surface.footprint, surface.elevation, surface.spaceId, surface.kind, surface.thickness ?? 0);
-  if (walls) for (const wall of plan.walls) {
+  if (walls && !plan.wallBodies) for (const wall of plan.walls) {
     const owner = getSpace(wall.spaceId);
     if (!visible(owner.floorIndex)) continue;
     const maxZ = lowWalls ? Math.min(wall.maxZ, wall.minZ + 1.3) : wall.maxZ;
@@ -73,9 +82,34 @@ export function buildMesh(plan, options = {}) {
       for (const [low, high] of sections) if (high > low + 1e-8) quad([[...a, low], [...b, low], [...b, high], [...a, high]], wall.spaceId, 'wall', baseColor(wall.spaceId).map(c => c * 1.12));
     }
   }
+  if (walls && plan.wallBodies) for (const body of plan.wallBodies) {
+    if (!visible(body.floorIndex)) continue;
+    const maxZ = lowWalls ? Math.min(body.maxZ, plan.floors[body.floorIndex].elevation + 1.3) : body.maxZ;
+    if (maxZ <= body.minZ) continue;
+    for (const side of body.sides) {
+      const count = side.edge.kind === 'arc' ? Math.ceil(Math.abs(side.edge.sweepDeg) / 3) : 1;
+      const material = plan.materials.find(m => m.id === side.materialId), id = side.spaceId ?? material?.spaceId;
+      const color = id ? baseColor(id).map(c => c * 1.12) : [.47, .48, .45];
+      for (let i = 0; i < count; i++) {
+        const a = at(side.edge, i / count), b = at(side.edge, (i + 1) / count), u0 = side.uv.uOffset + side.uv.uDirection * edgeLength(side.edge) * i / count, u1 = side.uv.uOffset + side.uv.uDirection * edgeLength(side.edge) * (i + 1) / count;
+        const points = [[...a, body.minZ], [...b, body.minZ], [...b, maxZ], [...a, maxZ]], uv = [[u0, body.minZ], [u1, body.minZ], [u1, maxZ], [u0, maxZ]];
+        for (const indices of [[0,1,2],[0,2,3]]) { face(indices.map(i => points[i]), id, 'wall', color); const result = faces.at(-1); result.materialId = side.materialId; result.sideId = side.id; result.uv = indices.map(i => uv[i]); }
+      }
+    }
+    // Only exposed caps: adjacent height bands must not emit coincident faces.
+    for (const [z, direction] of [[body.minZ, -1], [maxZ, 1]]) {
+      const neighbours = plan.wallBodies.filter(other => other.id !== body.id && visible(other.floorIndex) && (direction < 0 ? Math.abs(other.maxZ - z) < 1e-5 : Math.abs(other.minZ - z) < 1e-5)).map(b => b.footprint);
+      const caps = differenceUnion([body.footprint], neighbours);
+      for (const cap of caps) for (const tri of triangulate(cap)) face((direction < 0 ? [...tri].reverse() : tri).map(p => [...p, z]), null, 'wall-cap', [.48,.49,.45]);
+    }
+  }
+  for (const passage of plan.passages ?? []) {
+    const opening = plan.openings.find(o => o.id === passage.openingId), owner = getSpace(opening.hosts[0].spaceId);
+    if (visible(owner.floorIndex)) floor(passage.footprint, passage.floor.elevation, owner.id, 'door-floor', passage.floor.thickness);
+  }
   for (const stair of plan.verticalTraversals) {
     const source = getSpace(stair.source.spaceId), target = getSpace(stair.target.spaceId);
-    if (scope === 'top' ? !visible(target.floorIndex) : !visible(source.floorIndex) || !visible(target.floorIndex)) continue;
+    if (scope === 'top' || scope === 'floor' ? !visible(target.floorIndex) && !visible(source.floorIndex) : !visible(source.floorIndex) || !visible(target.floorIndex)) continue;
     for (const tread of stair.treads) floor(tread.footprint, tread.elevation, stair.source.spaceId, 'stair', tread.elevation - stair.source.position[2]);
   }
   function bar(a, b, id, category) {
@@ -122,7 +156,7 @@ export function buildMesh(plan, options = {}) {
     for (const stair of plan.verticalTraversals) if (visible(getSpace(stair.source.spaceId).floorIndex) && visible(getSpace(stair.target.spaceId).floorIndex)) lines.push({ a: stair.source.position.map((x, i) => i === 2 ? x + .08 : x), b: stair.target.position.map((x, i) => i === 2 ? x + .08 : x), color: [.91, .77, .43] });
   }
   for (const port of plan.externalPorts) if (visible(getSpace(port.owningSpaceId).floorIndex)) {
-    const opening = plan.openings.find(o => o.id === port.openingId), [x, y, z] = opening.center, [ux, uy] = opening.tangent, w = opening.width / 2;
+    const opening = plan.openings.find(o => o.id === port.openingId), [x, y, z] = plan.schemaVersion === 'br.zone/0.4' ? port.anchor.position : opening.center, [ux, uy] = opening.tangent, w = opening.width / 2;
     const corners = [[x - ux * w, y - uy * w, z], [x + ux * w, y + uy * w, z], [x + ux * w, y + uy * w, z + opening.height], [x - ux * w, y - uy * w, z + opening.height]];
     corners.forEach((a, i) => lines.push({ a, b: corners[(i + 1) % 4], color: [.95, .8, .44] }));
   }
@@ -130,7 +164,7 @@ export function buildMesh(plan, options = {}) {
 }
 
 export function sceneBounds(plan) {
-  const boxes = plan.spaces.map(s => bounds(s.footprint));
+  const boxes = [...plan.spaces, ...(plan.wallBodies ?? [])].map(s => bounds(s.footprint));
   return { min: [Math.min(...boxes.map(b => b.minX)), Math.min(...boxes.map(b => b.minY)), 0], max: [Math.max(...boxes.map(b => b.maxX)), Math.max(...boxes.map(b => b.maxY)), Math.max(...plan.spaces.map(s => s.elevation + s.clearHeight))] };
 }
 

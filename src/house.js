@@ -54,11 +54,12 @@ function westFootprint(right, y, width, depth, kind, tip) {
   return polygon([[right, y], [right, q(y + depth)], [q(right - width), q(y + depth)], [q(right - width - tip), q(y + depth - inset)], [q(right - width - tip), q(y + inset)], [q(right - width), y]]);
 }
 
-function compose(input, attempt) {
+export function composeHouse(input, attempt) {
   const randomKey = { ...input, config: { floorHeight: input.config.floorHeight, storeys: input.config.storeys } };
   const random = stream(randomKey, `house/composition/${attempt}`), mansion = input.profile === 'atrium-mansion';
+  const thickness = input.config.wallThickness ?? 0;
   const height = input.config.floorHeight, storeys = input.config.storeys, risers = Math.ceil(height / .18), run = q(risers * .28);
-  const width = mansion ? grid(random, 8.8, 10.8) : grid(random, 7.6, 9.6), depth = mansion ? grid(random, 10.4, 12.4) : grid(random, 8.4, 10.2);
+  const width = mansion ? grid(random, 8.8, 10.8) : grid(random, 7.6, 9.6), baseDepth = mansion ? grid(random, 10.4, 12.4) : grid(random, 8.4, 10.2), depth = q(baseDepth + 3 * thickness);
   const eastRecipe = choose(random, ['rooms', 'hall']), westRecipe = choose(random, ['rooms', 'hall']);
   const eastHall = eastRecipe === 'hall' ? grid(random, 2.4, 3.2) : 0, westHall = westRecipe === 'hall' ? grid(random, 2.4, 3.2) : 0;
   const eastWidth = grid(random, 5.2, mansion ? 7.2 : 6.4), extraStair = random() < (mansion ? .65 : .25);
@@ -76,8 +77,9 @@ function compose(input, attempt) {
     }
   }
   const coreWidth = Math.min(width, grid(random, 6.8, 8.2)), coreX = grid(random, 0, width - coreWidth, .1), coreDepth = q(run + 2.6 + grid(random, 0, 1.2));
-  const cores = [{ name: 'main', x: coreX, y: depth, width: coreWidth, depth: coreDepth }];
-  if (extraStair) cores.push({ name: 'service', x: q(width + eastHall + eastWidth - 5.2), y: depth, width: 5.2, depth: q(run + 2.8 + grid(random, 0, 1)) });
+  const eastStart = q(width + eastHall + (eastHall ? 2 : 1) * thickness);
+  const cores = [{ name: 'main', x: coreX, y: q(depth + thickness), width: coreWidth, depth: coreDepth }];
+  if (extraStair) cores.push({ name: 'service', x: q(eastStart + eastWidth - 5.2), y: q(depth + thickness), width: 5.2, depth: q(run + 2.8 + grid(random, 0, 1)) });
   const plan = {
     schemaVersion: HOUSE_SCHEMA, kind: 'generated-house', zoneId: input.zoneId, input,
     conventions: structuredClone(CONVENTIONS),
@@ -92,7 +94,11 @@ function compose(input, attempt) {
     plan.spaces.push(value); return value;
   }
   function connect(from, to, xy, aperture = 1.2, obligation = false) {
-    const a = space(from), b = space(to), hosts = [a, b].map(s => hostAt(s, xy, aperture));
+    const a = space(from), b = space(to), first = hostAt(a, xy, aperture);
+    const inward = approachFor(a.footprint.outer[first.edgeIndex], xy, aperture, .8).inward;
+    const other = point(xy[0] - inward[0] * thickness, xy[1] - inward[1] * thickness);
+    const hosts = [first, hostAt(b, other, aperture)];
+    if (thickness) { hosts[0].center = [...point(...xy), a.elevation]; hosts[1].center = [...other, b.elevation]; }
     const id = `door:${from}:${to}`;
     plan.openings.push({ id, type: 'local-passage', hosts, center: [...point(...xy), a.elevation], tangent: approachFor(a.footprint.outer[hosts[0].edgeIndex], xy, aperture, .8).tangent, width: aperture, height: 2.2, approachDepth: .8, direction: 'reversible' });
     if (obligation) plan.layout.obligations.push({ id: `required:${id}`, type: 'direct-passage', from, to });
@@ -120,26 +126,26 @@ function compose(input, attempt) {
       else if (floorIndex === 0) choices = mansion ? [['living', 'library', 'study'], ['living', 'study']] : [['living', 'study']];
       else if (wing === 'east') choices = [['bedroom', 'guestroom', 'bath'], ['bedroom', 'bath'], ['bedroom', 'guestroom', 'bath', 'dressing']];
       else choices = [['master', 'dressing', 'bath'], ['studio', 'office'], ['bedroom', 'bath']];
-      choices = choices.filter(program => program.reduce((n, type) => n + ROOM[type][2], 0) <= depth - .1);
-      const program = choose(r, choices), cuts = partition(program, depth, r), records = [];
+      choices = choices.filter(program => program.reduce((n, type) => n + ROOM[type][2], 0) <= baseDepth - .1);
+      const program = choose(r, choices), cuts = partition(program, baseDepth, r), records = [];
       const hallId = `hall:${wing}:${floorIndex}`;
       if (recipe === 'hall') {
-        add(hallId, floorIndex === 0 ? `${wing === 'east' ? 'Service' : 'Public'} wing hall` : 'Private wing hall', 'circulation', rect(wing === 'east' ? width : -hallWidth, 0, hallWidth, depth), floorIndex, [wing === 'east' ? q(width + hallWidth / 2) : q(-hallWidth / 2), q(depth / 2)], 'wing-hall');
+        add(hallId, floorIndex === 0 ? `${wing === 'east' ? 'Service' : 'Public'} wing hall` : 'Private wing hall', 'circulation', rect(wing === 'east' ? width + thickness : -hallWidth - thickness, 0, hallWidth, depth), floorIndex, [wing === 'east' ? q(width + hallWidth / 2) : q(-hallWidth / 2), q(depth / 2)], 'wing-hall');
         connect(`main:${floorIndex}`, hallId, [wing === 'east' ? width : 0, q(depth / 2)], 1.6);
       }
       for (let index = 0; index < program.length; index++) {
-        const type = program[index], [label, role] = ROOM[type], y = cuts[index], d = q(cuts[index + 1] - y), roomWidth = wing === 'east' ? eastWidth : grid(r, 4.2, mansion ? 6.4 : 5.6), right = -hallWidth;
+        const type = program[index], [label, role] = ROOM[type], y = q(cuts[index] + index * thickness), d = q(cuts[index + 1] - cuts[index] + (index === program.length - 1 ? (4 - program.length) * thickness : 0)), roomWidth = wing === 'east' ? eastWidth : grid(r, 4.2, mansion ? 6.4 : 5.6), right = q(-hallWidth - (hallWidth ? 2 : 1) * thickness);
         const kind = wing === 'east' ? 'rect' : floorIndex === 0 && index === program.length - 1 ? 'angled' : floorIndex === 0 && index === 0 && voidKind !== 'circular' ? 'apse' : choose(r, ['rect', 'rect', 'apse']);
-        const footprint = wing === 'east' ? rect(width + hallWidth, y, roomWidth, d) : westFootprint(right, y, roomWidth, d, kind, grid(r, .8, 1.8));
-        const id = `room:${wing}:${floorIndex}:${type}`, cx = wing === 'east' ? q(width + hallWidth + roomWidth / 2) : q(right - roomWidth / 2), cy = q(y + d / 2);
+        const footprint = wing === 'east' ? rect(eastStart, y, roomWidth, d) : westFootprint(right, y, roomWidth, d, kind, grid(r, .8, 1.8));
+        const id = `room:${wing}:${floorIndex}:${type}`, cx = wing === 'east' ? q(eastStart + roomWidth / 2) : q(right - roomWidth / 2), cy = q(y + d / 2);
         add(id, label, role, footprint, floorIndex, [cx, cy], type);
         plan.layout.program.push({ spaceId: id, type, wing, floorIndex });
-        connect(recipe === 'hall' ? hallId : `main:${floorIndex}`, id, [wing === 'east' ? width + hallWidth : -hallWidth, cy], ['pantry', 'dressing'].includes(type) ? 1 : 1.2);
+        connect(recipe === 'hall' ? hallId : `main:${floorIndex}`, id, [wing === 'east' ? recipe === 'hall' ? width + thickness + hallWidth : width : recipe === 'hall' ? -thickness - hallWidth : 0, cy], ['pantry', 'dressing'].includes(type) ? 1 : 1.2);
         records.push({ id, type, y, depth: d, width: roomWidth });
       }
       for (let index = 1; index < records.length; index++) {
         const previous = records[index - 1], current = records[index], kitchenPair = floorIndex === 0 && wing === 'east' && (previous.type === 'kitchen' || current.type === 'kitchen');
-        if (kitchenPair || (wing === 'west' && floorIndex === 0 && r() < .65)) connect(previous.id, current.id, [wing === 'east' ? q(width + hallWidth + eastWidth / 2) : q(-hallWidth - Math.min(previous.width, current.width) / 2), current.y], kitchenPair ? 1.4 : 1.2, kitchenPair);
+        if (kitchenPair || (wing === 'west' && floorIndex === 0 && r() < .65)) connect(previous.id, current.id, [wing === 'east' ? q(eastStart + eastWidth / 2) : q(-hallWidth - (hallWidth ? 2 : 1) * thickness - Math.min(previous.width, current.width) / 2), q(current.y - thickness)], kitchenPair ? 1.4 : 1.2, kitchenPair);
       }
       if (wing === 'east') eastRooms.set(floorIndex, records);
       for (const s of plan.spaces.filter(s => s.floorIndex === floorIndex && (s.id.startsWith(`room:${wing}:`) || s.id === hallId))) plan.surfaces.push({ id: `ceiling:${s.id}`, kind: 'ceiling', spaceId: s.id, elevation: q(s.elevation + s.clearHeight), footprint: structuredClone(s.footprint) });
@@ -149,10 +155,10 @@ function compose(input, attempt) {
   // Add a true non-cardinal room, attached to the dining aperture, rather than
   // merely rotating a rectangular building or smoothing room outlines.
   if (random() < (mansion ? .8 : .6)) {
-    const dining = eastRooms.get(0).find(room => room.type === 'dining'), x = q(width + eastHall + eastWidth), y = dining.y, d = dining.depth, reach = grid(random, 4, 6), skew = grid(random, .6, 1.4);
+    const dining = eastRooms.get(0).find(room => room.type === 'dining'), x = q(eastStart + eastWidth + thickness), y = dining.y, d = dining.depth, reach = grid(random, 4, 6), skew = grid(random, .6, 1.4);
     const footprint = polygon([[x, y], [q(x + reach), q(y - skew)], [q(x + reach + .8), q(y + d - .3)], [x, q(y + d)]]);
     const room = add('conservatory', 'Angled conservatory', 'public', footprint, 0, [q(x + reach / 2), q(y + d / 2)], 'conservatory');
-    connect(dining.id, room.id, [x, q(y + d / 2)], 1.4);
+    connect(dining.id, room.id, [q(x - thickness), q(y + d / 2)], 1.4);
     plan.layout.program.push({ spaceId: room.id, type: 'conservatory', wing: 'east', floorIndex: 0 });
     plan.surfaces.push({ id: `ceiling:${room.id}`, kind: 'ceiling', spaceId: room.id, elevation: q(room.clearHeight), footprint: structuredClone(footprint) });
   }
@@ -172,7 +178,7 @@ function compose(input, attempt) {
       const id = `core:${core.name}:${floorIndex}`;
       add(id, core.name === 'main' ? 'Main stair hall' : 'Service stair hall', 'circulation', footprint, floorIndex, [q(core.x + core.width / 2), q(core.y + core.depth / 2)], 'stair-hall');
       const owner = core.name === 'main' ? `main:${floorIndex}` : eastRooms.get(floorIndex).at(-1).id;
-      connect(owner, id, [q(core.x + core.width / 2), core.y], 1.4);
+      connect(owner, id, [q(core.x + core.width / 2), q(core.y - thickness)], 1.4);
     }
     for (let floorIndex = 0; floorIndex < storeys; floorIndex++) {
       const current = space(`core:${core.name}:${floorIndex}`), next = space(`core:${core.name}:${floorIndex + 1}`), footprint = next?.footprint ?? rect(core.x, core.y, core.width, core.depth);
@@ -191,7 +197,7 @@ function compose(input, attempt) {
   for (const s of plan.surfaces) s.footprint = rotate(s.footprint);
   for (const v of plan.protectedVoids) v.footprint = rotate(v.footprint);
   for (const stair of plan.verticalTraversals) { stair.source.position = move(stair.source.position); stair.target.position = move(stair.target.position); [...stair.landings, ...stair.treads].forEach(s => { s.footprint = rotate(s.footprint); }); }
-  for (const opening of plan.openings) { opening.center = move(opening.center); const host = opening.hosts[0]; opening.tangent = approachFor(space(host.spaceId).footprint.outer[host.edgeIndex], opening.center, opening.width, opening.approachDepth).tangent; }
+  for (const opening of plan.openings) { opening.center = move(opening.center); opening.hosts.forEach(h => { if (h.center) h.center = move(h.center); }); const host = opening.hosts[0]; opening.tangent = approachFor(space(host.spaceId).footprint.outer[host.edgeIndex], opening.center, opening.width, opening.approachDepth).tangent; }
   plan.externalPorts = realizeExternalPorts(input, plan.spaces, plan.openings);
   plan.walls = deriveWalls(plan); plan.guards = deriveGuards(plan);
   return plan;
@@ -199,7 +205,7 @@ function compose(input, attempt) {
 
 export function validateHouse(plan, options = {}) {
   const result = validateArchitecture(plan, options), add = (code, entityId, message) => result.errors.push({ code, entityId, message });
-  if (plan.schemaVersion !== HOUSE_SCHEMA || plan.kind !== 'generated-house' || plan.input.generatorVersion !== HOUSE_GENERATOR) add('HOUSE_IDENTITY_INVALID', plan.zoneId, 'House requires its explicit schema and generator versions.');
+  if (!((plan.schemaVersion === HOUSE_SCHEMA && plan.input.generatorVersion === HOUSE_GENERATOR) || (plan.schemaVersion === 'br.zone/0.4' && plan.input.generatorVersion === 4)) || plan.kind !== 'generated-house') add('HOUSE_IDENTITY_INVALID', plan.zoneId, 'House requires its explicit schema and generator versions.');
   const signature = plan.layout.signature, lower = plan.spaces.find(s => s.id === signature.lowerSpaceId), upper = plan.spaces.find(s => s.id === signature.upperSpaceId), reserve = plan.protectedVoids.find(v => v.id === signature.voidId);
   if (!lower || !upper || !reserve || reserve.ownerSpaceId !== lower.id || upper.role !== 'gallery' || reserve.type !== 'double-height' || lower.floorIndex !== signature.lowerFloorIndex || upper.floorIndex !== signature.upperFloorIndex || upper.floorIndex !== lower.floorIndex + 1 || !upper.footprint.holes.some(hole => canonicalStringify(reverseRing(hole)) === canonicalStringify(reserve.footprint.outer)) || !lower.clearVolumes.some(v => v.minZ === reserve.minZ && v.maxZ === reserve.maxZ && canonicalStringify(v.footprint) === canonicalStringify(reserve.footprint))) add('SIGNATURE_INVALID', signature.voidId, 'Signature metadata must identify the real tall clear-volume patch, protected opening, and immediately upper gallery.');
   if (plan.floors.length !== plan.input.config.storeys || plan.floors.some(floor => Math.abs(floor.elevation - q(floor.index * plan.input.config.floorHeight)) > EPS)) add('HOUSE_CONFIG_MISMATCH', 'floors', 'Realized storeys and elevations must match the supplied house configuration.');
@@ -236,7 +242,7 @@ export function generateHouse(raw = {}) {
   const input = normalizeHouseInput(raw), failures = [];
   let plan;
   for (let attempt = 0; attempt < input.config.maxAttempts; attempt++) {
-    try { plan = compose(input, attempt); }
+    try { plan = composeHouse(input, attempt); }
     catch (error) { failures.push({ attempt, errors: [{ code: 'COMPOSITION_FAILED', entityId: input.profile, message: error.message }] }); continue; }
     plan.diagnostics = validateHouse(plan, { checkCachedConnections: false, checkGeneration: false });
     plan.localConnections = structuredClone(plan.diagnostics.navigation.connections);

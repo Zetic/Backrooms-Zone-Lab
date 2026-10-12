@@ -1,6 +1,7 @@
 import { writeFile, mkdir } from 'node:fs/promises';
 import { generateStudy, canonicalExport } from '../src/zone.js';
 import { generateArchitecture } from '../src/architecture.js';
+import { generateSolidHouse } from '../src/solid-house.js';
 import { generateHouse } from '../src/house.js';
 import { floorSvg } from '../src/render.js';
 import { buildMesh, cameraMatrix, cameraBasis, sceneBounds } from '../src/mesh.js';
@@ -24,6 +25,8 @@ function standalone(svg) {
     'door-gap': 'stroke="#151f24" stroke-width=".19"',
     'local-door': 'stroke="#93c9b2" stroke-width=".065"',
     'guard-line': 'stroke="#ddd2af" stroke-width=".07" fill="none"',
+    'wall-solid': 'fill="#9c9b85" stroke="#c9c5aa" stroke-width=".015"',
+    'door-floor': 'fill="#4d5a5d"',
     'nav-path': 'fill="none" stroke="#8ed6bc" stroke-width=".06"'
   };
   return svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" ').replace(/class="([\w -]+)"/g, (_, names) => {
@@ -52,11 +55,11 @@ function cutaway(plan, title) {
   const markers = mesh.lines.map(line => { const a = project(line.a), b = project(line.b); return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#e7ca80" stroke-width="1.4"/>`; }).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700"><rect width="1000" height="700" fill="#131b1f"/><text x="30" y="35" fill="#e7ca80" font-family="Arial,sans-serif" font-size="18">${title}</text><text x="30" y="60" fill="#9baeb5" font-family="Arial,sans-serif" font-size="12">Through gallery floor ${(plan.layout?.signature.upperFloorIndex ?? 1) + 1} · low-wall cutaway · ceilings hidden</text>${polygons}${markers}<text x="30" y="677" fill="#9baeb5" font-family="Arial,sans-serif" font-size="11">Static geometry review; the interactive viewer uses depth-tested WebGL.</text></svg>`;
 }
-const plans = [generateStudy({ profile: 'angular', seed: '287' }), generateStudy({ profile: 'rotunda', seed: '623' }), generateStudy({ profile: 'gallery', seed: '12345' }), generateArchitecture(), generateHouse({ profile: 'gallery-house', seed: '2' }), generateHouse({ profile: 'atrium-mansion', seed: '0' }), generateHouse({ profile: 'atrium-mansion', seed: '1' })];
+const plans = [generateStudy({ profile: 'angular', seed: '287' }), generateStudy({ profile: 'rotunda', seed: '623' }), generateStudy({ profile: 'gallery', seed: '12345' }), generateArchitecture(), generateHouse({ profile: 'gallery-house', seed: '2' }), generateHouse({ profile: 'atrium-mansion', seed: '0' }), generateHouse({ profile: 'atrium-mansion', seed: '1' }), generateSolidHouse({ profile: 'gallery-house', seed: '3' }), generateSolidHouse({ profile: 'atrium-mansion', seed: '2' })];
 for (const plan of plans) {
-  const name = plan.input.profile + (plan.kind === 'generated-house' ? `-${plan.input.seed}` : '');
+  const name = (plan.schemaVersion === 'br.zone/0.4' ? 'solid-' : '') + plan.input.profile + (plan.kind === 'generated-house' ? `-${plan.input.seed}` : '');
   await writeFile(new URL(`${name}.json`, output), canonicalExport(plan));
   for (const floor of plan.floors) await writeFile(new URL(`${name}-floor-${floor.index + 1}.svg`, output), standalone(floorSvg(plan, floor.index, { labels: true, clearance: true, voids: true, navigation: plan.kind !== 'geometry-study', vertices: false, selected: '' })));
   if (plan.kind !== 'geometry-study') await writeFile(new URL(`${name}-cutaway.svg`, output), cutaway(plan, `${plan.input.profile.toUpperCase()} / SEED ${plan.input.seed}`));
 }
-console.log('Seven canonical plans, seventeen floor plans, and four static cutaways written.');
+console.log('Nine canonical plans, twenty-two floor plans, and six static cutaways written.');

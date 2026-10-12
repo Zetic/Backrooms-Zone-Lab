@@ -17,7 +17,7 @@ test('controller preserves exports through view changes, exposes errors, and res
   }
   const elements = new Map([...html.matchAll(/id="([^"]+)"/g)].map(match => [match[1], new Element(match[1])]));
   const get = id => { assert.ok(elements.has(id), `Missing real HTML control ${id}`); return elements.get(id); };
-  for (const [id, value] of Object.entries({ seed: '12345', profile: 'reference-house', 'floor-height': '3.2', 'floor-filter': 'all', 'volume-scope': 'gallery' })) get(id).value = value;
+  for (const [id, value] of Object.entries({ seed: '12345', profile: 'reference-house', 'floor-height': '3.2', 'wall-thickness': '0.2', 'floor-filter': 'all', 'volume-scope': 'gallery' })) get(id).value = value;
   for (const id of ['show-labels', 'show-clearance', 'show-voids', 'volume-walls', 'volume-low-walls', 'volume-guards']) get(id).checked = true;
   const oldDocument = globalThis.document, oldLocation = globalThis.location, oldHistory = globalThis.history;
   globalThis.document = { getElementById: get, querySelectorAll: () => [], createElement: () => new Element('download') };
@@ -46,8 +46,11 @@ test('controller preserves exports through view changes, exposes errors, and res
     get('profile').value = 'gallery-house'; await get('profile').emit('change');
     assert.equal(get('storeys').value, '2'); await get('controls').emit('submit');
     const generated = await exported(); assert.equal(generated.kind, 'generated-house'); assert.equal(generated.floors.length, 2);
-    assert.equal(get('composition-panel').hidden, false); assert.equal(get('schema-version').textContent, 'br.zone/0.3');
+    assert.equal(get('composition-panel').hidden, false); assert.equal(get('schema-version').textContent, 'br.zone/0.4');
     assert.equal(new URL(location.href).searchParams.get('storeys'), '2');
+    assert.equal(new URL(location.href).searchParams.get('thickness'), '0.2');
+    await get('floor-up').emit('click'); assert.equal(get('floor-filter').value, '1'); assert.equal(get('volume-scope').value, 'floor'); assert.equal(get('floor-up').disabled, true); assert.equal((await exported()).fingerprint, generated.fingerprint);
+    await get('floor-down').emit('click'); assert.equal(get('floor-filter').value, '0'); assert.equal(get('floor-down').disabled, true); assert.ok(get('floor-plans').innerHTML.includes('GROUND FLOOR')); assert.equal((await exported()).fingerprint, generated.fingerprint);
     await get('next-seed').emit('click'); const next = await exported();
     assert.notEqual(next.fingerprint, generated.fingerprint); assert.notDeepEqual(next.spaces, generated.spaces);
   } finally { globalThis.document = oldDocument; globalThis.location = oldLocation; globalThis.history = oldHistory; }
