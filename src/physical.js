@@ -1,6 +1,7 @@
 import { canonicalStringify } from './determinism.js';
 import { EPS, q, point, polygon, line, at, tangent, distance, edgeDistance, validateFootprint, footprintSubset, interiorsOverlap, signedArea } from './geometry.js';
 import { approachFor, deriveWalls, deriveGuards, localCeiling, flightFrame, flightRect } from './structure.js';
+import { validateWalls } from './walls.js';
 import { WALKER, localWalkPaths, graphReachability } from './navigation.js';
 
 const equal = (a, b) => canonicalStringify(a) === canonicalStringify(b);
@@ -11,7 +12,7 @@ const nearFootprint = (a, b) => a.holes.length === b.holes.length && a.outer.len
 
 // Rebuilds geometry and navigation evidence rather than trusting exported flags,
 // cached space edges, or previous diagnostics.
-export function validateArchitecture(plan, { checkCachedConnections = true } = {}) {
+export function validateArchitecture(plan, { checkCachedConnections = true, checkWallRebuild = true } = {}) {
   const errors = [], add = (code, entityId, message) => errors.push({ code, entityId, message });
   const spaceMap = new Map(), surfaceMap = new Map(), openingMap = new Map(), terminals = new Map(), connections = [];
   const validVolumes = [];
@@ -69,7 +70,10 @@ export function validateArchitecture(plan, { checkCachedConnections = true } = {
     }
   }
 
+  const wallCheck = plan.schemaVersion === 'br.zone/0.4' ? validateWalls(plan, { checkWallRebuild }) : { errors: [], blocked: new Set() };
+  errors.push(...wallCheck.errors);
   for (const opening of plan.openings) {
+    if (wallCheck.blocked.has(opening.id)) continue;
     const before = errors.length;
     if (!xyz(opening.center) || !Number.isFinite(opening.width) || opening.width < .8 || !Number.isFinite(opening.height) || opening.height < WALKER.headroom || !Number.isFinite(opening.approachDepth) || opening.approachDepth < .6 || !Array.isArray(opening.hosts) || opening.hosts.length !== (opening.type === 'external-door' ? 1 : 2)) { add('OPENING_INVALID', opening.id, 'Opening requires a finite physical aperture, usable approach depth, and correct host count.'); continue; }
     if (!(opening.type === 'external-door' ? ['reversible', 'entrance-only', 'exit-only'] : ['reversible', 'forward-only', 'reverse-only']).includes(opening.direction)) add('OPENING_INVALID', opening.id, 'Unknown traversal direction for this opening family.');
@@ -77,9 +81,11 @@ export function validateArchitecture(plan, { checkCachedConnections = true } = {
     for (const h of opening.hosts) {
       const space = spaceMap.get(h.spaceId), edge = space?.footprint.outer[h.edgeIndex];
       if (!space || !edge || edge.kind !== 'line' || h.ring !== 'outer' || !near(space.elevation, opening.center[2])) { add('OPENING_HOST_INVALID', opening.id, 'Opening host must be a straight boundary at its actual floor elevation.'); continue; }
-      const approach = approachFor(edge, opening.center, opening.width, opening.approachDepth);
-      const ends = [-1, 1].map(sign => [opening.center[0] + sign * approach.tangent[0] * opening.width / 2, opening.center[1] + sign * approach.tangent[1] * opening.width / 2]);
-      if (edgeDistance(edge, opening.center) > EPS || ends.some(p => edgeDistance(edge, p) > EPS)) add('OPENING_HOST_INVALID', opening.id, 'Aperture extends outside its host edge.');
+      const center = h.center ?? opening.center;
+      if (!xyz(center) || !near(center[2], space.elevation) || (h === opening.hosts[0] && !equal(center, opening.center))) { add('OPENING_HOST_INVALID', opening.id, 'Host threshold must have its owning floor elevation and agree with the primary aperture center.'); continue; }
+      const approach = approachFor(edge, center, opening.width, opening.approachDepth);
+      const ends = [-1, 1].map(sign => [center[0] + sign * approach.tangent[0] * opening.width / 2, center[1] + sign * approach.tangent[1] * opening.width / 2]);
+      if (edgeDistance(edge, center) > EPS || ends.some(p => edgeDistance(edge, p) > EPS)) add('OPENING_HOST_INVALID', opening.id, 'Aperture extends outside its host edge.');
       if (!footprintSubset(space.footprint, approach.footprint) || localCeiling(space, approach.footprint) - space.elevation < opening.height - EPS) add('OPENING_CLEARANCE_INVALID', opening.id, 'Approach or height is blocked on an owning side.');
       const wall = plan.walls.find(w => w.spaceId === space.id && w.host.edgeIndex === h.edgeIndex);
       if (!wall || !wall.openingIds.includes(opening.id)) add('OPENING_BLOCKED', opening.id, 'An owning wall does not contain the actual aperture.');
@@ -136,7 +142,7 @@ export function validateArchitecture(plan, { checkCachedConnections = true } = {
     if (['portId', 'role', 'family', 'direction', 'floorIndex', 'width', 'height', 'approachDepth'].some(key => port[key] !== req[key])) add('PORT_CONTRACT_MISMATCH', req.portId, 'Realized port differs from its supplied contract.');
     if (!opening || !owner || opening.hosts.length !== 1 || opening.hosts[0].spaceId !== owner.id || owner.floorIndex !== req.floorIndex || opening.type !== 'external-door' || opening.width !== req.width || opening.height !== req.height || opening.direction !== req.direction || opening.approachDepth !== req.approachDepth) { add('PORT_HOST_INVALID', req.portId, 'Port lacks its actual compatible external aperture.'); continue; }
     const edge = owner.footprint.outer[opening.hosts[0].edgeIndex], expected = approachFor(edge, opening.center, opening.width, opening.approachDepth);
-    if (!equal(port.approach, expected.footprint) || !equal(port.anchor.position, opening.center) || !equal(port.anchor.up, [0, 0, 1]) || port.anchor.forward.some((n, i) => Math.abs(n - (i === 2 ? 0 : -expected.inward[i])) > EPS)) add('PORT_FRAME_INVALID', req.portId, 'Port frame and local approach differ from their physical aperture.');
+    if (!equal(port.approach, expected.footprint) || !equal(port.anchor.position, plan.schemaVersion === 'br.zone/0.4' ? plan.passages.find(p=>p.openingId===opening.id)?.to : opening.center) || !equal(port.anchor.up, [0, 0, 1]) || port.anchor.forward.some((n, i) => Math.abs(n - (i === 2 ? 0 : -expected.inward[i])) > EPS)) add('PORT_FRAME_INVALID', req.portId, 'Port frame and local approach differ from their physical aperture.');
     const outward = approachFor(line(edge.to, edge.from), opening.center, opening.width, .8).footprint;
     if (plan.spaces.some(other => other.id !== owner.id && other.floorIndex === owner.floorIndex && interiorsOverlap(other.footprint, outward))) add('PORT_NOT_EXTERNAL', req.portId, 'External port opens into another local room.');
   }
