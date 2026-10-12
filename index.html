@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Engine-independent architectural geometry and zone contract laboratory.">
+  <title>Backrooms · Zone Lab</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">Z</span><span>BACKROOMS <b>ZONE LAB</b></span></a>
+    <span class="phase-pill">01 / GEOMETRY FOUNDATION</span>
+    <a class="repo-link" href="https://github.com/Zetic/Backrooms-Zone-Lab">Repository ↗</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">ARCHITECTURAL RESEARCH WORKBENCH</p><h1>Define the space.</h1><p class="lede">Inspect exact geometry. Test connection contracts. Export an engine-independent plan.</p></div>
+      <div class="stage-note"><span class="small-label">CURRENT CAPABILITY</span><strong>Geometry studies</strong><span>House generation, physical circulation, and 3D inspection follow in subsequent phases.</span></div>
+    </section>
+    <form id="controls" class="control-bar">
+      <label>Seed<input id="seed" value="12345" maxlength="120" required autocomplete="off"></label>
+      <label>Study<select id="profile"><option value="gallery">Gallery & void</option><option value="angular">Angled wing</option><option value="rotunda">Rotunda & apse</option></select></label>
+      <label>Storey height <span class="unit">m</span><input id="floor-height" type="number" min="2.6" max="5" step="0.1" value="3.2" required></label>
+      <button class="primary" type="submit">Generate study <span aria-hidden="true">↗</span></button>
+      <button id="next-seed" type="button">Next seed</button>
+      <div class="export-actions"><button id="copy-link" type="button">Copy link</button><button id="export" type="button">Export JSON ↓</button></div>
+    </form>
+    <div id="input-error" class="error-banner" role="alert" hidden></div>
+    <div id="metrics" class="metrics" aria-live="polite"></div>
+    <div class="workspace">
+      <section class="drawing-area" aria-label="Geometry studies">
+        <div class="view-bar"><div><span class="eyebrow">PLAN INSPECTION</span><h2 id="study-title">Gallery & void</h2></div><label>Show<select id="floor-filter"><option value="all">All floors · stacked</option><option value="0">Ground floor</option><option value="1">Upper floor</option></select></label></div>
+        <p id="study-summary" class="view-summary"></p>
+        <div class="view-toggles"><label><input id="show-labels" type="checkbox" checked> Labels</label><label><input id="show-clearance" type="checkbox" checked> Port approach</label><label><input id="show-vertices" type="checkbox"> Boundary vertices</label><label><input id="show-voids" type="checkbox" checked> Protected voids</label></div>
+        <div id="floor-plans"></div>
+        <div class="legend"><span><i class="legend-square main-color"></i> Specimen</span><span><i class="legend-square gallery-color"></i> Gallery / landing</span><span><i class="legend-line"></i> External port</span><span><i class="legend-square void-color"></i> Protected void</span><span>Dimensions in metres · +Y up</span></div>
+      </section>
+      <aside>
+        <section class="panel"><div class="panel-heading"><span class="eyebrow">VALIDATION</span><span id="status" class="status"></span></div><div id="diagnostics"></div><button id="export-report" class="text-button" type="button">Download validation report ↓</button></section>
+        <section class="panel selection-panel"><span class="eyebrow">SELECTED SPACE</span><div id="selection"></div></section>
+        <section class="panel"><div class="panel-heading"><span class="eyebrow">EXTERNAL CONTRACTS</span><span id="port-count" class="mono"></span></div><p class="muted">Role is descriptive. Direction is an independent traversal requirement.</p><div id="ports"></div><details><summary>Edit required contracts</summary><label class="sr-only" for="contracts">External port requirements as JSON</label><textarea id="contracts" spellcheck="false" rows="15"></textarea><button id="apply-contracts" type="button">Apply contracts</button></details></section>
+        <section class="panel identity-panel"><span class="eyebrow">CANONICAL IDENTITY</span><dl><dt>Schema</dt><dd>br.zone/0.1</dd><dt>Generator</dt><dd>1</dd><dt>Fingerprint</dt><dd id="fingerprint" class="mono"></dd></dl><p class="muted">Same complete input → same canonical plan. View settings do not change the export.</p></section>
+      </aside>
+    </div>
+    <footer><span>Finite zones. Portable spatial contracts.</span><a href="./docs/zone-plan.md">Data contract ↗</a><a href="./docs/status.md">Implementation status ↗</a></footer>
+  </main>
+  <div id="toast" role="status" hidden></div>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
