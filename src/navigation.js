@@ -38,9 +38,10 @@ function candidates(footprint, radius) {
 export function localWalkPaths(footprint, terminals, radius = WALKER.radius) {
   if (!terminals.length) return { valid: true, paths: [] };
   const nodes = [...terminals.map(t => t.position.slice(0, 2)), ...candidates(footprint, radius)];
+  const fits = nodes.map(p => contains(footprint, p) === 'inside' && footprintSubset(footprint, transform(circle(radius), p, 0)));
   const edges = nodes.map(() => []);
   for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
-    if (walkSegmentFits(footprint, nodes[i], nodes[j], radius)) { edges[i].push(j); edges[j].push(i); }
+    if (fits[i] && fits[j] && (distance(nodes[i], nodes[j]) <= EPS || footprintSubset(footprint, segmentFootprint(nodes[i], nodes[j], radius * 2)))) { edges[i].push(j); edges[j].push(i); }
   }
   const parents = new Map([[0, null]]), costs = nodes.map((_, i) => i === 0 ? 0 : Infinity), visited = new Set();
   for (let iteration = 0; iteration < nodes.length; iteration++) {
@@ -59,7 +60,7 @@ export function localWalkPaths(footprint, terminals, radius = WALKER.radius) {
     while (current !== null) { indices.unshift(current); current = parents.get(current); }
     return { terminalId: terminal.id, reachable: true, points: indices.map(i => nodes[i]) };
   });
-  const rootFits = walkSegmentFits(footprint, nodes[0], nodes[0], radius);
+  const rootFits = fits[0];
   return { valid: rootFits && paths.every(p => p.reachable), paths };
 }
 

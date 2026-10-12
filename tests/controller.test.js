@@ -43,5 +43,12 @@ test('controller preserves exports through view changes, exposes errors, and res
     assert.equal(get('volume-view').hidden, true); assert.equal(get('schema-version').textContent, 'br.zone/0.1');
     assert.equal(get('floor-filter').value, 'all'); assert.equal(get('show-navigation').disabled, true);
     assert.equal((await exported()).kind, 'geometry-study'); assert.equal(new URL(location.href).searchParams.get('profile'), 'angular');
+    get('profile').value = 'gallery-house'; await get('profile').emit('change');
+    assert.equal(get('storeys').value, '2'); await get('controls').emit('submit');
+    const generated = await exported(); assert.equal(generated.kind, 'generated-house'); assert.equal(generated.floors.length, 2);
+    assert.equal(get('composition-panel').hidden, false); assert.equal(get('schema-version').textContent, 'br.zone/0.3');
+    assert.equal(new URL(location.href).searchParams.get('storeys'), '2');
+    await get('next-seed').emit('click'); const next = await exported();
+    assert.notEqual(next.fingerprint, generated.fingerprint); assert.notDeepEqual(next.spaces, generated.spaces);
   } finally { globalThis.document = oldDocument; globalThis.location = oldLocation; globalThis.history = oldHistory; }
 });

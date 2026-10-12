@@ -28,7 +28,8 @@ export function triangulate(footprint) {
 
 export function buildMesh(plan, options = {}) {
   const faces = [], { scope = 'gallery', lowWalls = true, ceilings = false, walls = true, guards = true, selected } = options;
-  const visible = index => scope === 'all' || scope === 'top' ? scope === 'all' || index === 2 : index <= (scope === 'ground' ? 0 : 1);
+  const topFloor = plan.floors.length - 1, galleryFloor = plan.layout?.signature.upperFloorIndex ?? 1;
+  const visible = index => scope === 'all' || (scope === 'top' ? index === topFloor : index <= (scope === 'ground' ? 0 : galleryFloor));
   const getSpace = id => plan.spaces.find(s => s.id === id);
   const baseColor = id => id === selected ? [.89, .75, .43] : COLORS[getSpace(id)?.role] ?? COLORS.specimen;
   function face(points, spaceId, category, color = baseColor(spaceId)) {

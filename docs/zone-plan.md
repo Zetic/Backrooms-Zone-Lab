@@ -91,3 +91,31 @@ Stair treads and landings are semantic spatial data, not triangle meshes. Source
 `diagnostics.status` is `architecture-valid` or `invalid`; `reachability` is `validated` or `failed` for this physical contract. `navigation.connections` is rebuilt from actual geometric transitions and body-width floor witnesses. Exported `localConnections` must match it exactly. Empty/stale intended edges cannot certify a layout.
 
 Canonical serialization and fingerprint calculation follow v1 rules. Geometry and deterministic path diagnostics participate in the fingerprint; camera/view selections and timing do not. The exporter does not include meshes, UVs, engine objects, collision components, or portal render targets.
+
+---
+
+# Procedural house extension — br.zone/0.3
+
+The house director exports `schemaVersion: br.zone/0.3`, `kind: generated-house`, generator version 3, and either `gallery-house` or `atrium-mansion`. Versions 0.1 and 0.2 above retain their canonical examples. See [house director](house-director.md) for the bounded grammar, evidence, and limitations.
+
+V3 reuses the physical v2 entities. Its straight stairs can point in any horizontal direction; treads/landings/rails are independently validated in the source-to-target flight frame. Realizations still have finite-thickness slabs and semantic zero-thickness wall boundaries.
+
+| Additional field | Contract |
+| --- | --- |
+| `input.config.storeys` | 2 or 3, including all realized floor elevations |
+| `input.config.floorHeight` | 2.6–4.2 m; adaptive flight/core dimensions |
+| `input.config.maxAttempts` | Integer 1–6, default 4; participates in exported identity but not candidate RNG selection |
+| `layout.signature` | Actual lower/upper space and floor IDs, protected void ID, opening shape; upper gallery is immediately above the tall space |
+| `layout.wings` | Selected east/west recipe, `rooms` or `hall` |
+| `layout.orientationDegrees` | Canonical zone-local rotation applied to geometry and physical traversal data |
+| `layout.verticalCoreCount` | Composition summary of main/service cores |
+| `layout.program` | Unique semantic room entries with space ID, type, wing, floor |
+| `layout.obligations` | Required kitchen/dining and optional pantry/kitchen direct reversible passages, independently inferred from program on validation |
+| `generation.status` | `accepted` or `failed`; failure never removes input requirements |
+| `generation.attemptsTried` | Number of candidates considered within the bounded budget |
+| `generation.acceptedAttempt` | Zero-based accepted candidate index, or null on exhaustion |
+| `generation.candidateFailures` | Ordered rejected attempt indices, typed errors, and composition summaries when construction succeeds |
+
+`diagnostics.status` remains `architecture-valid` or `invalid`. Validation checks physical transitions, safe room paths and returnability, functional program consistency/minimum areas, signature correspondence, required semantic adjacencies, at least one circulation loop, realized configuration, and coherent attempt reporting. `GENERATION_EXHAUSTED` marks bounded failure alongside the last candidate's physical errors. Unsupported input syntax rejects before candidate generation.
+
+A valid candidate's stored `localConnections` is copied from physical reconstruction. Consumers can replay `validateHouse` to check those stored edges against geometry. Layout metadata and generation success do not replace physical evidence. Fingerprints include canonical geometry, normalized request, composition/attempt reports, and deterministic diagnostics; timing and renderer view state remain excluded.

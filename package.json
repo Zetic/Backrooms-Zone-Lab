@@ -1,13 +1,14 @@
 {
   "name": "backrooms-zone-lab",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test",
     "build": "node scripts/build.mjs",
     "batch": "node scripts/batch.mjs",
-    "batch:architecture": "node scripts/batch-architecture.mjs"
+    "batch:architecture": "node scripts/batch-architecture.mjs",
+    "batch:houses": "node scripts/batch-house.mjs"
   },
   "engines": { "node": ">=22" }
 }

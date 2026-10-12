@@ -1,13 +1,13 @@
 import { canonicalStringify } from './determinism.js';
 import { EPS, q, point, polygon, line, at, tangent, distance, edgeDistance, validateFootprint, footprintSubset, interiorsOverlap, signedArea } from './geometry.js';
-import { approachFor, deriveWalls, deriveGuards, localCeiling } from './structure.js';
+import { approachFor, deriveWalls, deriveGuards, localCeiling, flightFrame, flightRect } from './structure.js';
 import { WALKER, localWalkPaths, graphReachability } from './navigation.js';
 
 const equal = (a, b) => canonicalStringify(a) === canonicalStringify(b);
 const near = (a, b) => Number.isFinite(a) && Number.isFinite(b) && Math.abs(a - b) <= EPS * 2;
 const zOverlap = (a0, a1, b0, b1) => Math.min(a1, b1) > Math.max(a0, b0) + EPS;
 const xyz = p => Array.isArray(p) && p.length === 3 && p.every(Number.isFinite);
-const rect = (x, y, w, d) => polygon([[q(x), q(y)], [q(x + w), q(y)], [q(x + w), q(y + d)], [q(x), q(y + d)]]);
+const nearFootprint = (a, b) => a.holes.length === b.holes.length && a.outer.length === b.outer.length && a.outer.every((edge, i) => edge.kind === 'line' && b.outer[i].kind === 'line' && distance(edge.from, b.outer[i].from) <= EPS * 2 && distance(edge.to, b.outer[i].to) <= EPS * 2);
 
 // Rebuilds geometry and navigation evidence rather than trusting exported flags,
 // cached space edges, or previous diagnostics.
@@ -97,23 +97,23 @@ export function validateArchitecture(plan, { checkCachedConnections = true } = {
   for (const stair of plan.verticalTraversals) {
     const before = errors.length, source = spaceMap.get(stair.source?.spaceId), target = spaceMap.get(stair.target?.spaceId);
     const from = stair.source?.position, to = stair.target?.position;
-    if (!source || !target || !xyz(from) || !xyz(to) || !near(from[2], source.elevation) || !near(to[2], target.elevation) || !near(from[0], to[0]) || to[1] <= from[1] || to[2] <= from[2] || stair.type !== 'straight-stair' || !['reversible', 'forward-only', 'reverse-only'].includes(stair.direction)) { add('STAIR_ENDPOINT_INVALID', stair.id, 'Straight reference stair must join real surfaces with increasing Y and Z.'); continue; }
+    if (!source || !target || !xyz(from) || !xyz(to) || !near(from[2], source.elevation) || !near(to[2], target.elevation) || distance(from, to) <= EPS || to[2] <= from[2] || stair.type !== 'straight-stair' || !['reversible', 'forward-only', 'reverse-only'].includes(stair.direction)) { add('STAIR_ENDPOINT_INVALID', stair.id, 'Straight stairs must join real surfaces with nonzero horizontal run and increasing elevation.'); continue; }
     const sourceFloor = surfaceMap.get(stair.source.surfaceId), targetFloor = surfaceMap.get(stair.target.surfaceId);
     if (sourceFloor?.spaceId !== source.id || targetFloor?.spaceId !== target.id || sourceFloor?.kind !== 'floor' || targetFloor?.kind !== 'floor') add('STAIR_ENDPOINT_INVALID', stair.id, 'Stair endpoint surface references are not actual owning floors.');
-    const rise = to[2] - from[2], run = to[1] - from[1];
+    const rise = to[2] - from[2], { run, direction } = flightFrame(from, to);
     if (!Number.isFinite(stair.width) || stair.width < 1 || !Number.isFinite(stair.headroom) || stair.headroom < WALKER.headroom || !Number.isInteger(stair.riserCount) || stair.riserCount < 1 || stair.riserCount > 64 || !near(stair.riserHeight, rise / stair.riserCount) || stair.riserHeight > .2 || !near(stair.treadDepth, run / stair.riserCount) || stair.treadDepth < .26 || rise / run > Math.tan(40 * Math.PI / 180)) add('STAIR_DIMENSIONS_INVALID', stair.id, 'Stair width, rise, run, risers, treads, slope, or headroom is invalid.');
     if (!Array.isArray(stair.landings) || stair.landings.length !== 2 || !Array.isArray(stair.treads) || stair.treads.length !== stair.riserCount) { add('STAIR_GEOMETRY_INVALID', stair.id, 'Stair requires two landings and every actual tread.'); continue; }
-    const expectedLandings = [rect(from[0] - stair.width / 2, from[1] - 1, stair.width, 1), rect(to[0] - stair.width / 2, to[1], stair.width, 1)];
+    const expectedLandings = [flightRect([from[0] - direction[0], from[1] - direction[1]], stair.width, 1, direction), flightRect(to, stair.width, 1, direction)];
     for (let i = 0; i < 2; i++) {
       const owner = i === 0 ? source : target, landing = stair.landings[i], endpoint = i === 0 ? from : to;
       const issues = validateFootprint(landing.footprint);
-      if (issues.length || !near(landing.elevation, endpoint[2]) || !equal(landing.footprint, expectedLandings[i]) || !footprintSubset(owner.footprint, landing.footprint) || localCeiling(owner, landing.footprint) - owner.elevation < stair.headroom - EPS) add('STAIR_LANDING_INVALID', stair.id, 'Landing must have full width/depth, actual support, and headroom at its endpoint.');
+      if (issues.length || !near(landing.elevation, endpoint[2]) || !nearFootprint(landing.footprint, expectedLandings[i]) || !footprintSubset(owner.footprint, landing.footprint) || localCeiling(owner, landing.footprint) - owner.elevation < stair.headroom - EPS) add('STAIR_LANDING_INVALID', stair.id, 'Landing must have full width/depth, actual support, and headroom at its endpoint.');
     }
     const reservations = [];
     for (let step = 0; step < stair.treads.length; step++) {
-      const tread = stair.treads[step], expected = rect(from[0] - stair.width / 2, from[1] + step * stair.treadDepth, stair.width, stair.treadDepth), elevation = q(from[2] + rise * (step + 1) / stair.riserCount);
+      const tread = stair.treads[step], expected = flightRect([from[0] + direction[0] * step * stair.treadDepth, from[1] + direction[1] * step * stair.treadDepth], stair.width, stair.treadDepth, direction), elevation = q(from[2] + rise * (step + 1) / stair.riserCount);
       const issues = validateFootprint(tread.footprint);
-      if (issues.length || !equal(tread.footprint, expected) || !near(tread.elevation, elevation)) { add('STAIR_GEOMETRY_INVALID', stair.id, 'Tread position, dimensions, or elevation disagrees with the physical flight.'); continue; }
+      if (issues.length || !nearFootprint(tread.footprint, expected) || !near(tread.elevation, elevation)) { add('STAIR_GEOMETRY_INVALID', stair.id, 'Tread position, dimensions, or elevation disagrees with the physical flight.'); continue; }
       reservations.push({ footprint: tread.footprint, minZ: tread.elevation, maxZ: tread.elevation + stair.headroom });
       allReservations.push({ stairId: stair.id, footprint: tread.footprint, minZ: tread.elevation, maxZ: tread.elevation + stair.headroom });
       stairSolids.push({ stairId: stair.id, footprint: tread.footprint, minZ: from[2], maxZ: tread.elevation });
@@ -123,8 +123,8 @@ export function validateArchitecture(plan, { checkCachedConnections = true } = {
       if (crosses && interiorsOverlap(surface.footprint, reservation.footprint)) add('STAIR_HEADROOM_BLOCKED', stair.id, `Headroom intersects ${surface.id}.`);
     }
     if (errors.length !== before) continue;
-    terminals.get(source.id).push({ id: `${stair.id}:source`, position: [from[0], q(from[1] - .5), from[2]] });
-    terminals.get(target.id).push({ id: `${stair.id}:target`, position: [to[0], q(to[1] + .5), to[2]] });
+    terminals.get(source.id).push({ id: `${stair.id}:source`, position: [q(from[0] - direction[0] * .5), q(from[1] - direction[1] * .5), from[2]] });
+    terminals.get(target.id).push({ id: `${stair.id}:target`, position: [q(to[0] + direction[0] * .5), q(to[1] + direction[1] * .5), to[2]] });
     connections.push({ id: `connection:${stair.id}`, kind: 'stair', geometryId: stair.id, from: source.id, to: target.id, direction: stair.direction });
   }
   for (const solid of stairSolids) for (const volume of validVolumes) if (zOverlap(solid.minZ, solid.maxZ, volume.minZ, volume.maxZ) && interiorsOverlap(solid.footprint, volume.footprint)) add('STAIR_SOLID_COLLISION', solid.stairId, `Stair body obstructs ${volume.spaceId}.`);
@@ -165,9 +165,9 @@ export function validateArchitecture(plan, { checkCachedConnections = true } = {
   for (const p of plan.externalPorts) if (!reach.reachable.includes(p.owningSpaceId)) add('PORT_UNREACHABLE', p.portId, 'External port is not reachable through the local physical network.');
   const footprintArea = plan.spaces.reduce((n, s) => n + (spaceMap.has(s.id) ? signedArea(s.footprint.outer) + s.footprint.holes.reduce((a, ring) => a + signedArea(ring), 0) : 0), 0);
   return {
-    status: errors.length ? 'invalid' : 'architecture-valid', scope: 'Phase 2 reference geometry and declared walker navigation', errors,
-    warnings: [{ code: 'REFERENCE_LAYOUT', message: 'This is a designed reference house. Seed records identity; procedural layout diversity is pending Phase 3.' }],
-    metrics: { spaces: plan.spaces.length, floors: plan.floors.length, arcs: plan.spaces.flatMap(s => [s.footprint.outer, ...s.footprint.holes].flat()).filter(e => e.kind === 'arc').length, stairs: plan.verticalTraversals.length, portsRequested: plan.input.portRequirements.length, portsRealized: plan.externalPorts.length, netFootprintArea: q(footprintArea), reachableSpaces: reach.reachable.length, cycleRank: Math.max(0, usableConnections.length - plan.spaces.length + 1) },
+    status: errors.length ? 'invalid' : 'architecture-valid', scope: plan.kind === 'generated-house' ? 'Phase 3 generated architecture and declared walker navigation' : 'Phase 2 reference geometry and declared walker navigation', errors,
+    warnings: [plan.kind === 'generated-house' ? { code: 'HOUSE_DIRECTOR_SCOPE', message: 'Generated houses use bounded architectural grammars, door ports, and straight stairs. Engine collision and structural support remain separate realization tasks.' } : { code: 'REFERENCE_LAYOUT', message: 'This is a designed reference house. Seed records identity; procedural layout diversity is pending Phase 3.' }],
+    metrics: { spaces: plan.spaces.length, floors: plan.floors.length, arcs: plan.spaces.flatMap(s => [s.footprint.outer, ...s.footprint.holes].flat()).filter(e => e.kind === 'arc').length, stairs: plan.verticalTraversals.length, portsRequested: plan.input.portRequirements.length, portsRealized: plan.externalPorts.length, netFootprintArea: q(footprintArea), reachableSpaces: reach.reachable.length, cycleRank: plan.spaces.length ? Math.max(0, usableConnections.length - plan.spaces.length + 1) : 0 },
     reachability: errors.length ? 'failed' : 'validated', navigation: { ...reach, connections: usableConnections, spacePaths, walker: { ...WALKER } }
   };
 }
