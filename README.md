@@ -4,6 +4,8 @@ Prototype the architecture you want to walk in Unreal. Preserve the complete des
 
 Use the [full geometry prototype](gallery.html) for curved/angled rooms, wall solids, galleries and a 3D view. Use the default rectangular exchange page for the currently tested **`backrooms-zone` version 1** subset, defined by the [ZoneLabExchange contract](docs/unreal-exchange.md). This subset is a first transfer path, not a limit on what may be designed.
 
+**Start a new template:** follow [template authoring](docs/template-authoring.md) and copy the [runnable starter](docs/template-starter.js). House v2 now follows the local Unreal method: room program, circulation spine, required openings, physical checks and 15 named architectural rules. Size, Sprawl and Strangeness, six presets and rule reports are available in the default workbench. Dials may relax named conventions; they never relax physical validity.
+
 Open **`index.html` directly** from the repository folder. No build, server, install, runtime dependency or network is needed. Select **House** or **Level 0**, change the seed and dials, inspect each storey, and export the checked `.zone.json` and its plan. Import files to reopen them; edit the exchange JSON for one-off layouts. A failed change preserves the last accepted plan and disables export.
 
 The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Seven example zones, eleven plans, the templates and their 120-case reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
@@ -46,4 +48,4 @@ The [full geometry workbench](gallery.html) preserves the procedural gallery hou
 
 The Unreal core already builds round interiors using faceted corner fills and straight doorway flats. Openings on curved faces and general line/arc footprints need separate assessment and implementation. A rectangular schema restriction does not mean Unreal has no curved geometry support.
 
-`exchange/stream.js`, `exchange/checks.js` and `exchange/templates/` are portable core. `exchange/plan.js` and `exchange/app.js` handle drawing and interaction. [Current status](docs/status.md) records verification and the remaining integration limits.
+`exchange/stream.js`, `exchange/checks.js`, `exchange/method.js` and `exchange/templates/` are portable core. `exchange/plan.js` and `exchange/app.js` handle drawing and interaction. [Current status](docs/status.md) records verification and the remaining integration limits.

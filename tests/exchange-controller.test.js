@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import '../exchange/stream.js';
 import '../exchange/checks.js';
+import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
 import '../exchange/plan.js';
@@ -34,6 +35,26 @@ test('classic scripts have local assets and preserve legacy study URLs', async (
   for (const match of html.matchAll(/<script src="\.\/([^"]+)"/g)) assert.ok((await readFile(new URL('../' + match[1], import.meta.url), 'utf8')).length);
   const c = controller('?profile=atrium-mansion&seed=7&generator=4');
   assert.equal(c.navigation[0], 'file:///lab/gallery.html?profile=atrium-mansion&seed=7&generator=4');
+});
+
+test('House presets change the accepted plan and expose preserved rule reports', async () => {
+  const c = controller(), get = c.get;
+  assert.ok(get('rules').innerHTML.includes('15 of 15'));
+  await get('preset-5').click();
+  const zone = JSON.parse(get('editor').value);
+  assert.equal(zone.source.template, 'house-v2'); assert.equal(zone.source.dials.sprawl, 90); assert.equal(zone.source.dials.strange, 95);
+  assert.equal(globalThis.ZoneExchange.facts(zone).floors.length, 1);
+  assert.ok(get('rules').innerHTML.includes('let go from'));
+  await get('report').click();
+  const report = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
+  assert.equal(report.architecturalRules.rules.length, 15); assert.ok(report.architecturalRules.valid);
+  await get('preset-0').click(); assert.ok(get('rules').innerHTML.includes('15 of 15'));
+  // Repeated manual edits retain the known rule policy while dropping regeneration claims.
+  await get('apply').click(); await get('apply').click();
+  assert.ok(get('rules').innerHTML.includes('15 of 15')); assert.ok(get('template-export').disabled);
+  await get('report').click();
+  const editedReport = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
+  assert.equal(editedReport.architecturalRules.rules.length, 15); assert.equal(editedReport.templateAudit, null);
 });
 test('exchange controller exports the shown zone, keeps invalid proposals and round-trips imports', async () => {
   const c = controller(), get = c.get, initial = get('editor').value;

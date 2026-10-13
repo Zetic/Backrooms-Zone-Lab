@@ -39,6 +39,9 @@
   }
   function accept(zone, imported = false) {
     const checks = api.validate(zone);
+    const policy = api.templates.find(t => (zone.source?.template ?? '').replace(/^(?:edited-)+/, '') === api.templateKey(t));
+    const report = checks.valid && policy ? api.ruleReport(policy, zone) : null;
+    if (report && !report.valid) { checks.valid = false; checks.errors.push(...report.rules.filter(r => !r.kept && !r.relaxed).map(r => ({ code: 'rule.' + r.id, message: r.name + ': ' + r.detail }))); }
     state.checks = checks; showChecks(checks);
     if (!checks.valid) {
       state.rejected = true; state.draft = zone; message('Edit or import refused. The plan is the last accepted zone; export is disabled until the errors are resolved.');
@@ -46,6 +49,7 @@
       draw(); return false;
     }
     state.zone = zone; state.draft = null; state.rejected = false; message('');
+    $('rules').innerHTML = report?.rules.length ? '<p>' + report.kept + ' of ' + report.rules.length + ' rules kept</p>' + report.rules.map(r => '<p class="small">' + (r.kept ? '● ' : '◇ ') + esc(r.name) + (r.kept ? '' : '<br><span class="muted">' + esc(r.detail + ' · let go from ' + r.relaxedBy) + '</span>') + '</p>').join('') : '<p class="muted small">No architectural rulebook recorded for this template/version.</p>';
     const facts = api.facts(zone);
     if (!facts.floors.includes(state.floor)) state.floor = facts.floors[0];
     $('floor').innerHTML = facts.floors.map(f => `<option value="${f}">Floor ${(f / 100).toFixed(1)} m</option>`).join('');
@@ -54,7 +58,7 @@
     $('notes').value = zone.notes ?? ''; $('editor').value = api.serialize(zone);
     $('facts').innerHTML = `<div><strong>${facts.widthM} × ${facts.depthM} m</strong>Footprint bounds</div><div><strong>${facts.allocationAreaM2.toFixed(1)} m²</strong>Floor allocation</div><div><strong>${facts.counts.room} / ${facts.counts.hall} / ${facts.counts.stair}</strong>Rooms / halls / stairs</div><div><strong>${zone.joins.length}</strong>Joins</div>` +
       '<p class="muted small">' + Object.entries(facts.joins).filter(([, n]) => n).map(([mode, n]) => `${n} ${mode}`).join(' · ') + '<br>Allocation includes wall mass. Unreal reports finished usable floor.</p>';
-    $('template-export').disabled = !api.templates.some(t => zone.source?.template === t.id + '-v1');
+    $('template-export').disabled = !api.templates.some(t => zone.source?.template === api.templateKey(t));
     draw(); return true;
   }
   function generate() {
@@ -75,6 +79,8 @@
     $('seed').value = String(settings().seed); $('summary').textContent = template().summary;
     $('dials').innerHTML = template().dials.map(d => `<div class="dial"><label for="dial-${d.id}" title="${esc(d.help)}">${esc(d.name)}<output id="value-${d.id}">${settings().dials[d.id]}</output></label><input id="dial-${d.id}" type="range" min="0" max="100" step="1" value="${settings().dials[d.id]}"><div class="ends"><span>${esc(d.low)}</span><span>${esc(d.high)}</span></div></div>`).join('');
     for (const d of template().dials) $('dial-' + d.id).addEventListener('input', event => { settings().dials[d.id] = Number(event.target.value); $('value-' + d.id).value = event.target.value; generate(); });
+    $('presets').innerHTML = (template().presets ?? []).map((p, i) => '<button id="preset-' + i + '">' + esc(p.name) + '</button>').join('');
+    (template().presets ?? []).forEach((p, i) => $('preset-' + i).addEventListener('click', () => { settings().dials = { ...p.dials }; selectTemplate(); }));
     if (regenerate) generate();
   }
   function download(name, contents, mime) {
@@ -90,7 +96,7 @@
       const error = a.error ?? b.error ?? (api.serialize(a) === api.serialize(b) ? null : 'not byte-identical');
       if (error) failures.push({ seed, dials: spec.dials, error }); else ++passed;
     }
-    const report = { template: t.id + '-v1', passed, total: 120, failures }; audits.set(t.id, report); return report;
+    const report = { template: api.templateKey(t), passed, total: 120, failures }; audits.set(t.id, report); return report;
   }
   function moveFloor(step) {
     if (!state.zone) return;
@@ -115,23 +121,23 @@
   $('export').addEventListener('click', () => { if (!state.rejected && state.zone && api.validate(state.zone).valid) download(state.zone.id + '.zone.json', api.serialize(state.zone), 'application/json'); });
   $('snapshot').addEventListener('click', () => { if (!state.rejected && state.zone) download(state.zone.id + '-floor-' + state.floor + '.svg', api.plan(state.zone, state.floor), 'image/svg+xml'); });
   $('template-export').addEventListener('click', () => {
-    const t = api.templates.find(t => state.zone?.source?.template === t.id + '-v1'); if (!t) return;
+    const t = api.templates.find(t => state.zone?.source?.template === api.templateKey(t)); if (!t) return;
     // Reconstruct the same plain template from its loaded method and metadata;
     // a Blob download also works offline without fetching a local file.
-    const metadata = JSON.stringify({ id: t.id, name: t.name, summary: t.summary, dials: t.dials }, null, 2);
-    const code = '// Portable exchange template. Load stream.js and checks.js first.\n(function () {\n  \'use strict\';\n  const api = globalThis.ZoneExchange;\n  const ' + t.id + ' = ' + metadata.slice(0, -1) + ',\n' + t.make.toString() + '\n};\n  api.templates.push(' + t.id + ');\n}());\n';
+    const code = api.exportTemplate(t);
     download(t.id + '.js', code, 'text/javascript');
-    message('The template also needs exchange/stream.js and exchange/checks.js. Its 120-case result is in Export check report.');
+    message('The template also needs exchange/stream.js, exchange/checks.js and exchange/method.js. Its 120-case result is in Export check report.');
   });
   $('report').addEventListener('click', () => {
-    const t = api.templates.find(t => state.zone?.source?.template === t.id + '-v1');
-    download((state.zone?.id ?? 'rejected') + '-checks.json', JSON.stringify({ format: 'backrooms-zone-checks', version: 1, zone: state.zone?.id, shownPlanIsLastAccepted: state.rejected, checks: state.checks, proposedZone: state.draft, requestedTemplate: state.template, requestedSpec: settings(), templateAudit: t ? audit(t) : null, physicalStatus: 'Unreal Generate verification required; the file loader is not built.' }, null, 2) + '\n', 'application/json');
+    const t = api.templates.find(t => state.zone?.source?.template === api.templateKey(t));
+    const policy = t ?? api.templates.find(t => (state.zone?.source?.template ?? '').replace(/^(?:edited-)+/, '') === api.templateKey(t));
+    download((state.zone?.id ?? 'rejected') + '-checks.json', JSON.stringify({ format: 'backrooms-zone-checks', version: 1, zone: state.zone?.id, shownPlanIsLastAccepted: state.rejected, checks: state.checks, proposedZone: state.draft, architecturalRules: state.zone && policy ? api.ruleReport(policy, state.zone) : null, requestedTemplate: state.template, requestedSpec: settings(), templateAudit: t ? audit(t) : null, physicalStatus: 'Unreal Generate verification required; the file loader is not built.' }, null, 2) + '\n', 'application/json');
   });
   function applyText(text) {
     try {
       const zone = JSON.parse(text);
       if (accept(zone, true)) {
-        const t = api.templates.find(t => zone.source?.template === t.id + '-v1');
+        const t = api.templates.find(t => zone.source?.template === api.templateKey(t));
         if (t) { state.template = t.id; state.saved.set(t.id, { seed: zone.source.seed, dials: { ...zone.source.dials } }); $('template').value = t.id; selectTemplate(false); $('summary').textContent = t.summary + ' (fixed imported plan)'; }
       }
     } catch (error) { reject('Invalid JSON: ' + error.message); }

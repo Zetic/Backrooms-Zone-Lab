@@ -2,6 +2,7 @@ import { readFile, writeFile, mkdir, cp } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import '../exchange/stream.js';
 import '../exchange/checks.js';
+import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
 import '../exchange/plan.js';
@@ -15,13 +16,21 @@ export function cases() {
   }
   return cases;
 }
+export function shapingCases() {
+  const template = api.templates.find(t => t.id === 'house'), samples = [];
+  for (const sprawl of [0, 20, 35, 45, 55, 70, 85, 100]) for (const strange of [0, 25, 45, 65, 85, 100]) for (let seed = 1; seed <= 4; ++seed)
+    samples.push({ template, setting: 'sprawl-' + sprawl + '-strange-' + strange, spec: { seed, dials: { size: 60, sprawl, strange } } });
+  for (const [i, preset] of template.presets.entries()) samples.push({ template, setting: 'preset-' + i, spec: { seed: 1, dials: preset.dials } });
+  return samples;
+}
 export function audit() {
-  const reports = api.templates.map(t => ({ template: t.id + '-v1', passed: 0, total: 120, failures: [] }));
+  const reports = api.templates.map(t => ({ template: api.templateKey(t), passed: 0, total: 120, failures: [] }));
   for (const sample of cases()) {
-    const report = reports.find(r => r.template === sample.template.id + '-v1');
+    const report = reports.find(r => r.template === api.templateKey(sample.template));
     try {
       const a = sample.template.make(sample.spec), b = sample.template.make(sample.spec);
       if (a.error || b.error) throw new Error(a.error ?? b.error);
+      if (!api.ruleReport(sample.template, a).valid) throw new Error('unrelaxed architectural rule failed');
       if (api.serialize(a) !== api.serialize(b)) throw new Error('same-again mismatch');
       // Reordered input arrays and a round trip cannot alter the canonical file.
       const reordered = structuredClone(a); reordered.spaces.reverse(); reordered.joins.reverse(); reordered.entrances.reverse();
@@ -43,7 +52,7 @@ async function main() {
   }
   zones.push(JSON.parse(await readFile(new URL('../exchange/flat.zone.json', import.meta.url), 'utf8')));
   const manifest = { format: 'backrooms-zone-handoff', version: 1, contract: '../unreal-exchange.md', templates: reports, zones: [],
-    limitations: ['Unreal file loader is not implemented.', 'Browser checks do not resolve feature-dependent physical openings.', 'Plan floor allocation includes walls; Unreal measures usable support.', 'The earlier br.zone geometry studies are a separate format.'] };
+    limitations: ['Unreal file loader is not implemented.', 'Browser checks do not resolve feature-dependent physical openings.', 'Plan floor allocation includes walls; Unreal measures usable support.', 'Full br.zone geometry preserves design intent for a dedicated Unreal adapter.'] };
   for (const zone of zones) {
     const file = zone.id + '.zone.json', serialized = api.serialize(zone);
     await writeFile(new URL(file, output), serialized);
@@ -52,10 +61,12 @@ async function main() {
       const name = zone.id + '-floor-' + floor + '.svg'; plans.push(name);
       await writeFile(new URL(name, output), api.plan(zone, floor));
     }
-    manifest.zones.push({ file, sha256: createHash('sha256').update(serialized).digest('hex'), plans, notes: zone.notes });
+    const template = api.templates.find(t => api.templateKey(t) === zone.source?.template);
+    manifest.zones.push({ file, sha256: createHash('sha256').update(serialized).digest('hex'), plans, notes: zone.notes,
+      architecturalRules: template ? api.ruleReport(template, zone) : null });
   }
   await writeFile(new URL('manifest.json', output), JSON.stringify(manifest, null, 2) + '\n');
-  for (const file of ['stream.js', 'checks.js', 'templates/house.js', 'templates/level0.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
+  for (const file of ['stream.js', 'checks.js', 'method.js', 'templates/house.js', 'templates/level0.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
   console.log('Handoff: 7 zones, 11 plan snapshots, template code, shared checks/stream and audit manifest in docs/exchange-examples/.');
 }
 if (process.argv[1] && new URL('file:///' + process.argv[1].replaceAll('\\', '/').replace(/^\//, '')).pathname === new URL(import.meta.url).pathname) await main();

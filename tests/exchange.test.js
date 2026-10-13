@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import '../exchange/stream.js';
 import '../exchange/checks.js';
+import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
 import '../exchange/plan.js';

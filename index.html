@@ -8,13 +8,14 @@
   <link rel="stylesheet" href="./exchange/workbench.css">
 </head>
 <body>
-  <header><a class="brand" href="./index.html">BACKROOMS <b>ZONE LAB</b></a><span class="badge">RECTANGULAR EXCHANGE / 1</span><nav><a href="./gallery.html">Full geometry prototype</a><a href="./docs/transfer-workflow.md">Transfer guide</a><a href="https://github.com/Zetic/Backrooms-Zone-Lab">Repository ↗</a></nav></header>
+  <header><a class="brand" href="./index.html">BACKROOMS <b>ZONE LAB</b></a><span class="badge">RECTANGULAR EXCHANGE / 1</span><nav><a href="./gallery.html">Full geometry prototype</a><a href="./docs/template-authoring.md">New templates</a><a href="./docs/transfer-workflow.md">Transfer guide</a><a href="https://github.com/Zetic/Backrooms-Zone-Lab">Repository ↗</a></nav></header>
   <main>
     <aside>
       <p class="eyebrow">RECTANGULAR EXCHANGE CHECKS</p><h1>Make a place.</h1><p class="muted">The currently tested transfer subset. For curves, angled rooms and galleries, use the <a href="./gallery.html">full geometry prototype</a> and carry its design into Unreal.</p>
       <label for="template">Template</label><select id="template"></select><p id="summary" class="muted"></p>
       <label for="seed">Seed <span class="muted">unsigned 32-bit</span></label><div class="seed-row"><button id="seed-down" aria-label="Previous seed">−</button><input id="seed" type="number" min="0" max="4294967295" step="1" value="1"><button id="seed-up" aria-label="Next seed">+</button></div><button id="random">Random seed</button>
       <div class="heading"><h2>Dials</h2><button id="reset">Reset</button></div><div id="dials"></div>
+      <div id="presets" class="actions"></div><h2>Rules of the shown zone</h2><div id="rules"></div>
       <div class="heading"><h2>Checks</h2><output id="status" aria-live="polite"></output></div><div id="checks" role="status"></div>
       <p class="muted small">Browser checks cover the exchange rules. Unreal’s compiler verifies the actual support and opening clearance. The Unreal file loader is still to be built.</p>
       <h2>The zone</h2><div id="facts"></div>
@@ -31,6 +32,6 @@
       <p class="muted small">Drag to pan · Wheel to zoom · F to fit · Page Up / Down storey · Hover a space or join for details. Openings show intended mode and approximate position.</p>
     </section>
   </main>
-  <script src="./exchange/stream.js"></script><script src="./exchange/checks.js"></script><script src="./exchange/templates/house.js"></script><script src="./exchange/templates/level0.js"></script><script src="./exchange/plan.js"></script><script src="./exchange/app.js"></script>
+  <script src="./exchange/stream.js"></script><script src="./exchange/checks.js"></script><script src="./exchange/method.js"></script><script src="./exchange/templates/house.js"></script><script src="./exchange/templates/level0.js"></script><script src="./exchange/plan.js"></script><script src="./exchange/app.js"></script>
 </body>
 </html>

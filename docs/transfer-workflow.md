@@ -12,7 +12,7 @@ Open `index.html` directly from the downloaded repository folder. No server, ins
 
 Choose a storey with the arrows or selector. Drag the plan to pan, scroll to zoom, and press F to fit. Page Up / Down changes storeys. Rectangles are allocations in 50 cm units; x is east, y is north. The upper end of a stair is drawn as a stairwell with no floor. Joins show the resolved mode, approximate placement, and required/optional status in a tooltip. Entrances are uncut opportunities, not graph edges.
 
-Export `.zone.json` only after the checks pass. Use **Export plan .svg** on each storey, add a sentence in **notes** about what you like, and download the check report and template source. Templates depend on `exchange/stream.js` and `exchange/checks.js`; bring those shared files too. Use **Import** to reopen a zone without changing it. The exchange file is the save format. The JSON editor supports one-off rectangular layouts; edited generators are labelled as edited provenance and do not claim that the original template reproduces the change.
+Export `.zone.json` only after the checks pass. Use **Export plan .svg** on each storey, add a sentence in **notes** about what you like, and download the check report and template source. Templates depend on `exchange/stream.js`, `exchange/checks.js` and `exchange/method.js`; bring those shared files too. Use **Import** to reopen a zone without changing it. The exchange file is the save format. The JSON editor supports one-off rectangular layouts; edited generators are labelled as edited provenance and do not claim that the original template reproduces the change.
 
 ## The handoff
 
@@ -42,7 +42,7 @@ The future loader should preserve zone/space ids, map `room` and `hall` to the `
 
 Each template has one plain JavaScript file with `make({seed, dials})`. The shared stream exactly matches `Templates::Stream`, including unsigned multiplication. Choices use named draws, integer sizes/heights, complete sort orders and explicit work bounds. No template reads the DOM, a clock, random global state or another template's state. Classic-script registration supports both direct file opening and Node tests; it is not part of the C++ generator algorithm.
 
-The new templates are versioned as `house-v1` and `level0-v1`, with `source.lab = "exchange-1"`. They are new exchange generators, not a compatibility promise for any earlier `br.zone` identity or a byte-for-byte port of the current Unreal templates. House follows the Unreal three-column arrangement. Level 0 uses bounded rectangular subdivision, a required spanning tree and optional loops, and selects the connected arrival component before forming its final exchange file. Generator changes require deliberate template provenance revisions; exchange `version: 1` is the data schema version.
+House is now `house-v2`, with `source.lab = "exchange-2"`: the local Unreal House v2 program/spine grammar, three dials, six presets and 15 rules. The optional native parity check compares accepted geometry and physical joins with the local generator. Level 0 remains `level0-v1`, a bounded rectangular subdivision generator with required connectivity and optional loops. The previous browser House v1 source is archived; its files remain fixed imports and are not reinterpreted as House v2. Generator versions are separate from exchange schema `version: 1`. See [template authoring](template-authoring.md) for the shared method and a runnable starter.
 
 ## Current version 1 checks and realization gaps
 

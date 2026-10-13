@@ -6,7 +6,7 @@ The owner's clarification on October 12, 2026 sets the direction: the browser pr
 
 The full geometry workbench at `gallery.html` exports canonical `br.zone` JSON and a validation report. Keep that original file, its schema/generator versions, seed, profile, configuration and stable identities. It records line/arc footprints, wall and opening geometry, floors, voids, stairs and connections where the selected generator supplies them. Include the generator source and its local module dependencies, plans or screenshots, and notes on the qualities to preserve.
 
-The rectangular page at `index.html` exports `backrooms-zone` version 1 and portable House/Level 0 templates. That is a currently tested subset, with 242 layouts checked against the existing portable C++ core. Neither workbench has an Unreal runtime JSON loader yet. A valid browser export preserves a design; it does not establish that its Unreal realization is already implemented.
+The rectangular page at `index.html` exports `backrooms-zone` version 1 and portable House/Level 0 templates. House v2 carries the local program/spine method with explicit rule relaxation; see [template authoring](template-authoring.md). This subset has 440 layouts checked against the portable C++ core, with House geometry/join parity against the local generator. Neither workbench has an Unreal runtime JSON loader yet. A valid browser export preserves a design; it does not establish that its Unreal realization is already implemented.
 
 Do not rename `br.zone` as a version 1 exchange file or flatten its curves into rectangles to pass those checks. Keep a derived compatibility layout separate, with any deliberate design changes recorded and reviewed.
 
