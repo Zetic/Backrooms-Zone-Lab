@@ -1,5 +1,7 @@
 # Backrooms Zone Lab — Product Requirements and Architectural Design Brief
 
+This brief governs the retained **geometry studies** at `gallery.html`. The owner's October 12 rectangular [Unreal exchange contract](unreal-exchange.md) governs the default workbench at `index.html`; see [transfer workflow](transfer-workflow.md). The geometry studies' `br.zone` data and 3D scope are separate research and do not override that transfer contract.
+
 **Audience:** Autonomous implementation/work agent, technical reviewer, and future game-engine integrators  
 **Status:** Initial project brief / implementation requirements  
 **Proposed repository:** `Zetic/Backrooms-Zone-Lab` (new repository)  

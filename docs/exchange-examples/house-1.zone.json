@@ -1,0 +1,435 @@
+{
+  "entrances": [
+    {
+      "at": 14,
+      "side": "s",
+      "space": "entry",
+      "title": "Front door"
+    },
+    {
+      "at": 5.5,
+      "side": "n",
+      "space": "kitchen",
+      "title": "Kitchen back door"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "house-1",
+  "joins": [
+    {
+      "a": "bath",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-1",
+      "b": "uphall-front",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-2",
+      "b": "uphall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-3",
+      "b": "uphall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "closet",
+      "b": "main-bedroom",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "ensuite",
+      "b": "main-bedroom",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "front",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "hall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "stair",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "family",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "hall",
+      "b": "pantry",
+      "mode": "door",
+      "required": false
+    },
+    {
+      "a": "kitchen",
+      "b": "pantry",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "main-bedroom",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "stair",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "uphall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "upbath",
+      "b": "uphall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "uphall",
+      "b": "uphall-front",
+      "mode": "open",
+      "required": true
+    }
+  ],
+  "name": "House · seed 1",
+  "notes": "A two-storey home with private rooms off the halls. Plain rectangular rooms keep the circulation transferable. The stair is realized as a ramp in Unreal.",
+  "source": {
+    "dials": {
+      "rooms": 50,
+      "size": 40
+    },
+    "lab": "exchange-1",
+    "seed": 1,
+    "template": "house-v1"
+  },
+  "spaces": [
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bath",
+      "kind": "room",
+      "rect": [
+        17,
+        8,
+        25,
+        13
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "bedroom-1",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        11,
+        8
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "bedroom-2",
+      "kind": "room",
+      "rect": [
+        17,
+        0,
+        25,
+        8
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "bedroom-3",
+      "kind": "room",
+      "rect": [
+        17,
+        12,
+        25,
+        23
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "closet",
+      "kind": "room",
+      "rect": [
+        0,
+        8,
+        4,
+        14
+      ],
+      "role": "closet",
+      "title": "Closet"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "dining",
+      "kind": "room",
+      "rect": [
+        0,
+        12,
+        11,
+        17
+      ],
+      "role": "living",
+      "title": "Dining room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "ensuite",
+      "kind": "room",
+      "rect": [
+        4,
+        8,
+        11,
+        14
+      ],
+      "role": "bath",
+      "title": "Main bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "entry",
+      "kind": "hall",
+      "rect": [
+        11,
+        0,
+        17,
+        4
+      ],
+      "title": "Entry hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "family",
+      "kind": "room",
+      "rect": [
+        17,
+        13,
+        25,
+        23
+      ],
+      "role": "living",
+      "title": "Family room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "front",
+      "kind": "room",
+      "rect": [
+        17,
+        0,
+        25,
+        8
+      ],
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall",
+      "kind": "hall",
+      "rect": [
+        14,
+        4,
+        17,
+        23
+      ],
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "kitchen",
+      "kind": "room",
+      "rect": [
+        0,
+        17,
+        11,
+        23
+      ],
+      "role": "kitchen",
+      "title": "Kitchen"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "landing",
+      "kind": "hall",
+      "rect": [
+        11,
+        18,
+        14,
+        23
+      ],
+      "title": "Landing"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "living",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        11,
+        12
+      ],
+      "role": "living",
+      "title": "Living room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "main-bedroom",
+      "kind": "room",
+      "rect": [
+        0,
+        14,
+        11,
+        23
+      ],
+      "role": "bedroom",
+      "title": "Main bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "pantry",
+      "kind": "room",
+      "rect": [
+        11,
+        18,
+        14,
+        23
+      ],
+      "role": "storage",
+      "title": "Pantry"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "foot": "s",
+      "id": "stair",
+      "kind": "stair",
+      "rect": [
+        11,
+        4,
+        14,
+        18
+      ],
+      "rise": 290,
+      "title": "Stairs"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "upbath",
+      "kind": "room",
+      "rect": [
+        17,
+        8,
+        25,
+        12
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "uphall",
+      "kind": "hall",
+      "rect": [
+        14,
+        0,
+        17,
+        23
+      ],
+      "title": "Upstairs hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "uphall-front",
+      "kind": "hall",
+      "rect": [
+        11,
+        0,
+        14,
+        4
+      ],
+      "title": "Upstairs hall"
+    }
+  ],
+  "start": {
+    "space": "entry",
+    "x": 14,
+    "y": 2
+  },
+  "theme": "residential",
+  "version": 1
+}

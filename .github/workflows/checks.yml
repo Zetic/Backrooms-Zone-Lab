@@ -18,4 +18,5 @@ jobs:
       - run: npm run batch:architecture
       - run: npm run batch:houses
       - run: npm run batch:walls
+      - run: npm run batch:exchange
       - run: npm run build

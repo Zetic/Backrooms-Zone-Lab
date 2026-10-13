@@ -1,0 +1,87 @@
+{
+  "format": "backrooms-zone-handoff",
+  "version": 1,
+  "contract": "../unreal-exchange.md",
+  "templates": [
+    {
+      "template": "house-v1",
+      "passed": 120,
+      "total": 120,
+      "failures": []
+    },
+    {
+      "template": "level0-v1",
+      "passed": 120,
+      "total": 120,
+      "failures": []
+    }
+  ],
+  "zones": [
+    {
+      "file": "house-1.zone.json",
+      "sha256": "5db5561d7a2b198eb73d5102685923f3f5a201d8764649960dbed80b979d36f2",
+      "plans": [
+        "house-1-floor-0.svg",
+        "house-1-floor-290.svg"
+      ],
+      "notes": "A two-storey home with private rooms off the halls. Plain rectangular rooms keep the circulation transferable. The stair is realized as a ramp in Unreal."
+    },
+    {
+      "file": "house-7.zone.json",
+      "sha256": "eaf937b362d9673cc83f0788a08eb84c9c8ff403df04805955943d21c822c74e",
+      "plans": [
+        "house-7-floor-0.svg",
+        "house-7-floor-290.svg"
+      ],
+      "notes": "A two-storey home with private rooms off the halls. Plain rectangular rooms keep the circulation transferable. The stair is realized as a ramp in Unreal."
+    },
+    {
+      "file": "house-29.zone.json",
+      "sha256": "ad76f61c9d0f96603bd5c00f9ab033e59106b7a8416a058d5614ab2c393d125f",
+      "plans": [
+        "house-29-floor-0.svg",
+        "house-29-floor-290.svg"
+      ],
+      "notes": "A two-storey home with private rooms off the halls. Plain rectangular rooms keep the circulation transferable. The stair is realized as a ramp in Unreal."
+    },
+    {
+      "file": "level0-1.zone.json",
+      "sha256": "aa667da8b26ae0e80c9affdafbf5eb6c8474631d70515cd49cc27abc955e6e0c",
+      "plans": [
+        "level0-1-floor-0.svg"
+      ],
+      "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision."
+    },
+    {
+      "file": "level0-7.zone.json",
+      "sha256": "0f69936b797e2c23f9401703731102bee2e099ba6ca15974b699c972788b5959",
+      "plans": [
+        "level0-7-floor-0.svg"
+      ],
+      "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision."
+    },
+    {
+      "file": "level0-29.zone.json",
+      "sha256": "0a0d8efc595e2c8147e76fdfa66b7ee9f82c41492baa13588e1c3f5046c8fbc8",
+      "plans": [
+        "level0-29-floor-0.svg"
+      ],
+      "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision."
+    },
+    {
+      "file": "flat.zone.json",
+      "sha256": "d8b3896242e02269fc1da307fa87ea222701850ff2b56ab941db0357b6c1fa73",
+      "plans": [
+        "flat-floor-0.svg",
+        "flat-floor-290.svg"
+      ],
+      "notes": "A narrow two-storey flat. The kitchen is reached only through the front room."
+    }
+  ],
+  "limitations": [
+    "Unreal file loader is not implemented.",
+    "Browser checks do not resolve feature-dependent physical openings.",
+    "Plan floor allocation includes walls; Unreal measures usable support.",
+    "The earlier br.zone geometry studies are a separate format."
+  ]
+}

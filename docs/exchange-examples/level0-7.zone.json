@@ -1,0 +1,1195 @@
+{
+  "entrances": [
+    {
+      "at": 9.5,
+      "side": "w",
+      "space": "r-0-0-16-19",
+      "title": "W entrance"
+    },
+    {
+      "at": 38.5,
+      "side": "s",
+      "space": "r-26-0-51-21",
+      "title": "S entrance"
+    },
+    {
+      "at": 46.5,
+      "side": "n",
+      "space": "r-37-86-56-102",
+      "title": "N entrance"
+    },
+    {
+      "at": 12,
+      "side": "e",
+      "space": "r-78-0-102-24",
+      "title": "E entrance"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "level0-7",
+  "joins": [
+    {
+      "a": "r-0-0-16-19",
+      "b": "r-0-19-12-29",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-0-0-16-19",
+      "b": "r-12-19-26-29",
+      "mode": "door",
+      "required": false
+    },
+    {
+      "a": "r-0-0-16-19",
+      "b": "r-16-0-26-19",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-0-19-12-29",
+      "b": "r-12-19-26-29",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-0-46-16-62",
+      "b": "r-0-62-13-77",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-0-46-16-62",
+      "b": "r-16-46-26-62",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-0-62-13-77",
+      "b": "r-0-77-13-90",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-0-77-13-90",
+      "b": "r-0-90-13-102",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-0-77-13-90",
+      "b": "r-13-77-26-102",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-0-90-13-102",
+      "b": "r-13-77-26-102",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-12-19-26-29",
+      "b": "r-16-0-26-19",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-12-19-26-29",
+      "b": "r-26-21-36-34",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-13-62-26-77",
+      "b": "r-13-77-26-102",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-13-62-26-77",
+      "b": "r-16-46-26-62",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-13-62-26-77",
+      "b": "r-26-64-42-74",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-13-77-26-102",
+      "b": "r-26-74-42-86",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-13-77-26-102",
+      "b": "r-26-86-37-102",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-14-29-26-46",
+      "b": "r-16-46-26-62",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-14-29-26-46",
+      "b": "r-26-21-36-34",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-14-29-26-46",
+      "b": "r-26-34-38-48",
+      "mode": "wide",
+      "required": false
+    },
+    {
+      "a": "r-16-0-26-19",
+      "b": "r-26-0-51-21",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-16-46-26-62",
+      "b": "r-26-48-38-64",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-26-0-51-21",
+      "b": "r-26-21-36-34",
+      "mode": "wide",
+      "required": false
+    },
+    {
+      "a": "r-26-0-51-21",
+      "b": "r-36-21-51-34",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-26-0-51-21",
+      "b": "r-51-0-61-14",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-26-34-38-48",
+      "b": "r-26-48-38-64",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-26-48-38-64",
+      "b": "r-26-64-42-74",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-26-48-38-64",
+      "b": "r-38-34-56-52",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-26-48-38-64",
+      "b": "r-38-52-56-64",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-26-64-42-74",
+      "b": "r-26-74-42-86",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-26-64-42-74",
+      "b": "r-38-52-56-64",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-26-74-42-86",
+      "b": "r-26-86-37-102",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-26-74-42-86",
+      "b": "r-37-86-56-102",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-26-74-42-86",
+      "b": "r-42-75-56-86",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-26-86-37-102",
+      "b": "r-37-86-56-102",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-36-21-51-34",
+      "b": "r-51-14-61-34",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-37-86-56-102",
+      "b": "r-42-75-56-86",
+      "mode": "wide",
+      "required": false
+    },
+    {
+      "a": "r-37-86-56-102",
+      "b": "r-56-85-69-102",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-38-34-56-52",
+      "b": "r-38-52-56-64",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-38-34-56-52",
+      "b": "r-56-34-67-45",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-38-34-56-52",
+      "b": "r-56-45-71-62",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-38-52-56-64",
+      "b": "r-42-64-56-75",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-38-52-56-64",
+      "b": "r-56-45-71-62",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-42-64-56-75",
+      "b": "r-42-75-56-86",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-42-64-56-75",
+      "b": "r-56-62-71-75",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-51-0-61-14",
+      "b": "r-51-14-61-34",
+      "mode": "door",
+      "required": false
+    },
+    {
+      "a": "r-51-0-61-14",
+      "b": "r-61-10-78-23",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-51-14-61-34",
+      "b": "r-56-34-67-45",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-51-14-61-34",
+      "b": "r-61-23-78-34",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-56-34-67-45",
+      "b": "r-56-45-71-62",
+      "mode": "door",
+      "required": false
+    },
+    {
+      "a": "r-56-34-67-45",
+      "b": "r-61-23-78-34",
+      "mode": "wide",
+      "required": false
+    },
+    {
+      "a": "r-56-34-67-45",
+      "b": "r-67-34-80-45",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-56-45-71-62",
+      "b": "r-56-62-71-75",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-56-45-71-62",
+      "b": "r-67-34-80-45",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-56-45-71-62",
+      "b": "r-71-45-91-57",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-56-62-71-75",
+      "b": "r-56-75-71-85",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-56-62-71-75",
+      "b": "r-71-57-91-68",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-56-75-71-85",
+      "b": "r-56-85-69-102",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-56-75-71-85",
+      "b": "r-71-68-82-85",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-56-85-69-102",
+      "b": "r-69-85-86-102",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-61-0-78-10",
+      "b": "r-61-10-78-23",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-61-0-78-10",
+      "b": "r-78-0-102-24",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-61-10-78-23",
+      "b": "r-61-23-78-34",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-61-10-78-23",
+      "b": "r-78-0-102-24",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-61-23-78-34",
+      "b": "r-67-34-80-45",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-61-23-78-34",
+      "b": "r-78-24-92-34",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-67-34-80-45",
+      "b": "r-71-45-91-57",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-67-34-80-45",
+      "b": "r-80-34-90-45",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-69-85-86-102",
+      "b": "r-71-68-82-85",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-69-85-86-102",
+      "b": "r-82-68-102-85",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-69-85-86-102",
+      "b": "r-86-85-102-102",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-71-45-91-57",
+      "b": "r-80-34-90-45",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-71-45-91-57",
+      "b": "r-91-45-102-58",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-71-57-91-68",
+      "b": "r-91-58-102-68",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-78-0-102-24",
+      "b": "r-78-24-92-34",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "r-78-0-102-24",
+      "b": "r-92-24-102-34",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "r-78-24-92-34",
+      "b": "r-80-34-90-45",
+      "mode": "wide",
+      "required": false
+    },
+    {
+      "a": "r-78-24-92-34",
+      "b": "r-92-24-102-34",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-80-34-90-45",
+      "b": "r-90-34-102-45",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-82-68-102-85",
+      "b": "r-86-85-102-102",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-82-68-102-85",
+      "b": "r-91-58-102-68",
+      "mode": "wide",
+      "required": false
+    },
+    {
+      "a": "r-90-34-102-45",
+      "b": "r-91-45-102-58",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "r-90-34-102-45",
+      "b": "r-92-24-102-34",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "r-91-45-102-58",
+      "b": "r-91-58-102-68",
+      "mode": "door",
+      "required": true
+    }
+  ],
+  "name": "Level 0 · seed 7",
+  "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision.",
+  "source": {
+    "dials": {
+      "gaps": 40,
+      "open": 70,
+      "scale": 45,
+      "size": 35
+    },
+    "lab": "exchange-1",
+    "seed": 7,
+    "template": "level0-v1"
+  },
+  "spaces": [
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-0-0-16-19",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        16,
+        19
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-0-19-12-29",
+      "kind": "room",
+      "rect": [
+        0,
+        19,
+        12,
+        29
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-0-46-16-62",
+      "kind": "room",
+      "rect": [
+        0,
+        46,
+        16,
+        62
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-0-62-13-77",
+      "kind": "room",
+      "rect": [
+        0,
+        62,
+        13,
+        77
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-0-77-13-90",
+      "kind": "room",
+      "rect": [
+        0,
+        77,
+        13,
+        90
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-0-90-13-102",
+      "kind": "room",
+      "rect": [
+        0,
+        90,
+        13,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-12-19-26-29",
+      "kind": "room",
+      "rect": [
+        12,
+        19,
+        26,
+        29
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-13-62-26-77",
+      "kind": "room",
+      "rect": [
+        13,
+        62,
+        26,
+        77
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-13-77-26-102",
+      "kind": "room",
+      "rect": [
+        13,
+        77,
+        26,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-14-29-26-46",
+      "kind": "room",
+      "rect": [
+        14,
+        29,
+        26,
+        46
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-16-0-26-19",
+      "kind": "room",
+      "rect": [
+        16,
+        0,
+        26,
+        19
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-16-46-26-62",
+      "kind": "room",
+      "rect": [
+        16,
+        46,
+        26,
+        62
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-0-51-21",
+      "kind": "room",
+      "rect": [
+        26,
+        0,
+        51,
+        21
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-21-36-34",
+      "kind": "room",
+      "rect": [
+        26,
+        21,
+        36,
+        34
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-34-38-48",
+      "kind": "room",
+      "rect": [
+        26,
+        34,
+        38,
+        48
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-48-38-64",
+      "kind": "room",
+      "rect": [
+        26,
+        48,
+        38,
+        64
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-64-42-74",
+      "kind": "room",
+      "rect": [
+        26,
+        64,
+        42,
+        74
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-74-42-86",
+      "kind": "room",
+      "rect": [
+        26,
+        74,
+        42,
+        86
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-26-86-37-102",
+      "kind": "room",
+      "rect": [
+        26,
+        86,
+        37,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-36-21-51-34",
+      "kind": "room",
+      "rect": [
+        36,
+        21,
+        51,
+        34
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-37-86-56-102",
+      "kind": "room",
+      "rect": [
+        37,
+        86,
+        56,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-38-34-56-52",
+      "kind": "room",
+      "rect": [
+        38,
+        34,
+        56,
+        52
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-38-52-56-64",
+      "kind": "room",
+      "rect": [
+        38,
+        52,
+        56,
+        64
+      ],
+      "title": "Arrival room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-42-64-56-75",
+      "kind": "room",
+      "rect": [
+        42,
+        64,
+        56,
+        75
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-42-75-56-86",
+      "kind": "room",
+      "rect": [
+        42,
+        75,
+        56,
+        86
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-51-0-61-14",
+      "kind": "room",
+      "rect": [
+        51,
+        0,
+        61,
+        14
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-51-14-61-34",
+      "kind": "room",
+      "rect": [
+        51,
+        14,
+        61,
+        34
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-56-34-67-45",
+      "kind": "room",
+      "rect": [
+        56,
+        34,
+        67,
+        45
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-56-45-71-62",
+      "kind": "room",
+      "rect": [
+        56,
+        45,
+        71,
+        62
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-56-62-71-75",
+      "kind": "room",
+      "rect": [
+        56,
+        62,
+        71,
+        75
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-56-75-71-85",
+      "kind": "room",
+      "rect": [
+        56,
+        75,
+        71,
+        85
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-56-85-69-102",
+      "kind": "room",
+      "rect": [
+        56,
+        85,
+        69,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-61-0-78-10",
+      "kind": "room",
+      "rect": [
+        61,
+        0,
+        78,
+        10
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-61-10-78-23",
+      "kind": "room",
+      "rect": [
+        61,
+        10,
+        78,
+        23
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-61-23-78-34",
+      "kind": "room",
+      "rect": [
+        61,
+        23,
+        78,
+        34
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-67-34-80-45",
+      "kind": "room",
+      "rect": [
+        67,
+        34,
+        80,
+        45
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-69-85-86-102",
+      "kind": "room",
+      "rect": [
+        69,
+        85,
+        86,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-71-45-91-57",
+      "kind": "room",
+      "rect": [
+        71,
+        45,
+        91,
+        57
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-71-57-91-68",
+      "kind": "room",
+      "rect": [
+        71,
+        57,
+        91,
+        68
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-71-68-82-85",
+      "kind": "room",
+      "rect": [
+        71,
+        68,
+        82,
+        85
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-78-0-102-24",
+      "kind": "room",
+      "rect": [
+        78,
+        0,
+        102,
+        24
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-78-24-92-34",
+      "kind": "room",
+      "rect": [
+        78,
+        24,
+        92,
+        34
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-80-34-90-45",
+      "kind": "room",
+      "rect": [
+        80,
+        34,
+        90,
+        45
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-82-68-102-85",
+      "kind": "room",
+      "rect": [
+        82,
+        68,
+        102,
+        85
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-86-85-102-102",
+      "kind": "room",
+      "rect": [
+        86,
+        85,
+        102,
+        102
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-90-34-102-45",
+      "kind": "room",
+      "rect": [
+        90,
+        34,
+        102,
+        45
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-91-45-102-58",
+      "kind": "room",
+      "rect": [
+        91,
+        45,
+        102,
+        58
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-91-58-102-68",
+      "kind": "room",
+      "rect": [
+        91,
+        58,
+        102,
+        68
+      ],
+      "title": "Room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "r-92-24-102-34",
+      "kind": "room",
+      "rect": [
+        92,
+        24,
+        102,
+        34
+      ],
+      "title": "Room"
+    }
+  ],
+  "start": {
+    "space": "r-38-52-56-64",
+    "x": 47,
+    "y": 58
+  },
+  "theme": "backrooms",
+  "version": 1
+}

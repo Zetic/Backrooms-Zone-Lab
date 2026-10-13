@@ -6,7 +6,7 @@ import { defaultPorts } from '../src/zone.js';
 // Controller integration with a minimal DOM adapter. This verifies event/data
 // flow and the unavailable-WebGL fallback; it is not a browser or GPU test.
 test('controller preserves exports through view changes, exposes errors, and restores study mode', async () => {
-  const html = await readFile(new URL('../index.html', import.meta.url), 'utf8'), downloads = [];
+  const html = await readFile(new URL('../gallery.html', import.meta.url), 'utf8'), downloads = [];
   class Element {
     constructor(id) { this.id = id; this.value = ''; this.checked = false; this.hidden = false; this.disabled = false; this.listeners = new Map(); this.classList = { toggle() {} }; this.options = new Map(); }
     addEventListener(type, callback) { this.listeners.set(type, callback); }

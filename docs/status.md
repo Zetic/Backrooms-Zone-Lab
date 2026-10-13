@@ -1,6 +1,18 @@
 # Implementation status
 
-The solid-wall geometry extension is the current review scope. The [complete house milestone](requirements.md) still requires Phase 4 workbench hardening and deployed browser acceptance.
+The current workbench is the rectangular Unreal exchange lab, package 0.5.0. The copied [owner's exchange contract](unreal-exchange.md) governs it; [transfer workflow](transfer-workflow.md) describes the handoff. The earlier solid-wall/house research is preserved at `gallery.html` with unchanged `br.zone` generation and fixtures. The capabilities below describe that separate research page.
+
+## Unreal exchange status
+
+- `index.html` uses local classic scripts and no runtime dependencies/build step. House and Level 0 use the exact Unreal uint32 named draw, integer grid/heights/dials, stable space ids and bounded attempts.
+- Browser checks cover exchange schema/grid, ids/counts, overlaps/stacking, stair endpoints/run, joins/fallback/floors/headroom, Human graph reach/return, start and free entrances. Feature-dependent physical clearance remains Unreal's responsibility and is explicitly flagged. Generated templates keep all rooms plain.
+- Seed stepping/random, per-template dials/reset, storey switching, pan/zoom/fit, import/export, notes, editable JSON, rejected-change preservation, disabled invalid exports, template/check downloads and SVG snapshots are implemented. Earlier shared study URLs redirect to `gallery.html`.
+- Both templates pass **120/120** documented configurations, with byte repeatability, reversed-list canonical exports and round trips. The seven-zone handoff includes eleven storey plans, template code, core files, notes and a SHA-256/audit manifest.
+- The existing portable C++ compiler accepted **242/242** layouts: all 240 acceptance configurations, the documented flat and a negative-coordinate/negative-height case. Every join was accepted, Human outward/return reachability passed, reversed-list compiled digests agreed and all six stream vectors matched. Evidence is produced by `npm run verify:unreal -- --core=<portable-core>` under ignored `.verification/`.
+- Verification: **85/85 Node tests**, all existing geometry/reference/house/wall batches, the exchange batch and static build pass. Desktop browser checks over loopback HTTP cover template/storey changes, imports, invalid-edit preservation/export refusal, all four downloads, actual downloaded JSON/JS/report consistency, pan/zoom/Fit and keyboard storey switching, with no console errors. Direct `file://` browser testing is blocked by the automation URL policy; local classic-script execution/assets and offline template export are verified by the controller tests. Deployed Pages and narrow-screen browser acceptance remain unverified.
+- **The Unreal JSON file loader is still unbuilt.** This change provides compatible prototype files and generator source, not an Unreal import UI or a port of the generators into the game. Curves, explicit thick-wall geometry, materials and the old `br.zone` plans are outside exchange version 1.
+
+## Geometry studies
 
 | Capability | Current state |
 | --- | --- |

@@ -1,0 +1,249 @@
+{
+  "format": "backrooms-zone",
+  "version": 1,
+  "id": "flat",
+  "name": "Small flat",
+  "theme": "residential",
+  "notes": "A narrow two-storey flat. The kitchen is reached only through the front room.",
+  "source": {
+    "template": "by-hand",
+    "seed": 7,
+    "dials": {},
+    "lab": "0.1"
+  },
+  "start": {
+    "space": "entry",
+    "x": 11,
+    "y": 2
+  },
+  "spaces": [
+    {
+      "id": "entry",
+      "title": "Entry",
+      "kind": "hall",
+      "rect": [
+        8,
+        0,
+        14,
+        4
+      ],
+      "floor": 0
+    },
+    {
+      "id": "front",
+      "title": "Front room",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        8,
+        10
+      ],
+      "floor": 0,
+      "role": "living"
+    },
+    {
+      "id": "kitchen",
+      "title": "Kitchen",
+      "kind": "room",
+      "rect": [
+        0,
+        10,
+        8,
+        22
+      ],
+      "floor": 0,
+      "role": "kitchen"
+    },
+    {
+      "id": "hallway",
+      "title": "Hallway",
+      "kind": "hall",
+      "rect": [
+        11,
+        4,
+        14,
+        22
+      ],
+      "floor": 0
+    },
+    {
+      "id": "cupboard",
+      "title": "Cupboard",
+      "kind": "room",
+      "rect": [
+        8,
+        18,
+        11,
+        22
+      ],
+      "floor": 0,
+      "role": "storage"
+    },
+    {
+      "id": "stairs",
+      "title": "Stairs",
+      "kind": "stair",
+      "rect": [
+        8,
+        4,
+        11,
+        18
+      ],
+      "floor": 0,
+      "rise": 290,
+      "foot": "s"
+    },
+    {
+      "id": "landing",
+      "title": "Landing",
+      "kind": "hall",
+      "rect": [
+        8,
+        18,
+        11,
+        22
+      ],
+      "floor": 290
+    },
+    {
+      "id": "uphall",
+      "title": "Upstairs hall",
+      "kind": "hall",
+      "rect": [
+        11,
+        0,
+        14,
+        22
+      ],
+      "floor": 290
+    },
+    {
+      "id": "uphall-front",
+      "title": "Upstairs hall",
+      "kind": "hall",
+      "rect": [
+        8,
+        0,
+        11,
+        4
+      ],
+      "floor": 290
+    },
+    {
+      "id": "bedroom",
+      "title": "Bedroom",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        8,
+        11
+      ],
+      "floor": 290,
+      "role": "bedroom"
+    },
+    {
+      "id": "bathroom",
+      "title": "Bathroom",
+      "kind": "room",
+      "rect": [
+        0,
+        11,
+        8,
+        16
+      ],
+      "floor": 290,
+      "role": "bath"
+    },
+    {
+      "id": "back-bedroom",
+      "title": "Back bedroom",
+      "kind": "room",
+      "rect": [
+        0,
+        16,
+        8,
+        22
+      ],
+      "floor": 290,
+      "role": "bedroom"
+    }
+  ],
+  "joins": [
+    {
+      "a": "entry",
+      "b": "front",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "stairs",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "hallway",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "front",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hallway",
+      "b": "cupboard",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "stairs",
+      "b": "landing",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "uphall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "uphall",
+      "b": "uphall-front",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "uphall-front",
+      "b": "bedroom",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom",
+      "b": "bathroom",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "back-bedroom",
+      "mode": "door",
+      "required": true
+    }
+  ],
+  "entrances": [
+    {
+      "title": "Front door",
+      "space": "entry",
+      "side": "s",
+      "at": 11
+    }
+  ]
+}

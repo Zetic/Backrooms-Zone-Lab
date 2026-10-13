@@ -1,0 +1,249 @@
+{
+  "entrances": [
+    {
+      "at": 11,
+      "side": "s",
+      "space": "entry",
+      "title": "Front door"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "flat",
+  "joins": [
+    {
+      "a": "back-bedroom",
+      "b": "landing",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bathroom",
+      "b": "bedroom",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom",
+      "b": "uphall-front",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "cupboard",
+      "b": "hallway",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "front",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "hallway",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "stairs",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "front",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "stairs",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "uphall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "uphall",
+      "b": "uphall-front",
+      "mode": "open",
+      "required": true
+    }
+  ],
+  "name": "Small flat",
+  "notes": "A narrow two-storey flat. The kitchen is reached only through the front room.",
+  "source": {
+    "dials": {},
+    "lab": "0.1",
+    "seed": 7,
+    "template": "by-hand"
+  },
+  "spaces": [
+    {
+      "floor": 290,
+      "id": "back-bedroom",
+      "kind": "room",
+      "rect": [
+        0,
+        16,
+        8,
+        22
+      ],
+      "role": "bedroom",
+      "title": "Back bedroom"
+    },
+    {
+      "floor": 290,
+      "id": "bathroom",
+      "kind": "room",
+      "rect": [
+        0,
+        11,
+        8,
+        16
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "floor": 290,
+      "id": "bedroom",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        8,
+        11
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "floor": 0,
+      "id": "cupboard",
+      "kind": "room",
+      "rect": [
+        8,
+        18,
+        11,
+        22
+      ],
+      "role": "storage",
+      "title": "Cupboard"
+    },
+    {
+      "floor": 0,
+      "id": "entry",
+      "kind": "hall",
+      "rect": [
+        8,
+        0,
+        14,
+        4
+      ],
+      "title": "Entry"
+    },
+    {
+      "floor": 0,
+      "id": "front",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        8,
+        10
+      ],
+      "role": "living",
+      "title": "Front room"
+    },
+    {
+      "floor": 0,
+      "id": "hallway",
+      "kind": "hall",
+      "rect": [
+        11,
+        4,
+        14,
+        22
+      ],
+      "title": "Hallway"
+    },
+    {
+      "floor": 0,
+      "id": "kitchen",
+      "kind": "room",
+      "rect": [
+        0,
+        10,
+        8,
+        22
+      ],
+      "role": "kitchen",
+      "title": "Kitchen"
+    },
+    {
+      "floor": 290,
+      "id": "landing",
+      "kind": "hall",
+      "rect": [
+        8,
+        18,
+        11,
+        22
+      ],
+      "title": "Landing"
+    },
+    {
+      "floor": 0,
+      "foot": "s",
+      "id": "stairs",
+      "kind": "stair",
+      "rect": [
+        8,
+        4,
+        11,
+        18
+      ],
+      "rise": 290,
+      "title": "Stairs"
+    },
+    {
+      "floor": 290,
+      "id": "uphall",
+      "kind": "hall",
+      "rect": [
+        11,
+        0,
+        14,
+        22
+      ],
+      "title": "Upstairs hall"
+    },
+    {
+      "floor": 290,
+      "id": "uphall-front",
+      "kind": "hall",
+      "rect": [
+        8,
+        0,
+        11,
+        4
+      ],
+      "title": "Upstairs hall"
+    }
+  ],
+  "start": {
+    "space": "entry",
+    "x": 11,
+    "y": 2
+  },
+  "theme": "residential",
+  "version": 1
+}

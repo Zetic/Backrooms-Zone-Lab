@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Engine-independent architectural geometry and zone contract laboratory.">
+  <title>Backrooms · Zone Lab</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">Z</span><span>BACKROOMS <b>ZONE LAB</b></span></a>
+    <span class="phase-pill">GEOMETRY STUDIES · SEPARATE FORMAT</span>
+    <a class="repo-link" href="./index.html">Unreal exchange lab ↗</a>
+    <a class="repo-link" href="https://github.com/Zetic/Backrooms-Zone-Lab">Repository ↗</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">ARCHITECTURAL RESEARCH WORKBENCH</p><h1>Generate a house.</h1><p class="lede">Explore seeded architectural layouts. This page exports br.zone studies; these are outside the rectangular Unreal exchange contract. Use the <a href="./index.html">exchange lab</a> to make transferable prototypes.</p></div>
+      <div class="stage-note"><span class="small-label">CURRENT CAPABILITY</span><strong>Procedural multistory houses</strong><span>Seed changes vary room programs, wing layouts, circulation loops, and gallery placement.</span></div>
+    </section>
+    <form id="controls" class="control-bar">
+      <label>Seed<input id="seed" value="12345" maxlength="120" required autocomplete="off"></label>
+      <label>Profile<select id="profile"><optgroup label="Procedural houses"><option value="atrium-mansion">Atrium mansion</option><option value="gallery-house">Gallery house</option></optgroup><optgroup label="Reference architecture"><option value="reference-house">Three-storey reference house</option></optgroup><optgroup label="Geometry studies"><option value="gallery">Gallery & void</option><option value="angular">Angled wing</option><option value="rotunda">Rotunda & apse</option></optgroup></select></label>
+      <label id="storeys-control">Storeys<select id="storeys"><option value="2">Two</option><option value="3" selected>Three</option></select></label>
+      <label>Storey height <span class="unit">m</span><input id="floor-height" type="number" min="2.6" max="4.2" step="0.1" value="3.2" required></label>
+      <label id="wall-thickness-control">Wall thickness <span class="unit">m</span><input id="wall-thickness" type="number" min="0.1" max="0.4" step="0.05" value="0.2" required></label>
+      <button class="primary" type="submit">Generate plan <span aria-hidden="true">↗</span></button>
+      <button id="next-seed" type="button">Next seed</button>
+      <div class="export-actions"><button id="copy-link" type="button">Copy link</button><button id="export" type="button">Export JSON ↓</button></div>
+    </form>
+    <div id="input-error" class="error-banner" role="alert" hidden></div>
+    <div id="metrics" class="metrics" aria-live="polite"></div>
+    <div class="workspace">
+      <section class="drawing-area" aria-label="Geometry studies">
+        <nav class="floor-stepper" aria-label="Floor navigation"><button id="floor-down" type="button" aria-label="Go down one floor">↓ Floor down</button><output id="active-floor" aria-live="polite"></output><button id="floor-up" type="button" aria-label="Go up one floor">Floor up ↑</button></nav>
+        <section id="volume-view" class="volume-view">
+          <div class="view-bar"><div><span class="eyebrow">3D WHITEBOX</span><h2>Volumes & circulation</h2></div><label>Cutaway<select id="volume-scope"><option value="gallery">Through gallery floor</option><option value="all">Whole building</option><option value="floor">Selected floor only</option><option value="ground">Ground floor</option><option value="top">Top floor only</option></select></label></div>
+          <div class="view-toggles viewer-toggles"><label><input id="volume-walls" type="checkbox" checked> Walls</label><label><input id="volume-low-walls" type="checkbox" checked> Low wall cutaway</label><label><input id="volume-ceilings" type="checkbox"> Ceilings</label><label><input id="volume-guards" type="checkbox" checked> Guards</label><button id="reset-camera" type="button">Reset view</button></div>
+          <canvas id="volume-canvas" tabindex="0" role="img" aria-label="Interactive 3D house: drag to orbit; Shift-drag to pan; wheel to zoom; arrow keys rotate; plus and minus zoom; zero resets; click a surface to inspect."></canvas>
+          <div id="volume-error" class="error-banner" hidden></div>
+          <p class="viewer-help">Drag to orbit · Shift-drag to pan · Scroll to zoom · Click a space to inspect<br>Keyboard: arrows rotate · + / − zoom · 0 resets. Cutaways change inspection only.</p>
+        </section>
+        <div class="view-bar"><div><span class="eyebrow">PLAN INSPECTION</span><h2 id="study-title">Atrium mansion</h2></div><label>Show<select id="floor-filter"><option value="all">All floors · stacked</option><option value="0">Ground floor</option><option value="1">Second floor</option><option value="2">Third floor</option></select></label></div>
+        <p id="study-summary" class="view-summary"></p>
+        <div class="view-toggles"><label><input id="show-labels" type="checkbox" checked> Labels</label><label><input id="show-clearance" type="checkbox" checked> Port approach</label><label><input id="show-vertices" type="checkbox"> Boundary vertices</label><label><input id="show-voids" type="checkbox" checked> Protected voids</label><label><input id="show-navigation" type="checkbox"> Validated paths</label></div>
+        <div id="floor-plans"></div>
+        <div class="legend"><span><i class="legend-square main-color"></i> Public</span><span><i class="legend-square gallery-color"></i> Circulation / gallery</span><span><i class="legend-square private-color"></i> Private</span><span><i class="legend-square service-color"></i> Service</span><span><i class="legend-line"></i> External port</span><span><i class="legend-square void-color"></i> Protected void</span><span>Dimensions in metres · +Y up</span></div>
+      </section>
+      <aside>
+        <section class="panel"><div class="panel-heading"><span class="eyebrow">VALIDATION</span><span id="status" class="status"></span></div><div id="diagnostics"></div><button id="export-report" class="text-button" type="button">Download validation report ↓</button></section>
+        <section id="composition-panel" class="panel"><span class="eyebrow">COMPOSITION</span><div id="composition"></div></section>
+        <section class="panel selection-panel"><span class="eyebrow">SELECTED SPACE</span><div id="selection"></div></section>
+        <section class="panel"><div class="panel-heading"><span class="eyebrow">EXTERNAL CONTRACTS</span><span id="port-count" class="mono"></span></div><p class="muted">Role is descriptive. Direction is an independent traversal requirement.</p><div id="ports"></div><details><summary>Edit required contracts</summary><label class="sr-only" for="contracts">External port requirements as JSON</label><textarea id="contracts" spellcheck="false" rows="15"></textarea><button id="apply-contracts" type="button">Apply contracts</button></details></section>
+        <section class="panel identity-panel"><span class="eyebrow">CANONICAL IDENTITY</span><dl><dt>Schema</dt><dd id="schema-version">br.zone/0.4</dd><dt>Generator</dt><dd id="generator-version">4</dd><dt>Fingerprint</dt><dd id="fingerprint" class="mono"></dd></dl><p class="muted">Same complete input → same canonical plan. View settings do not change the export.</p></section>
+      </aside>
+    </div>
+    <footer><span>Finite zones. Portable spatial contracts.</span><a href="./docs/zone-plan.md">Data contract ↗</a><a href="./docs/status.md">Implementation status ↗</a></footer>
+  </main>
+  <div id="toast" role="status" hidden></div>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
