@@ -1,6 +1,6 @@
 # Implementation status
 
-The current workbench is the rectangular Unreal exchange lab, package 0.5.0. The copied [owner's exchange contract](unreal-exchange.md) governs it; [transfer workflow](transfer-workflow.md) describes the handoff. The earlier solid-wall/house research is preserved at `gallery.html` with unchanged `br.zone` generation and fixtures. The capabilities below describe that separate research page.
+Package 0.5.0 provides a full geometry prototype at `gallery.html` and a checked rectangular exchange subset at `index.html`. The [design handoff](design-handoff.md) records the owner's goal: preserve the intended prototype and extend Unreal where transfer exposes missing capabilities. The [exchange contract](unreal-exchange.md) governs version 1 files; [transfer workflow](transfer-workflow.md) explains both paths. Full geometry generation and fixtures remain unchanged.
 
 ## Unreal exchange status
 
@@ -10,9 +10,9 @@ The current workbench is the rectangular Unreal exchange lab, package 0.5.0. The
 - Both templates pass **120/120** documented configurations, with byte repeatability, reversed-list canonical exports and round trips. The seven-zone handoff includes eleven storey plans, template code, core files, notes and a SHA-256/audit manifest.
 - The existing portable C++ compiler accepted **242/242** layouts: all 240 acceptance configurations, the documented flat and a negative-coordinate/negative-height case. Every join was accepted, Human outward/return reachability passed, reversed-list compiled digests agreed and all six stream vectors matched. Evidence is produced by `npm run verify:unreal -- --core=<portable-core>` under ignored `.verification/`.
 - Verification: **85/85 Node tests**, all existing geometry/reference/house/wall batches, the exchange batch and static build pass. Desktop browser checks over loopback HTTP cover template/storey changes, imports, invalid-edit preservation/export refusal, all four downloads, actual downloaded JSON/JS/report consistency, pan/zoom/Fit and keyboard storey switching, with no console errors. Direct `file://` browser testing is blocked by the automation URL policy; local classic-script execution/assets and offline template export are verified by the controller tests. Deployed Pages and narrow-screen browser acceptance remain unverified.
-- **The Unreal JSON file loader is still unbuilt.** This change provides compatible prototype files and generator source, not an Unreal import UI or a port of the generators into the game. Curves, explicit thick-wall geometry, materials and the old `br.zone` plans are outside exchange version 1.
+- **The Unreal JSON file loaders are still unbuilt.** Version 1 checks establish the rectangular subset only. Full `br.zone` plans preserve curves, explicit wall geometry and materials for a dedicated adapter and gap-driven Unreal work. The existing core has faceted round interiors with openings on straight flats; arbitrary curved footprints and curved-face openings are not established by these checks.
 
-## Geometry studies
+## Full geometry prototypes
 
 | Capability | Current state |
 | --- | --- |

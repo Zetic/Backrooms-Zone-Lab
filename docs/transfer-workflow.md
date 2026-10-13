@@ -1,8 +1,12 @@
 # Prototype here, walk in Unreal
 
-The default page implements the October 12, 2026 contract copied from the owner's `Tools/ZoneLabExchange.md` into [unreal-exchange.md](unreal-exchange.md). That document is the format authority. This workflow does not change the Unreal game, its world planner or its compiler.
+The goal is to carry the desired prototype into Unreal and extend the lab where that design reveals missing capabilities. The [design handoff](design-handoff.md) explains full geometry exports and capability assessment. The October 12 contract copied from the owner's `Tools/ZoneLabExchange.md` into [unreal-exchange.md](unreal-exchange.md) defines the rectangular version 1 subset on the default page. It does not set a ceiling on prototype geometry. This PR does not implement changes to the Unreal game, its world planner or its compiler.
 
-## Use the lab
+## Choose a prototype path
+
+Use `gallery.html` for full geometry: curved and angled rooms, wall bodies, gallery voids and 3D inspection. Export the original `br.zone` file and validation report, with generator source, plans/screenshots and notes. These carry the design to a dedicated Unreal adapter and gap-driven core work. Preserve unsupported geometry in the file; do not reduce it to prose or an unreviewed rectangular approximation.
+
+Use `index.html` for the currently tested rectangular exchange subset, as follows.
 
 Open `index.html` directly from the downloaded repository folder. No server, install, build or network is required. House and Level 0 are finite templates, with an unsigned 32-bit seed and integer 0–100 dials. Each change regenerates immediately. A rejected configuration leaves the last accepted plan visible and disables export until the failure is resolved.
 
@@ -40,11 +44,11 @@ Each template has one plain JavaScript file with `make({seed, dials})`. The shar
 
 The new templates are versioned as `house-v1` and `level0-v1`, with `source.lab = "exchange-1"`. They are new exchange generators, not a compatibility promise for any earlier `br.zone` identity or a byte-for-byte port of the current Unreal templates. House follows the Unreal three-column arrangement. Level 0 uses bounded rectangular subdivision, a required spanning tree and optional loops, and selects the connected arrival component before forming its final exchange file. Generator changes require deliberate template provenance revisions; exchange `version: 1` is the data schema version.
 
-## Limits of the prototype
+## Current version 1 checks and realization gaps
 
 - The browser verifies schema, grid, ids, overlap/stacking, stair endpoints/run, shared stretches, floor differences/common headroom, Human graph reach/return, start, entrances, counts and repeatability. Exported generated templates keep all rooms plain. Shapes/columns/dividers/screens in imported files are retained as hints with a physical-verification warning; browser topology cannot prove their exact opening clearance. Start rooms and stair landings must stay plain.
 - Dimensions and area in the browser describe allocation. A 3-unit room has about 1.35 m clear width after the compiler's 15 cm wall mass. The compiler measures final usable supported floor, including its feature cuts. The browser does not manufacture a false exact usable-area figure.
 - A wide join falls back to a door when only 4–5 units are shared. The plan reports this. Opening `at` is a hint; the compiler may slide it. New themes require notes and use an Unreal fallback; unknown roles remain descriptive.
 - Stair runs also respect the current ramp recipe's 80-unit maximum (84 units including the two landings); an overlong imported stair is refused before export.
-- Curves, arbitrary angles, explicit thick-wall solids, wall materials/UVs, holes/gallery meshes and non-Euclidean graphs from the old workbench cannot be silently rounded into exchange version 1. The [geometry studies](../gallery.html) remain available with unchanged generation and their own `br.zone` exports. They are useful research, but outside this transfer path.
-- No furniture, physical walls/frames, lighting, 3D viewer, portal graph or proprietary browser save format is added to the exchange workbench. Unsupported ideas belong in `notes`, for deciding what to build next on the Unreal side.
+- Curves, arbitrary angles, wall solids, materials/UVs and gallery voids remain in the full geometry `br.zone` handoff. They require their own adapter and capability assessment, rather than silent rounding into version 1. The existing Unreal core already has faceted round interiors with straight doorway flats; arbitrary curved-face doors need additional work. See [design handoff](design-handoff.md).
+- The rectangular page remains a small checked exchange tool. The full geometry page retains physical geometry and 3D inspection. Use notes to explain intent alongside the actual exported geometry. Transfer reports should identify missing Unreal capabilities, and the chosen prototypes should guide implementation and physical verification there.

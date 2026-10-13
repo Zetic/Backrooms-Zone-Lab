@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Prototype rectangular zones and portable templates for the Unreal Backrooms Zone Lab.">
+  <meta name="description" content="Check rectangular zone exchange files, or design full geometry prototypes for transfer into the Unreal Backrooms Zone Lab.">
   <title>Backrooms · Zone Lab</title>
   <link rel="stylesheet" href="./exchange/workbench.css">
 </head>
 <body>
-  <header><a class="brand" href="./index.html">BACKROOMS <b>ZONE LAB</b></a><span class="badge">UNREAL EXCHANGE / 1</span><nav><a href="./gallery.html">Geometry studies</a><a href="./docs/transfer-workflow.md">Transfer guide</a><a href="https://github.com/Zetic/Backrooms-Zone-Lab">Repository ↗</a></nav></header>
+  <header><a class="brand" href="./index.html">BACKROOMS <b>ZONE LAB</b></a><span class="badge">RECTANGULAR EXCHANGE / 1</span><nav><a href="./gallery.html">Full geometry prototype</a><a href="./docs/transfer-workflow.md">Transfer guide</a><a href="https://github.com/Zetic/Backrooms-Zone-Lab">Repository ↗</a></nav></header>
   <main>
     <aside>
-      <p class="eyebrow">FINITE ZONE PROTOTYPES</p><h1>Make a place.</h1><p class="muted">Rectangles and joins here. The walk, walls and collision in Unreal.</p>
+      <p class="eyebrow">RECTANGULAR EXCHANGE CHECKS</p><h1>Make a place.</h1><p class="muted">The currently tested transfer subset. For curves, angled rooms and galleries, use the <a href="./gallery.html">full geometry prototype</a> and carry its design into Unreal.</p>
       <label for="template">Template</label><select id="template"></select><p id="summary" class="muted"></p>
       <label for="seed">Seed <span class="muted">unsigned 32-bit</span></label><div class="seed-row"><button id="seed-down" aria-label="Previous seed">−</button><input id="seed" type="number" min="0" max="4294967295" step="1" value="1"><button id="seed-up" aria-label="Next seed">+</button></div><button id="random">Random seed</button>
       <div class="heading"><h2>Dials</h2><button id="reset">Reset</button></div><div id="dials"></div>

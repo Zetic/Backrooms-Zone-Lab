@@ -1,6 +1,6 @@
 # Backrooms Zone Lab
 
-This is the retained geometry research documentation. Open [gallery.html](gallery.html) for this workbench. The default page and [transfer workflow](docs/transfer-workflow.md) now use the owner's rectangular Unreal exchange contract. `br.zone` research exports do not satisfy that contract.
+Open [gallery.html](gallery.html) for the full geometry prototype workbench. Its `br.zone` exports preserve the architecture to transfer into Unreal through a dedicated adapter and any needed core extensions; see [design handoff](docs/design-handoff.md). The default page provides a separately checked rectangular exchange subset. Its current schema limits do not limit prototype design.
 
 A browser laboratory for deterministic, engine-independent finite architectural zones. **Generated houses now include physical wall thickness, independently textured side slots, explicit clear floor areas, and floor up/down controls.**
 

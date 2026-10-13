@@ -1,6 +1,8 @@
 # Backrooms Zone Lab
 
-Prototype finite zones in the browser and hand them to the Unreal Backrooms Zone Lab as **`backrooms-zone` version 1** files and portable template code. The format follows the owner's [ZoneLabExchange contract](docs/unreal-exchange.md).
+Prototype the architecture you want to walk in Unreal. Preserve the complete design and generator source in the handoff; extend the Unreal Zone Lab where a chosen prototype exposes a missing capability. The [design handoff](docs/design-handoff.md) describes this goal and the current integration gaps.
+
+Use the [full geometry prototype](gallery.html) for curved/angled rooms, wall solids, galleries and a 3D view. Use the default rectangular exchange page for the currently tested **`backrooms-zone` version 1** subset, defined by the [ZoneLabExchange contract](docs/unreal-exchange.md). This subset is a first transfer path, not a limit on what may be designed.
 
 Open **`index.html` directly** from the repository folder. No build, server, install, runtime dependency or network is needed. Select **House** or **Level 0**, change the seed and dials, inspect each storey, and export the checked `.zone.json` and its plan. Import files to reopen them; edit the exchange JSON for one-off layouts. A failed change preserves the last accepted plan and disables export.
 
@@ -15,7 +17,7 @@ The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Seven 
 - One plain JavaScript file per template, using the exact named uint32 `Templates::Stream` draw, whole-number decisions, complete sort orders and bounded work.
 - Browser checks and a **120/120** seed/dial acceptance report per template; plan snapshots and notes on what the format cannot express.
 
-Unreal builds the walls, doors, collision, lights and final usable floors. The lab reports allocation dimensions/area explicitly. It does not export wall solids, materials, meshes or a world graph.
+In the rectangular exchange path, Unreal builds the walls, doors, collision, lights and final usable floors. That page reports allocation dimensions/area explicitly. Full geometry exports retain the prototype's richer geometry and connection intent for a dedicated Unreal adapter and any required core extensions.
 
 ## Optional tooling
 
@@ -38,8 +40,10 @@ npm run verify:unreal -- --core=C:/Dev/Backrooms/Source/Backrooms/Workshop
 
 Logs and the generated harness go to ignored `.verification/`. See the transfer guide for other compiler paths.
 
-## Earlier geometry research
+## Full geometry prototypes
 
-The [geometry studies workbench](gallery.html) preserves the procedural gallery houses, atrium mansions, arbitrary angles/arcs, physical thick walls and 3D viewer. Its **`br.zone` files are a different format** and cannot be imported as rectangular exchange files. Its generation and regression examples remain unchanged. [Study documentation and verification commands](README-studies.md) describe that research separately.
+The [full geometry workbench](gallery.html) preserves the procedural gallery houses, atrium mansions, arbitrary angles/arcs, physical thick walls and 3D viewer. Its **`br.zone` files carry design intent** and need an Unreal adapter; they are not rectangular exchange files. Keep the original geometry when handing them over. [Prototype documentation and verification commands](README-studies.md) describe this workbench.
+
+The Unreal core already builds round interiors using faceted corner fills and straight doorway flats. Openings on curved faces and general line/arc footprints need separate assessment and implementation. A rectangular schema restriction does not mean Unreal has no curved geometry support.
 
 `exchange/stream.js`, `exchange/checks.js` and `exchange/templates/` are portable core. `exchange/plan.js` and `exchange/app.js` handle drawing and interaction. [Current status](docs/status.md) records verification and the remaining integration limits.

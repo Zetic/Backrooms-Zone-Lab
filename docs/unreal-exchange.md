@@ -2,6 +2,8 @@
 
 October 12, 2026. A trial, like the Unreal Zone Lab it feeds (`Source/Backrooms/Workshop/ZoneLab`).
 
+**Owner clarification, October 12:** Prototype the intended architecture and preserve it in the handoff. The rectangular version 1 path below is the first checked transfer subset, not a design ceiling. Full geometry prototypes keep their original line/arc, wall, opening and traversal data for a dedicated adapter and any needed Unreal core extensions. Transfer gaps should guide work in the Unreal lab; geometry or required connections must not be silently simplified or dropped. The core already builds faceted round interiors with straight doorway flats; this does not establish arbitrary arc-footprint or curved-face opening support.
+
 ## Purpose
 
 The browser lab is a fast place to invent zone layouts; Unreal stays the place that builds walls, doors, collision and lighting. The lab is useful only if what it produces can be taken into the Unreal Zone Lab without being redrawn by hand.
@@ -13,11 +15,11 @@ It hands back two things:
 
 This page is self-contained. Whoever builds the lab does not need the Unreal project.
 
-The Unreal loader for zone files is not built yet. It will be written against this page, so the format below is the contract for both sides. The rules and limits are the Unreal compiler's as it stands today, and the worked example has been run through it.
+The Unreal loader for version 1 zone files is not built yet. It will be written against this page, so the format below is the contract for that subset on both sides. The worked example has been run through the current compiler. Broader prototypes retain their own versioned design data until an adapter and any necessary compiler capabilities are built and verified.
 
 ## The model: what a zone is
 
-A zone is a set of rectangles on a grid plus a list of which rectangles connect. That is all Unreal takes in; it works out every wall, door frame, ceiling, light and collision box itself.
+A version 1 exchange zone is a set of rectangles on a grid plus a list of which rectangles connect. For this path, Unreal works out every wall, door frame, ceiling, light and collision box itself. This representation does not cover every intended prototype or every geometry capability already in the core.
 
 - **Space**: one rectangle a player would name (a kitchen, a hallway, a pillar room). It has a floor height and a ceiling height. Spaces tile the ground edge to edge; the wall between two spaces is implied by their shared edge and has no rectangle of its own.
 - **Join**: a request that two spaces sharing a wall be connected, and how (a door, a wide opening, no wall at all). Two spaces with no join between them get a solid wall.
@@ -27,17 +29,17 @@ A zone is a set of rectangles on a grid plus a list of which rectangles connect.
 
 A zone has no position in the world and no fixed height. It is built in its own coordinates, and Unreal places it wherever a connection needs it.
 
-The lab must not draw walls with thickness, door swings or wall segments. If the lab's data model is rectangles and joins, the transfer is direct; if it is walls and lines, it is not transferable.
+The rectangular exchange page uses allocations and joins rather than explicit wall solids, door swings or wall segments. A full geometry prototype may use lines, arcs and wall bodies: preserve them in its design export and implement a suitable Unreal adapter instead of treating the design as non-transferable.
 
 ## Grid and geometry rules
 
-These are the limits the Unreal compiler enforces. A zone that breaks one is refused, so the lab must hold to them and check them (see *Checks before export*).
+These are the rules of the currently checked version 1 exchange subset. The exchange page must hold to them and check them (see *Checks before export*). A full geometry design outside this subset needs capability assessment and implementation during transfer, not automatic design rejection.
 
 | Rule | Value |
 | --- | --- |
 | Plan unit | 1 unit = 50 cm. Every rectangle corner is a whole number of units. |
 | Axes | x runs east, y runs north. Rectangles are `[x0, y0, x1, y1]` with `x1 > x0` and `y1 > y0`. Negative coordinates are allowed. |
-| Rotation | None. Every rectangle is axis-aligned; no diagonal or curved walls. |
+| Rotation | Version 1 allocations are axis-aligned. Arbitrary angled or curved outlines remain in the full geometry handoff. |
 | Heights | Centimetres, in steps of 10. A floor height may be negative. |
 | Room size | Each side 3 to 40 units (1.5 m to 20 m). |
 | Ceiling | 200 to 800 cm above the space's own floor. |
