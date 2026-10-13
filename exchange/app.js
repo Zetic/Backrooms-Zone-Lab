@@ -87,8 +87,8 @@
   function selectTemplate(regenerate = true) {
     state.template = $('template').value;
     $('seed').value = String(settings().seed); $('summary').textContent = template().summary;
-    $('dials').innerHTML = template().dials.map(d => `<div class="dial"><label for="dial-${d.id}" title="${esc(d.help)}">${esc(d.name)}<output id="value-${d.id}">${settings().dials[d.id]}</output></label><input id="dial-${d.id}" type="range" min="0" max="100" step="1" value="${settings().dials[d.id]}"><div class="ends"><span>${esc(d.low)}</span><span>${esc(d.high)}</span></div></div>`).join('');
-    for (const d of template().dials) $('dial-' + d.id).addEventListener('input', event => { settings().dials[d.id] = Number(event.target.value); $('value-' + d.id).value = event.target.value; generate(); });
+    $('dials').innerHTML = template().dials.map(d => `<div class="dial"><label for="dial-${d.id}" title="${esc(d.help)}">${esc(d.name)}<output id="value-${d.id}">${d.id === 'wings' ? 1 + Math.floor(settings().dials[d.id] * 5 / 100) : settings().dials[d.id]}</output></label><input id="dial-${d.id}" type="range" min="0" max="100" step="1" value="${settings().dials[d.id]}"><div class="ends"><span>${esc(d.low)}</span><span>${esc(d.high)}</span></div></div>`).join('');
+    for (const d of template().dials) $('dial-' + d.id).addEventListener('input', event => { settings().dials[d.id] = Number(event.target.value); $('value-' + d.id).value = d.id === 'wings' ? 1 + Math.floor(Number(event.target.value) * 5 / 100) : event.target.value; generate(); });
     $('presets').innerHTML = (template().presets ?? []).map((p, i) => '<button id="preset-' + i + '">' + esc(p.name) + '</button>').join('');
     (template().presets ?? []).forEach((p, i) => $('preset-' + i).addEventListener('click', () => { settings().dials = { ...p.dials }; selectTemplate(); }));
     updatePresets();

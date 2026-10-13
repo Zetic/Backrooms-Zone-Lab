@@ -4,7 +4,7 @@ The owner's clarification on October 12, 2026 sets the direction: the browser pr
 
 ## Preserve the design
 
-The full geometry workbench at `gallery.html` exports canonical `br.zone` JSON and a validation report. Keep that original file, its schema/generator versions, seed, profile, configuration and stable identities. It records line/arc footprints, wall and opening geometry, floors, voids, stairs and connections where the selected generator supplies them. Include the generator source and its local module dependencies, plans or screenshots, and notes on the qualities to preserve.
+The house full geometry workbench at `gallery.html` exports canonical `br.zone` JSON and a validation report. Keep that original file, its schema/generator versions, seed, profile, configuration and stable identities. It records line/arc footprints, wall and opening geometry, floors, voids, stairs and connections where the selected generator supplies them. Include the generator source and its local module dependencies, plans or screenshots, and notes on the qualities to preserve.
 
 The rectangular page at `index.html` exports `backrooms-zone` version 1 and portable House/Level 0/Office templates. Optional outlines preserve design paths inside rectangular bounds; optional embedded rules record architectural diagnostics. Outlines still require an adapter and do not replace the richer `br.zone` contract. House v2 carries the local program/spine method with explicit rule relaxation; see [template authoring](template-authoring.md). This subset has 440 layouts checked against the portable C++ core, with House geometry/join parity against the local generator. Neither workbench has an Unreal runtime JSON loader yet. A valid browser export preserves a design; it does not establish that its Unreal realization is already implemented.
 
@@ -29,3 +29,5 @@ For each selected prototype, compare its exported geometry and movement requirem
 Extend the importer and portable compiler for the useful design, keeping determinism, canonical geometry, shared ownership, clearance, collision and Human outward/return traversal intact. A moved door, simplified curve or altered stair is a design change to review, not an unnoticed import repair. Required connections remain required; a blocker is reported rather than silently discarded.
 
 Transfer fixed layouts first so they can be inspected and walked. Port the generator after that geometry contract is accepted, preserving explicit versions, stable identities, seed/dial decisions and bounded work. Compare representative seeds and complete journeys in Unreal. Keep the original prototype available throughout that process.
+
+Office v2 has a dedicated `office.html` workbench with actual rotated clear floors, wall bodies and supported apertures. Preserve its full `br.zone/0.4` files. Its separately generated rectangular exchange is not an approximation to substitute for the angled design.

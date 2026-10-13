@@ -37,13 +37,14 @@
       }
     },
     {
-      "template": "offices-v1",
+      "template": "offices-v2",
       "passed": 120,
       "total": 120,
       "failures": [],
       "strict": {
         "dials": {
           "size": 0,
+          "wings": 0,
           "open": 0,
           "sprawl": 0,
           "strange": 0
@@ -513,13 +514,13 @@
     },
     {
       "file": "offices-1.zone.json",
-      "sha256": "025ce1fb87287c5bb6b23cdfee28b6ed452d58c58b7323c962ebf1b59d338f6b",
+      "sha256": "adcab10656101aba9b8755706ae62514423ce150f2813294b126704a126bac94",
       "plans": [
         "offices-1-floor-0.svg"
       ],
-      "notes": "Office floor: visitor reception and meetings, staff workplaces, washrooms, break/copy/server/storage rooms. Dials explicitly relax architectural conventions. This prototype describes rooms and circulation; furniture is not placed.",
+      "notes": "Office v2: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
       "architecturalRules": {
-        "template": "offices-v1",
+        "template": "offices-v2",
         "rules": [
           {
             "id": "arrival",
@@ -603,7 +604,7 @@
           },
           {
             "id": "hall-share",
-            "name": "Corridors take no more than 30% of the floor",
+            "name": "Corridors take no more than 40% of the floor",
             "kept": true,
             "detail": "",
             "relaxed": false,
@@ -648,22 +649,30 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "wing-count",
+            "name": "The requested number of independent wings is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 16,
+        "kept": 17,
         "valid": true,
         "broken": []
       }
     },
     {
       "file": "offices-1-open.zone.json",
-      "sha256": "6b7e8881b1c6eab736890d3d5098f336fa9b76811feba9392a4359291bc1afe0",
+      "sha256": "1816aa5f7ce28984c3743e5297aad283323dda2c38d36ac41d0f5dd0244b8510",
       "plans": [
         "offices-1-open-floor-0.svg"
       ],
-      "notes": "Office floor: visitor reception and meetings, staff workplaces, washrooms, break/copy/server/storage rooms. Dials explicitly relax architectural conventions. This prototype describes rooms and circulation; furniture is not placed.",
+      "notes": "Office v2: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
       "architecturalRules": {
-        "template": "offices-v1",
+        "template": "offices-v2",
         "rules": [
           {
             "id": "arrival",
@@ -747,7 +756,7 @@
           },
           {
             "id": "hall-share",
-            "name": "Corridors take no more than 30% of the floor",
+            "name": "Corridors take no more than 40% of the floor",
             "kept": true,
             "detail": "",
             "relaxed": false,
@@ -792,22 +801,30 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "wing-count",
+            "name": "The requested number of independent wings is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 16,
+        "kept": 17,
         "valid": true,
         "broken": []
       }
     },
     {
       "file": "offices-1-wrong.zone.json",
-      "sha256": "5eb96b975c450e55727381799f2a67df6931ee4fa50529c760461ae20ae0a69e",
+      "sha256": "485c220768c029da1c6ece47eda8c4b6421c79398fff4faceef4f54116949c37",
       "plans": [
         "offices-1-wrong-floor-0.svg"
       ],
-      "notes": "Office floor: visitor reception and meetings, staff workplaces, washrooms, break/copy/server/storage rooms. Dials explicitly relax architectural conventions. This prototype describes rooms and circulation; furniture is not placed.",
+      "notes": "Office v2: central visitor/service hub, 6 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
       "architecturalRules": {
-        "template": "offices-v1",
+        "template": "offices-v2",
         "rules": [
           {
             "id": "arrival",
@@ -876,26 +893,26 @@
           {
             "id": "meeting-counts",
             "name": "There are one to three meeting rooms",
-            "kept": false,
-            "detail": "Meeting rooms are missing or repeat excessively.",
+            "kept": true,
+            "detail": "",
             "relaxed": true,
             "relaxedBy": "Strangeness 50"
           },
           {
             "id": "proportions",
             "name": "Work and meeting rooms have conventional proportions",
-            "kept": true,
-            "detail": "",
+            "kept": false,
+            "detail": "A work or meeting room is unusually elongated.",
             "relaxed": true,
             "relaxedBy": "Strangeness 20"
           },
           {
             "id": "hall-share",
-            "name": "Corridors take no more than 30% of the floor",
+            "name": "Corridors take no more than 40% of the floor",
             "kept": true,
             "detail": "",
             "relaxed": true,
-            "relaxedBy": "Sprawl 35 or Strangeness 30"
+            "relaxedBy": "Sprawl 35 or Strangeness 30 or Wings 40"
           },
           {
             "id": "hall-width",
@@ -936,9 +953,17 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "wing-count",
+            "name": "The requested number of independent wings is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 6,
+        "kept": 7,
         "valid": true,
         "broken": [
           {
@@ -982,12 +1007,12 @@
             "relaxedBy": "Strangeness 50"
           },
           {
-            "id": "meeting-counts",
-            "name": "There are one to three meeting rooms",
+            "id": "proportions",
+            "name": "Work and meeting rooms have conventional proportions",
             "kept": false,
-            "detail": "Meeting rooms are missing or repeat excessively.",
+            "detail": "A work or meeting room is unusually elongated.",
             "relaxed": true,
-            "relaxedBy": "Strangeness 50"
+            "relaxedBy": "Strangeness 20"
           },
           {
             "id": "hall-width",
@@ -1199,10 +1224,11 @@
     },
     {
       "file": "gallery-offices-standard-office.svg",
-      "template": "offices-v1",
+      "template": "offices-v2",
       "preset": "Standard office",
       "dials": {
         "size": 40,
+        "wings": 0,
         "open": 35,
         "sprawl": 0,
         "strange": 0
@@ -1218,14 +1244,15 @@
         8,
         9
       ],
-      "sha256": "ef1abd3ccc6f0cb087d68f3f6c290bcc692c2977708d628e89f1406ec2fe6e66"
+      "sha256": "3e4114bfa6b2c3de512b32b688c51b50a91aef6ce7335cd54e6adf0011140c22"
     },
     {
       "file": "gallery-offices-private-practice.svg",
-      "template": "offices-v1",
+      "template": "offices-v2",
       "preset": "Private practice",
       "dials": {
         "size": 15,
+        "wings": 0,
         "open": 0,
         "sprawl": 0,
         "strange": 0
@@ -1241,14 +1268,15 @@
         8,
         9
       ],
-      "sha256": "83bd98eee6d08f8cd011342f403e396ae4b7f1795794561366522ebc2e4e3e6e"
+      "sha256": "02225730b424a952b96870fdc6035d23dd7e3cb501098b8182cc59cf95221809"
     },
     {
       "file": "gallery-offices-open-workplace.svg",
-      "template": "offices-v1",
+      "template": "offices-v2",
       "preset": "Open workplace",
       "dials": {
         "size": 70,
+        "wings": 20,
         "open": 100,
         "sprawl": 0,
         "strange": 0
@@ -1264,16 +1292,17 @@
         8,
         9
       ],
-      "sha256": "f300cfe5e8c8b4a5b1c5f4f2147631403972d0cd9b43f28407f33547944b9978"
+      "sha256": "2675a9f984795d1204baf0c09f0a5597e212333d45cd9d12ea02f6022614dd4a"
     },
     {
       "file": "gallery-offices-department-wings.svg",
-      "template": "offices-v1",
+      "template": "offices-v2",
       "preset": "Department wings",
       "dials": {
         "size": 70,
+        "wings": 60,
         "open": 45,
-        "sprawl": 85,
+        "sprawl": 40,
         "strange": 0
       },
       "seeds": [
@@ -1287,14 +1316,15 @@
         8,
         9
       ],
-      "sha256": "a567459e6d14e60bb855bccc4a7e27a7debcaebd4b6d7d20a37078504904ef9f"
+      "sha256": "ee4adcfc8702c219b37eb00807d18a0e6ca6926a4c990d3345fdc14d324efde7"
     },
     {
       "file": "gallery-offices-after-hours.svg",
-      "template": "offices-v1",
+      "template": "offices-v2",
       "preset": "After hours",
       "dials": {
         "size": 50,
+        "wings": 40,
         "open": 20,
         "sprawl": 35,
         "strange": 60
@@ -1310,14 +1340,15 @@
         8,
         9
       ],
-      "sha256": "1703ad0447f15d5cf1a276f0541e0b0eea094c52d8f63f41d4b5e5e3c3a5f3e7"
+      "sha256": "9a56ac97069dc054a953dbfafe6e5253e283644e746d727a46d7dd2af96c8cb5"
     },
     {
       "file": "gallery-offices-wrong-workplace.svg",
-      "template": "offices-v1",
+      "template": "offices-v2",
       "preset": "Wrong workplace",
       "dials": {
         "size": 75,
+        "wings": 100,
         "open": 65,
         "sprawl": 90,
         "strange": 95
@@ -1333,7 +1364,31 @@
         8,
         9
       ],
-      "sha256": "083f5871d80fa5c651871dca2bcf444a56356f4dff59e567fb2d3451c65d78b7"
+      "sha256": "f2992684be9cd39f6437c7308a243e14a3537fb6d1de9a3b24d6be3e97070df3"
+    },
+    {
+      "file": "gallery-offices-reference-floor.svg",
+      "template": "offices-v2",
+      "preset": "Reference floor",
+      "dials": {
+        "size": 65,
+        "wings": 20,
+        "open": 15,
+        "sprawl": 20,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "b1f066a03424d03597bf0086a6c0b198672f31b44bca1675fbdb4a9b45615113"
     }
   ]
 }

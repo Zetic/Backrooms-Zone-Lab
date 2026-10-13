@@ -1,330 +1,306 @@
 {
   "entrances": [
     {
-      "at": 19.5,
-      "side": "n",
-      "space": "rear-corridor",
-      "title": "Staff entrance"
-    },
-    {
-      "at": 19.5,
+      "at": 0,
       "side": "s",
       "space": "reception",
       "title": "Visitor entrance"
+    },
+    {
+      "at": 110,
+      "side": "n",
+      "space": "wing-0-exit",
+      "title": "Wing 1 exit"
+    },
+    {
+      "at": -107,
+      "side": "s",
+      "space": "wing-1-exit",
+      "title": "Wing 2 exit"
     }
   ],
   "format": "backrooms-zone",
   "id": "offices-1-open",
   "joins": [
     {
-      "a": "core-0",
-      "b": "main-left-0",
+      "a": "core-break",
+      "b": "hub-west",
       "mode": "door",
       "required": true
     },
     {
-      "a": "core-1",
-      "b": "main-right-1",
+      "a": "core-copy",
+      "b": "hub-east",
       "mode": "door",
       "required": true
     },
     {
-      "a": "core-2",
-      "b": "main-left-2",
+      "a": "core-server",
+      "b": "hub-east",
       "mode": "door",
       "required": true
     },
     {
-      "a": "core-3",
-      "b": "main-right-3",
+      "a": "core-store",
+      "b": "hub-east",
       "mode": "door",
       "required": true
     },
     {
-      "a": "core-4",
-      "b": "main-left-4",
+      "a": "core-washroom",
+      "b": "hub-west",
       "mode": "door",
       "required": true
     },
     {
-      "a": "core-5",
-      "b": "main-right-5",
-      "mode": "wide",
-      "required": true
-    },
-    {
-      "a": "core-6",
-      "b": "main-left-6",
-      "mode": "wide",
-      "required": true
-    },
-    {
-      "a": "main-left-0",
-      "b": "main-left-1",
+      "a": "hub-east",
+      "b": "hub-ne",
       "mode": "open",
       "required": true
     },
     {
-      "a": "main-left-0",
+      "a": "hub-east",
+      "b": "hub-se",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-east",
+      "b": "wing-0-hall-0",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-ne",
+      "b": "hub-north",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-north",
+      "b": "hub-nw",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-nw",
+      "b": "hub-west",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-se",
+      "b": "hub-south",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-south",
+      "b": "hub-sw",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-south",
       "b": "reception",
       "mode": "open",
       "required": true
     },
     {
-      "a": "main-left-0",
-      "b": "work-0-0",
+      "a": "hub-sw",
+      "b": "hub-west",
       "mode": "open",
       "required": true
     },
     {
-      "a": "main-left-1",
-      "b": "main-left-2",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-1",
-      "b": "work-0-1",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-2",
-      "b": "main-left-3",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-2",
-      "b": "work-0-2",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-3",
-      "b": "main-left-4",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-3",
-      "b": "work-0-3",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-4",
-      "b": "main-left-5",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-4",
-      "b": "work-0-4",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-5",
-      "b": "main-left-6",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-5",
-      "b": "work-0-5",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-6",
-      "b": "rear-corridor",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-left-6",
-      "b": "work-0-6",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-0",
-      "b": "main-right-1",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-0",
-      "b": "reception",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-0",
-      "b": "work-1-0",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-1",
-      "b": "main-right-2",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-1",
-      "b": "work-1-1",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-2",
-      "b": "main-right-3",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-2",
-      "b": "work-1-2",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-3",
-      "b": "main-right-4",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-3",
-      "b": "work-1-3",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-4",
-      "b": "main-right-5",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-4",
-      "b": "work-1-4",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-5",
-      "b": "main-right-6",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-5",
-      "b": "work-1-5",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-6",
-      "b": "rear-corridor",
-      "mode": "open",
-      "required": true
-    },
-    {
-      "a": "main-right-6",
-      "b": "work-1-6",
+      "a": "hub-west",
+      "b": "wing-1-hall-0",
       "mode": "open",
       "required": true
     },
     {
       "a": "reception",
       "b": "visitor-meeting-left",
-      "mode": "wide",
+      "mode": "door",
       "required": true
     },
     {
       "a": "reception",
       "b": "visitor-meeting-right",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-exit",
+      "b": "wing-0-junction",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-hall-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-0-0",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-0-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-1-0",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-1-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-hall-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-0-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-0-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-1-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-1-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-2",
+      "b": "wing-0-junction",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-2",
+      "b": "wing-0-room-0-4",
       "mode": "wide",
       "required": true
     },
     {
-      "a": "work-0-0",
-      "b": "work-0-1",
+      "a": "wing-0-hall-2",
+      "b": "wing-0-room-1-4",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-0-1",
-      "b": "work-0-2",
+      "a": "wing-1-exit",
+      "b": "wing-1-junction",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-0",
+      "b": "wing-1-hall-1",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-0-2",
-      "b": "work-0-3",
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-0-0",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-0-3",
-      "b": "work-0-4",
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-0-1",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-0-4",
-      "b": "work-0-5",
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-1-0",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-1-1",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-0-5",
-      "b": "work-0-6",
+      "a": "wing-1-hall-1",
+      "b": "wing-1-hall-2",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-1-0",
-      "b": "work-1-1",
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-0-2",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-1-1",
-      "b": "work-1-2",
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-0-3",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-1-2",
-      "b": "work-1-3",
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-1-2",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-1-3",
-      "b": "work-1-4",
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-1-3",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-1-4",
-      "b": "work-1-5",
+      "a": "wing-1-hall-2",
+      "b": "wing-1-junction",
       "mode": "open",
       "required": true
     },
     {
-      "a": "work-1-5",
-      "b": "work-1-6",
+      "a": "wing-1-hall-2",
+      "b": "wing-1-room-0-4",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-2",
+      "b": "wing-1-room-1-4",
       "mode": "open",
       "required": true
     }
   ],
   "name": "Offices · seed 1 · Open workplace",
-  "notes": "Office floor: visitor reception and meetings, staff workplaces, washrooms, break/copy/server/storage rooms. Dials explicitly relax architectural conventions. This prototype describes rooms and circulation; furniture is not placed.",
+  "notes": "Office v2: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
   "rules": [
     {
       "detail": "",
@@ -354,7 +330,7 @@
       "detail": "",
       "id": "hall-share",
       "kept": true,
-      "name": "Corridors take no more than 30% of the floor",
+      "name": "Corridors take no more than 40% of the floor",
       "relaxed": false,
       "relaxedBy": ""
     },
@@ -448,6 +424,14 @@
     },
     {
       "detail": "",
+      "id": "wing-count",
+      "kept": true,
+      "name": "The requested number of independent wings is realized",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
       "id": "work-access",
       "kept": true,
       "name": "Every workplace opens from circulation",
@@ -460,37 +444,24 @@
       "open": 100,
       "size": 70,
       "sprawl": 0,
-      "strange": 0
+      "strange": 0,
+      "wings": 20
     },
-    "lab": "exchange-3",
+    "lab": "exchange-4",
     "seed": 1,
-    "template": "offices-v1"
+    "template": "offices-v2"
   },
   "spaces": [
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "core-0",
+      "id": "core-break",
       "kind": "room",
       "rect": [
-        15,
-        7,
-        24,
-        18
-      ],
-      "role": "washroom",
-      "title": "Washrooms"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "core-1",
-      "kind": "room",
-      "rect": [
-        15,
-        18,
-        24,
-        29
+        -11,
+        0,
+        0,
+        9
       ],
       "role": "break",
       "title": "Break room"
@@ -498,13 +469,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "core-2",
+      "id": "core-copy",
       "kind": "room",
       "rect": [
-        15,
-        29,
-        24,
-        40
+        0,
+        -5,
+        11,
+        -1
       ],
       "role": "copy",
       "title": "Copy room"
@@ -512,13 +483,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "core-3",
+      "id": "core-server",
       "kind": "room",
       "rect": [
-        15,
-        40,
-        24,
-        51
+        0,
+        -9,
+        11,
+        -5
       ],
       "role": "server",
       "title": "Server room"
@@ -526,13 +497,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "core-4",
+      "id": "core-store",
       "kind": "room",
       "rect": [
-        15,
-        51,
-        24,
-        62
+        0,
+        -1,
+        11,
+        9
       ],
       "role": "store",
       "title": "Supply store"
@@ -540,41 +511,27 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "core-5",
+      "id": "core-washroom",
       "kind": "room",
       "rect": [
-        15,
-        62,
-        24,
-        72
+        -11,
+        -9,
+        0,
+        0
       ],
-      "role": "work",
-      "title": "Workplace"
+      "role": "washroom",
+      "title": "Washrooms"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "core-6",
-      "kind": "room",
-      "rect": [
-        15,
-        72,
-        24,
-        83
-      ],
-      "role": "work",
-      "title": "Workplace"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-left-0",
+      "id": "hub-east",
       "kind": "hall",
       "rect": [
         11,
-        7,
+        -9,
         15,
-        18
+        9
       ],
       "role": "hall",
       "title": "Corridor"
@@ -582,13 +539,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "main-left-1",
+      "id": "hub-ne",
       "kind": "hall",
       "rect": [
         11,
-        18,
+        9,
         15,
-        29
+        13
       ],
       "role": "hall",
       "title": "Corridor"
@@ -596,13 +553,41 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "main-left-2",
+      "id": "hub-north",
+      "kind": "hall",
+      "rect": [
+        -11,
+        9,
+        11,
+        13
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-nw",
+      "kind": "hall",
+      "rect": [
+        -15,
+        9,
+        -11,
+        13
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-se",
       "kind": "hall",
       "rect": [
         11,
-        29,
+        -13,
         15,
-        40
+        -9
       ],
       "role": "hall",
       "title": "Corridor"
@@ -610,13 +595,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "main-left-3",
+      "id": "hub-south",
       "kind": "hall",
       "rect": [
+        -11,
+        -13,
         11,
-        40,
-        15,
-        51
+        -9
       ],
       "role": "hall",
       "title": "Corridor"
@@ -624,13 +609,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "main-left-4",
+      "id": "hub-sw",
       "kind": "hall",
       "rect": [
-        11,
-        51,
-        15,
-        62
+        -15,
+        -13,
+        -11,
+        -9
       ],
       "role": "hall",
       "title": "Corridor"
@@ -638,139 +623,13 @@
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "main-left-5",
+      "id": "hub-west",
       "kind": "hall",
       "rect": [
-        11,
-        62,
-        15,
-        72
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-left-6",
-      "kind": "hall",
-      "rect": [
-        11,
-        72,
-        15,
-        83
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-0",
-      "kind": "hall",
-      "rect": [
-        24,
-        7,
-        28,
-        18
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-1",
-      "kind": "hall",
-      "rect": [
-        24,
-        18,
-        28,
-        29
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-2",
-      "kind": "hall",
-      "rect": [
-        24,
-        29,
-        28,
-        40
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-3",
-      "kind": "hall",
-      "rect": [
-        24,
-        40,
-        28,
-        51
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-4",
-      "kind": "hall",
-      "rect": [
-        24,
-        51,
-        28,
-        62
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-5",
-      "kind": "hall",
-      "rect": [
-        24,
-        62,
-        28,
-        72
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "main-right-6",
-      "kind": "hall",
-      "rect": [
-        24,
-        72,
-        28,
-        83
-      ],
-      "role": "hall",
-      "title": "Corridor"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "rear-corridor",
-      "kind": "hall",
-      "rect": [
-        11,
-        83,
-        28,
-        87
+        -15,
+        -9,
+        -11,
+        9
       ],
       "role": "hall",
       "title": "Corridor"
@@ -781,10 +640,10 @@
       "id": "reception",
       "kind": "room",
       "rect": [
-        11,
-        0,
-        28,
-        7
+        -6,
+        -19,
+        6,
+        -13
       ],
       "role": "reception",
       "title": "Reception"
@@ -795,13 +654,13 @@
       "id": "visitor-meeting-left",
       "kind": "room",
       "rect": [
-        0,
-        0,
-        11,
-        7
+        -16,
+        -23,
+        -6,
+        -13
       ],
       "role": "meeting",
-      "title": "Meeting room"
+      "title": "Visitor meeting"
     },
     {
       "ceiling": 270,
@@ -809,215 +668,439 @@
       "id": "visitor-meeting-right",
       "kind": "room",
       "rect": [
-        28,
-        0,
-        39,
-        7
+        6,
+        -23,
+        16,
+        -13
       ],
       "role": "meeting",
-      "title": "Meeting room"
+      "title": "Visitor meeting"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-0-0",
+      "id": "wing-0-exit",
+      "kind": "hall",
+      "rect": [
+        107,
+        -4,
+        113,
+        4
+      ],
+      "role": "exit",
+      "title": "Exit / stair lobby"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-0",
+      "kind": "hall",
+      "rect": [
+        15,
+        -2,
+        51,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-1",
+      "kind": "hall",
+      "rect": [
+        51,
+        -2,
+        87,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-2",
+      "kind": "hall",
+      "rect": [
+        87,
+        -2,
+        103,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-junction",
+      "kind": "hall",
+      "rect": [
+        103,
+        -2,
+        107,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-0",
       "kind": "room",
       "rect": [
-        0,
-        7,
-        11,
+        19,
+        2,
+        37,
+        17
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-1",
+      "kind": "room",
+      "rect": [
+        37,
+        2,
+        53,
         18
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-0-1",
+      "id": "wing-0-room-0-2",
       "kind": "room",
       "rect": [
-        0,
-        18,
-        11,
-        29
+        53,
+        2,
+        71,
+        16
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-0-2",
+      "id": "wing-0-room-0-3",
       "kind": "room",
       "rect": [
-        0,
-        29,
-        11,
-        40
-      ],
-      "role": "work",
-      "title": "Workplace"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "work-0-3",
-      "kind": "room",
-      "rect": [
-        0,
-        40,
-        11,
-        51
-      ],
-      "role": "work",
-      "title": "Workplace"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "work-0-4",
-      "kind": "room",
-      "rect": [
-        0,
-        51,
-        11,
-        62
-      ],
-      "role": "work",
-      "title": "Workplace"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "work-0-5",
-      "kind": "room",
-      "rect": [
-        0,
-        62,
-        11,
-        72
-      ],
-      "role": "work",
-      "title": "Workplace"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "work-0-6",
-      "kind": "room",
-      "rect": [
-        0,
-        72,
-        11,
-        83
-      ],
-      "role": "work",
-      "title": "Workplace"
-    },
-    {
-      "ceiling": 270,
-      "floor": 0,
-      "id": "work-1-0",
-      "kind": "room",
-      "rect": [
-        28,
-        7,
-        39,
+        71,
+        2,
+        88,
         18
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-1-1",
+      "id": "wing-0-room-0-4",
       "kind": "room",
       "rect": [
-        28,
-        18,
-        39,
-        29
+        88,
+        2,
+        103,
+        13
       ],
-      "role": "work",
-      "title": "Workplace"
+      "role": "conference",
+      "title": "Team meeting"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-1-2",
+      "id": "wing-0-room-1-0",
       "kind": "room",
       "rect": [
-        28,
-        29,
-        39,
-        40
+        19,
+        -12,
+        32,
+        -2
       ],
-      "role": "work",
-      "title": "Workplace"
+      "role": "team",
+      "title": "Department lounge"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-1-3",
+      "id": "wing-0-room-1-1",
       "kind": "room",
       "rect": [
-        28,
-        40,
-        39,
-        51
+        32,
+        -17,
+        50,
+        -2
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-1-4",
+      "id": "wing-0-room-1-2",
       "kind": "room",
       "rect": [
-        28,
-        51,
-        39,
-        62
+        50,
+        -18,
+        66,
+        -2
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-1-5",
+      "id": "wing-0-room-1-3",
       "kind": "room",
       "rect": [
-        28,
-        62,
-        39,
-        72
+        66,
+        -16,
+        82,
+        -2
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
     },
     {
       "ceiling": 270,
       "floor": 0,
-      "id": "work-1-6",
+      "id": "wing-0-room-1-4",
       "kind": "room",
       "rect": [
-        28,
-        72,
-        39,
-        83
+        82,
+        -18,
+        98,
+        -2
       ],
       "role": "work",
-      "title": "Workplace"
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-exit",
+      "kind": "hall",
+      "rect": [
+        -110,
+        -4,
+        -104,
+        4
+      ],
+      "role": "exit",
+      "title": "Exit / stair lobby"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-0",
+      "kind": "hall",
+      "rect": [
+        -51,
+        -2,
+        -15,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-1",
+      "kind": "hall",
+      "rect": [
+        -87,
+        -2,
+        -51,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-2",
+      "kind": "hall",
+      "rect": [
+        -100,
+        -2,
+        -87,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-junction",
+      "kind": "hall",
+      "rect": [
+        -104,
+        -2,
+        -100,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-0",
+      "kind": "room",
+      "rect": [
+        -37,
+        -17,
+        -19,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-1",
+      "kind": "room",
+      "rect": [
+        -54,
+        -18,
+        -37,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-2",
+      "kind": "room",
+      "rect": [
+        -71,
+        -17,
+        -54,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-3",
+      "kind": "room",
+      "rect": [
+        -87,
+        -16,
+        -71,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-4",
+      "kind": "room",
+      "rect": [
+        -100,
+        -15,
+        -87,
+        -2
+      ],
+      "role": "conference",
+      "title": "Team meeting"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-0",
+      "kind": "room",
+      "rect": [
+        -30,
+        2,
+        -19,
+        12
+      ],
+      "role": "team",
+      "title": "Department lounge"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-1",
+      "kind": "room",
+      "rect": [
+        -47,
+        2,
+        -30,
+        18
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-2",
+      "kind": "room",
+      "rect": [
+        -65,
+        2,
+        -47,
+        16
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-3",
+      "kind": "room",
+      "rect": [
+        -81,
+        2,
+        -65,
+        17
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-4",
+      "kind": "room",
+      "rect": [
+        -99,
+        2,
+        -81,
+        18
+      ],
+      "role": "work",
+      "title": "Team workplace"
     }
   ],
   "start": {
     "space": "reception",
-    "x": 19.5,
-    "y": 3.5
+    "x": 0,
+    "y": -16
   },
   "theme": "backrooms",
   "version": 1
