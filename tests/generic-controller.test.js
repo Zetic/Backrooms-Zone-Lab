@@ -25,15 +25,16 @@ function controller() {
   const get = id => { assert.ok(elements.has(id), id); return elements.get(id); };
   const context = { genericTemplate, genericDefaults, GenericRunner, genericViewOptions, genericSvg, canonicalExport, escapeHtml,
     Viewer3D: class { constructor() { throw new Error('WebGL unavailable.'); } }, generatorArchive: async () => new Blob(['source']),
-    document: { getElementById: get, createElement: () => new Element('download') }, location: { search: '?rooms=0&seed=7', href: 'https://example.test/lab/generic.html' }, history: { replaceState() {} }, URL, URLSearchParams, Blob, setTimeout, globalThis: {} };
+    document: { getElementById: get, createElement: () => new Element('download') }, location: { search: '?rooms=0&seed=7', href: 'https://example.test/lab/generic.html' }, history: { replaceState() {} }, URL, URLSearchParams, Blob, Date, setTimeout, globalThis: {} };
   vm.runInNewContext(code.replace(/labels\(\); generate\(\);\s*$/, 'labels(); globalThis.ready = generate();'), context);
   return { get, downloads, ready: context.globalThis.ready };
 }
 test('Generic controller exports accepted geometry and retains it while changes are pending or refused', async () => {
   const c = controller(); await c.ready; const get = c.get;
+  assert.ok(!html.includes('seed-gallery')); assert.match(get('elapsed').textContent, /s · one seed/);
   assert.equal(get('status').textContent, 'PHYSICAL CHECKS PASS'); assert.equal(get('value-rooms').textContent, '8');
   await get('export').click(); const exported = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
-  assert.equal(exported.kind, 'generated-generic'); assert.equal(exported.input.generatorVersion, 2); assert.ok(exported.wallBodies.length);
+  assert.equal(exported.kind, 'generated-generic'); assert.equal(exported.input.generatorVersion, 3); assert.ok(exported.wallBodies.length);
   const accepted = get('generic-plan').innerHTML;
   get('dial-orientation').value = '100'; await get('dial-orientation').emit('input');
   assert.equal(get('status').textContent, 'CHANGES PENDING'); assert.ok(get('export').disabled); assert.equal(get('generic-plan').innerHTML, accepted);

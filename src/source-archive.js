@@ -20,7 +20,7 @@ export function storedZip(files) {
 export async function generatorArchive(spec, fetchFile = fetch) {
   const root = new URL('../', import.meta.url), files = { 'package.json': '{"type":"module","engines":{"node":">=22"}}\n', 'input.json': JSON.stringify(spec, null, 2) + '\n',
     'regenerate.mjs': "import {readFile,writeFile} from 'node:fs/promises';\nimport {generateGenericDesign} from './src/generic.js';\nimport {canonicalExport} from './src/zone.js';\nconst spec=JSON.parse(await readFile(new URL('./input.json',import.meta.url),'utf8'));\nawait writeFile(new URL('./layout.zone.json',import.meta.url),canonicalExport(generateGenericDesign(spec)));\n",
-    'README.txt': 'Generic v2 generator and full geometry dependencies. Run node regenerate.mjs with Node 22 or newer to reproduce layout.zone.json from input.json. No installation or external packages are needed.\n' };
+    'README.txt': 'Versioned Generic generator and full geometry dependencies. Run node regenerate.mjs with Node 22 or newer to reproduce layout.zone.json from input.json. No installation or external packages are needed.\n' };
   const queue = ['src/generic.js', 'src/zone.js'];
   while (queue.length) {
     const path = queue.shift(); if (Object.hasOwn(files, path)) continue;
