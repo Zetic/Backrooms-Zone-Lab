@@ -5,6 +5,7 @@ import '../exchange/checks.js';
 import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
+import '../exchange/templates/offices.js';
 import '../exchange/plan.js';
 
 const api = globalThis.ZoneExchange;
@@ -21,6 +22,14 @@ export function shapingCases() {
   for (const sprawl of [0, 20, 35, 45, 55, 70, 85, 100]) for (const strange of [0, 25, 45, 65, 85, 100]) for (let seed = 1; seed <= 4; ++seed)
     samples.push({ template, setting: 'sprawl-' + sprawl + '-strange-' + strange, spec: { seed, dials: { size: 60, sprawl, strange } } });
   for (const [i, preset] of template.presets.entries()) samples.push({ template, setting: 'preset-' + i, spec: { seed: 1, dials: preset.dials } });
+  return samples;
+}
+export function officeCases() {
+  const template = api.templates.find(t => t.id === 'offices'), samples = [];
+  if (!template) return samples;
+  for (const sprawl of [0, 50, 100]) for (const strange of [0, 30, 50, 65, 75, 100]) for (let seed = 1; seed <= 2; ++seed)
+    samples.push({ template, setting: 'office-sprawl-' + sprawl + '-strange-' + strange, spec: { seed, dials: { size: 60, open: strange % 2 ? 0 : 100, sprawl, strange } } });
+  for (const [i, preset] of template.presets.entries()) samples.push({ template, setting: 'office-preset-' + i, spec: { seed: 1, dials: preset.dials } });
   return samples;
 }
 export function audit() {
@@ -47,8 +56,14 @@ async function main() {
   const output = new URL('../docs/exchange-examples/', import.meta.url);
   await mkdir(output, { recursive: true });
   const zones = [];
-  for (const template of api.templates) for (const seed of [1, 7, 29]) {
+  for (const template of api.templates) for (const seed of template.id === 'offices' ? [1] : [1, 7, 29]) {
     const zone = template.make({ seed }); zones.push(zone);
+  }
+  const office = api.templates.find(t => t.id === 'offices');
+  if (office) for (const name of ['Open workplace', 'Wrong workplace']) {
+    const p = office.presets.find(p => p.name === name), zone = office.make({ seed: 1, dials: p.dials });
+    zone.id += '-' + (name === 'Open workplace' ? 'open' : 'wrong'); zone.name += ' · ' + name;
+    zones.push(zone);
   }
   zones.push(JSON.parse(await readFile(new URL('../exchange/flat.zone.json', import.meta.url), 'utf8')));
   const manifest = { format: 'backrooms-zone-handoff', version: 1, contract: '../unreal-exchange.md', templates: reports, zones: [],
@@ -66,7 +81,7 @@ async function main() {
       architecturalRules: template ? api.ruleReport(template, zone) : null });
   }
   await writeFile(new URL('manifest.json', output), JSON.stringify(manifest, null, 2) + '\n');
-  for (const file of ['stream.js', 'checks.js', 'method.js', 'templates/house.js', 'templates/level0.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
-  console.log('Handoff: 7 zones, 11 plan snapshots, template code, shared checks/stream and audit manifest in docs/exchange-examples/.');
+  for (const file of ['stream.js', 'checks.js', 'method.js', 'templates/house.js', 'templates/level0.js', 'templates/offices.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
+  console.log('Handoff: ' + zones.length + ' zones, ' + manifest.zones.reduce((n, z) => n + z.plans.length, 0) + ' plan snapshots, template code, shared core and audit manifest in docs/exchange-examples/.');
 }
 if (process.argv[1] && new URL('file:///' + process.argv[1].replaceAll('\\', '/').replace(/^\//, '')).pathname === new URL(import.meta.url).pathname) await main();

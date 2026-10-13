@@ -5,7 +5,7 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { cases, shapingCases } from './exchange.mjs';
+import { cases, shapingCases, officeCases } from './exchange.mjs';
 const api = globalThis.ZoneExchange;
 const args = Object.fromEntries(process.argv.slice(2).map(arg => { const split = arg.indexOf('='); return [arg.slice(0, split), arg.slice(split + 1)]; }));
 if (!args['--core']) throw new Error('Pass --core=<directory containing TemplateModel.h and the portable C++ sources>.');
@@ -14,16 +14,19 @@ const vcvars = args['--vcvars'] ?? 'C:/Program Files/Microsoft Visual Studio/202
 // These paths are written to a command file. Refuse shell metacharacters rather than interpolating them.
 for (const path of [core, output, vcvars]) if (/["&|<>%!\r\n]/.test(path)) throw new Error('Unsupported character in build path.');
 await mkdir(output, { recursive: true });
-const samples = [...cases(), ...shapingCases()].map(c => ({ name: c.template.id + '-' + c.setting + '-' + c.spec.seed, spec: c.spec, zone: c.template.make(c.spec) }));
+const selected = args['--templates']?.split(',');
+const samples = [...cases(), ...shapingCases(), ...officeCases()].filter(c => !selected || selected.includes(c.template.id)).map(c => ({ name: c.template.id + '-' + c.setting + '-' + c.spec.seed, spec: c.spec, zone: c.template.make(c.spec) }));
+if (!samples.length) throw new Error('No templates matched --templates.');
 samples.push({ name: 'documented-flat', zone: JSON.parse(await readFile(new URL('../exchange/flat.zone.json', import.meta.url), 'utf8')) });
-const negative = structuredClone(samples.find(s => s.name === 'house-defaults-1').zone);
-negative.id = 'negative-house'; for (const s of negative.spaces) { s.rect = s.rect.map(n => n - 200); s.floor -= 580; }
+const negative = structuredClone((samples.find(s => s.name === 'house-defaults-1') ?? samples.find(s => s.name.endsWith('-defaults-1'))).zone);
+negative.id = 'negative-zone'; for (const s of negative.spaces) { s.rect = s.rect.map(n => n - 200); s.floor -= 580; }
 negative.start.x -= 200; negative.start.y -= 200; negative.entrances.forEach(e => e.at -= 200);
 samples.push({ name: 'negative-coordinates-and-heights', zone: negative });
 const string = s => JSON.stringify(s), roles = ['living', 'bedroom', 'closet', 'bath', 'kitchen', 'storage'];
 const aliases = { main: 'bedroom', ensuite: 'bath', wc: 'bath', utility: 'storage', store: 'storage' };
 // Optional parity additionally requires the local ZoneLabVersion 2 sources.
 const parity = args['--lab-parity'] === 'true';
+if (parity && !samples.some(s => s.spec && s.zone.source?.template === 'house-v2')) throw new Error('--lab-parity needs House cases; no native Office generator exists yet.');
 const functions = samples.map(({ name, zone, spec }, index) => {
   const checks = api.validate(zone); if (!checks.valid) throw new Error(name + ': ' + JSON.stringify(checks.errors));
   const lines = [`bool case${index}(){`, `const char* name=${string(name)}; const std::string zone=${string(zone.id)}; Arrangement arrangement; std::vector<LayPiece> pieces; std::vector<Instance> instances; std::vector<Footprint> footprints;`];
@@ -99,6 +102,6 @@ if (build.status !== 0) {
 }
 const run = spawnSync(executable, [], { encoding: 'utf8', timeout: 180000 });
 await writeFile(join(output, 'unreal-result.log'), run.stdout + run.stderr);
-const report = { format: 'backrooms-zone-unreal-check', version: 1, core, total: samples.length, passed: run.status === 0, houseParity: parity, summary: run.stdout.trim(), compilerLog: log };
+const report = { format: 'backrooms-zone-unreal-check', version: 1, core, total: samples.length, templates: selected ?? 'all', passed: run.status === 0, houseParity: parity, summary: run.stdout.trim(), compilerLog: log };
 await writeFile(join(output, 'unreal-result.json'), JSON.stringify(report, null, 2) + '\n');
 console.log(run.stdout.trim()); if (run.error || run.status !== 0) { console.error(run.error?.message ?? run.stderr); process.exitCode = 1; }

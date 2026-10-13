@@ -1,0 +1,40 @@
+{
+  "format": "office-template-verification",
+  "version": 1,
+  "testedAt": "2026-10-13T04:09:04.275Z",
+  "template": "offices-v1",
+  "package": "0.7.0",
+  "sourceSha256Utf8Lf": "aa5ec5406cb0102de4c74b9fcb8314370c0577a94a5d0954433593b4300e214c",
+  "nodeTests": {
+    "passed": 99,
+    "failed": 0
+  },
+  "officeAcceptance": "120/120",
+  "mixedThresholdCases": 256,
+  "native": {
+    "total": 164,
+    "passed": true,
+    "checks": [
+      "all required joins accepted",
+      "Human reach and return",
+      "reversed-list compiled digests",
+      "six stream vectors"
+    ],
+    "localOfficeGeneratorParity": false
+  },
+  "browser": [
+    "Offices selection",
+    "Standard office 16/16 rules",
+    "Open workplace 16/16 rules",
+    "Wrong workplace 6/16 rules with explicit permitted breaks",
+    "actual JS download reproduces selected preset",
+    "actual report download includes 16 rules and 120/120 audit",
+    "no console warnings/errors"
+  ],
+  "limits": [
+    "Office geometry is one-storey rectangular exchange.",
+    "Furniture is not placed.",
+    "Unreal runtime JSON loaders and a native Office generator are not implemented.",
+    "Deployed Pages and narrow-screen acceptance are unverified."
+  ]
+}
