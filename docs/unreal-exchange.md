@@ -11,7 +11,7 @@ The browser lab is a fast place to invent zone layouts; Unreal stays the place t
 It hands back two things:
 
 1. **Zone files** (`.zone.json`): one finished layout each, as rectangles and the connections between them. Unreal takes these in as fixed zones to walk. This is the quick path and the one to get working first.
-2. **Template code** (one `.js` file per template): the generator that makes zones from a seed and dials. These are ported to C++ so the game can make endless variations. That only works if the code follows the rules in *Writing a template so it ports*.
+2. **Template code** (one `.js` file per template): the generator that makes zones from a seed and dials, with its rules and presets. These are ported to C++ so the game can make endless variations. That only works if the code follows *Writing a template*. A template may have any dials it needs; the Unreal house (below) is the worked example.
 
 This page is self-contained. Whoever builds the lab does not need the Unreal project.
 
@@ -70,7 +70,21 @@ Every space has a `kind`, which is what the plan colours by and what Unreal buil
 
 A new theme is welcome: give it a name and describe it in the zone's `notes`. Unreal falls back to an existing one until the new look is built.
 
-**Role.** A room in the `residential` theme may name a role, which picks its floor finish: `living` and unnamed rooms get wood, `bedroom` and `closet` carpet, `bath` and `kitchen` tile, `storage` its own finish. Roles in `backrooms` change nothing visible yet. A role the lab invents (`garage`, `office`) is kept and ignored until Unreal has a finish for it.
+**Role.** What a space is for. Rules are written against roles, so give every space one. The roles the Unreal house uses:
+
+| Role | Title | Kind | Finish in `residential` |
+| --- | --- | --- | --- |
+| `entry` | Entry hall | hall | wood |
+| `hall`, `backhall`, `landing`, `uphall` | Hallway, Back hall, Landing, Upstairs hall | hall | wood |
+| `stair` | Stairs | stair | wood |
+| `living`, `dining`, `family`, `study`, `den` | Living room, Dining room, Family room, Study, Den | room | wood |
+| `kitchen` | Kitchen | room | tile |
+| `bath`, `ensuite`, `wc` | Bathroom, Main bathroom, WC | room | tile |
+| `bedroom`, `main` | Bedroom, Main bedroom | room | carpet |
+| `closet` | Walk-in closet | room | carpet |
+| `utility`, `store` | Utility room, Store room | room | store-room floor |
+
+Roles in `backrooms` change nothing visible yet. A role the lab invents (`garage`, `office`) is kept and ignored until Unreal has a finish for it; say what it is in `notes`.
 
 **Title.** Free text shown to the player and on the plan ("Main bedroom"). Titles need not be unique; ids must be.
 
@@ -149,6 +163,7 @@ One zone per file, named `<id>.zone.json`, UTF-8. This is version 1.
 | `spaces` | array | See below. Order does not matter; ids do. |
 | `joins` | array | See below. |
 | `entrances` | array, optional | `{ "title", "space", "side", "at" }`: an outer wall of a space (`n`, `e`, `s`, `w`) and the coordinate along it. |
+| `rules` | array, optional | The template's rules as this zone stands against them: `{ "id", "name", "kept", "relaxed", "relaxedBy", "detail" }` (see *Rules*). Unreal recomputes its own; this is for comparing. |
 
 A space:
 
@@ -160,9 +175,10 @@ A space:
 | `rect` | `[x0, y0, x1, y1]` | Whole units. |
 | `floor` | integer | Centimetres, a multiple of 10. A stair's is its foot. |
 | `ceiling` | integer, optional | Centimetres above its floor. Left out: the theme's. |
-| `role` | string, optional | `living`, `bedroom`, `closet`, `bath`, `kitchen`, `storage`, or the lab's own. |
+| `role` | string, optional | One of the roles in *Spaces*, or the lab's own. |
 | `theme` | string, optional | Overrides the zone's. |
 | `features` | object, optional | `{ "shape", "columns", "divider", "screen" }`, any of them. |
+| `outline` | array, optional | Design data: the space's real shape when it is not its rectangle. A closed path in units, each point `[x, y]` (fractions allowed), or `{ "arc": [cx, cy], "to": [x, y] }` for a circular arc to the next point. It must lie inside `rect`. The version 1 loader builds `rect` and keeps `outline` for the adapter that will build it; never drop it. |
 | `rise` | integer, stairs only | Centimetres climbed. |
 | `foot` | string, stairs only | `n`, `e`, `s` or `w`. |
 
@@ -204,7 +220,7 @@ y=0  +---------------+-----------+     +---------------+-----+-----+
     { "id": "front",        "title": "Front room",    "kind": "room",  "rect": [0, 0, 8, 10],    "floor": 0, "role": "living" },
     { "id": "kitchen",      "title": "Kitchen",       "kind": "room",  "rect": [0, 10, 8, 22],   "floor": 0, "role": "kitchen" },
     { "id": "hallway",      "title": "Hallway",       "kind": "hall",  "rect": [11, 4, 14, 22],  "floor": 0 },
-    { "id": "cupboard",     "title": "Cupboard",      "kind": "room",  "rect": [8, 18, 11, 22],  "floor": 0, "role": "storage" },
+    { "id": "cupboard",     "title": "Cupboard",      "kind": "room",  "rect": [8, 18, 11, 22],  "floor": 0, "role": "store" }   ,
     { "id": "stairs",       "title": "Stairs",        "kind": "stair", "rect": [8, 4, 11, 18],   "floor": 0, "rise": 290, "foot": "s" },
     { "id": "landing",      "title": "Landing",       "kind": "hall",  "rect": [8, 18, 11, 22],  "floor": 290 },
     { "id": "uphall",       "title": "Upstairs hall", "kind": "hall",  "rect": [11, 0, 14, 22],  "floor": 290 },
@@ -234,25 +250,37 @@ y=0  +---------------+-----------+     +---------------+-----+-----+
 
 Things to notice in it: the stair is 3 units wide and 14 long (a run of 10 for a rise of 290); the cupboard sits under the landing because their floors are 290 apart; nothing upstairs overlaps the stair's rectangle; the entry meets the front room along only 4 units, so that join can only be a door.
 
-## Writing a template so it ports
+## Writing a template
 
-A template is one function from a seed and dials to a zone in the exchange format. It ports to C++ line by line if it is written the way the Unreal templates are. The shape:
+A template is one function from a seed and dials to a zone in the exchange format, plus what describes it: its dials, its presets and its rules. It ports to C++ almost line by line if it is written the way the Unreal templates are.
 
 ```js
 const house = {
   id: "house",
   name: "House",
-  summary: "An ordinary home on two storeys.",
+  summary: "A home, from an ordinary two-storey house to a rambling one-storey spread.",
   dials: [
-    { id: "size",  name: "Size",  low: "Modest", high: "Large", value: 40, help: "How large the house and its rooms are" },
-    { id: "rooms", name: "Rooms", low: "Few",    high: "Many",  value: 50, help: "How far its floors are divided" }
+    { id: "size",    name: "Size",        low: "Modest",   high: "Large",     value: 40, help: "How large, and how many bedrooms (2 to 5)" },
+    { id: "sprawl",  name: "Sprawl",      low: "Compact",  high: "Sprawling", value: 0,  help: "A box on two storeys, to one long storey" },
+    { id: "strange", name: "Strangeness", low: "Expected", high: "Wrong",     value: 0,  help: "Every house rule kept, to none" }
   ],
-  // spec = { seed: 1, dials: { size: 40, rooms: 50 } }. Returns a zone, or { error: "why" }.
+  presets: [
+    { name: "Suburban", dials: { size: 40, sprawl: 0,  strange: 0 } },
+    { name: "Ranch",    dials: { size: 50, sprawl: 65, strange: 0 } }
+  ],
+  rules: [
+    { id: "kitchen", name: "The kitchen opens onto the dining room", relaxedBy: { dial: "strange", from: 70 } },
+    { id: "entry",   name: "The front door opens into an entry hall" }        // never relaxed
+  ],
+  // spec = { seed: 1, dials: { size: 40, sprawl: 0, strange: 0 } }. Returns a zone (with its rules report),
+  // or { error: "why" }.
   make(spec) { /* ... */ }
 };
 ```
 
-**The random draw.** Every random choice is a named, stateless draw: a function of a seed, a path and a name. This is the Unreal side's `Templates::Stream`, and this JavaScript gives the same numbers:
+### The random draw
+
+Every random choice is a named, stateless draw: a function of a seed, a path and a name. This is the Unreal side's `Templates::Stream`, and this JavaScript gives the same numbers:
 
 ```js
 // Unsigned 32-bit throughout.
@@ -281,34 +309,150 @@ Check the lab's copy against these before trusting it:
 | `stream(4294967295, "room/0,0,12,10", "seed")` | 1657424870 |
 | `stream(123456789, "join/0,0,8,8/8,0,16,8", "order")` | 25009617 |
 
-How the Unreal templates use it, to copy:
+How the Unreal templates use it: a seed for the zone, a stream per attempt, and every draw of an attempt named under the template's family.
 
 ```js
 const zoneSeed = stream(spec.seed, "zonelab/" + this.id, "seed");
-for (let attempt = 0; attempt < 4; ++attempt) {
-  const s = stream(zoneSeed, "attempt", String(attempt));
-  const pick   = (name, lo, hi) => lo + stream(s, "house", name) % (hi - lo + 1);   // whole number, lo..hi
-  const chance = (name, percent) => stream(s, "house", name) % 100 < percent;
-  // ... lay the spaces, ask for the joins, run the checks; return the zone if they pass.
+for (let attempt = 0; attempt < 16; ++attempt) {
+  const d = draws(stream(zoneSeed, "attempt", String(attempt)), this.id);
+  // ... decide the program, arrange it, ask for the openings, check the rules; return the zone if it passes.
 }
 return { error: "no attempt was accepted" };
 ```
 
-The rules:
+### Building blocks
+
+The Unreal house is built from a few small pieces. The same pieces in JavaScript make a template easy to port, because each has a C++ twin of the same name. This JavaScript was run beside its C++ twin and gave identical output (`Saved/M3/ZoneLabJs` in the project).
+
+```js
+// Draws: every choice of one attempt, by name.
+function draws(s, family) {
+  return {
+    pick:   (name, lo, hi) => hi <= lo ? lo : lo + stream(s, family, name) % (hi - lo + 1),
+    chance: (name, percent) => stream(s, family, name) % 100 < percent
+  };
+}
+
+// Rooms in a row filling a strip exactly. Each slot { role, lo, hi, optional, absorb } is drawn between lo
+// and hi; while the row is too long, optional slots are dropped from its end and then slots shrink towards lo;
+// while it is too short, slots grow towards hi (round from a drawn one), then an absorbing slot past hi by at
+// most 6. Sets each slot's len; false when no fit is found.
+function fit(slots, total, d, name) {
+  let sum = 0;
+  slots.forEach((sl, k) => { sl.len = d.pick(name + "/" + k + "/" + sl.role, sl.lo, sl.hi); sum += sl.len; });
+  while (sum > total) { let drop = -1; for (let k = slots.length - 1; k >= 0 && drop < 0; --k) if (slots[k].optional) drop = k;
+                        if (drop < 0) break; sum -= slots[drop].len; slots.splice(drop, 1); }
+  while (sum > total) { let any = false; for (let k = slots.length - 1; k >= 0 && sum > total; --k) if (slots[k].len > slots[k].lo) { --slots[k].len; --sum; any = true; } if (!any) break; }
+  if (sum > total || slots.length === 0) return false;
+  const n = slots.length, start = d.pick(name + "/grow", 0, n - 1);
+  while (sum < total) { let any = false; for (let i = 0; i < n && sum < total; ++i) { const sl = slots[(start + i) % n]; if (sl.len < sl.hi) { ++sl.len; ++sum; any = true; } } if (!any) break; }
+  for (const sl of slots) while (sum < total && sl.absorb && sl.len < sl.hi + 6) { ++sl.len; ++sum; }
+  return sum === total;
+}
+
+// Frames: an origin and a direction (0 north, 1 east, 2 south, 3 west); u runs along it, v to its left.
+// A hall is laid in a frame: the hall at v 0..hw, rooms on its left at v > hw and on its right at v < 0.
+const DX = [0, 1, 0, -1], DY = [1, 0, -1, 0];
+const leftOf = d => (d + 3) & 3, rightOf = d => (d + 1) & 3;
+function uv(f, u0, u1, v0, v1) {             // the rectangle u0..u1 along, v0..v1 to the left: [x0, y0, x1, y1]
+  const l = leftOf(f.dir);
+  const ax = f.x + u0 * DX[f.dir] + v0 * DX[l], ay = f.y + u0 * DY[f.dir] + v0 * DY[l];
+  const bx = f.x + u1 * DX[f.dir] + v1 * DX[l], by = f.y + u1 * DY[f.dir] + v1 * DY[l];
+  return [Math.min(ax, bx), Math.min(ay, by), Math.max(ax, bx), Math.max(ay, by)];
+}
+function move(f, u, v) { const l = leftOf(f.dir); return { x: f.x + u * DX[f.dir] + v * DX[l], y: f.y + u * DY[f.dir] + v * DY[l], dir: f.dir }; }
+// The frame of the hall that leaves the end of a hall `length` long and hw wide, by its left side (turn 1)
+// or right side (turn 2), nextWide wide. Rooms on that side of the first hall stop nextWide short of its end.
+function turned(f, length, hw, turn, nextWide) {
+  if (turn === 1) { const m = move(f, length, hw); return { x: m.x, y: m.y, dir: leftOf(f.dir) }; }
+  const m = move(f, length - nextWide, 0); return { x: m.x, y: m.y, dir: rightOf(f.dir) };
+}
+```
+
+Two more the house uses, described rather than given:
+
+- **A hall with things along it.** Lay each side's things in order from the start of the hall; a thing that would stand on something already laid moves along one unit at a time (at most 20) and fails the attempt if it never fits. Then the hall's length is the longer side (plus the next hall's width on the side it turns to), and the hall itself must stand clear. A hall longer than 36 units is laid as pieces joined by `open`, cut where every room keeps 4 units of wall on the piece it opens off. Things are rooms, a gap (hall with nothing off it), a suite (a bedroom with its closet beside it next to the hall and its bathroom behind) and a branch (a side hall laid the same way, its rooms starting past the first hall's rooms).
+- **Taking back.** When something fails part way, remove what that step added and try the next option. Never leave half a hall in the plan.
+
+### Rules
+
+A rule is a named check the template keeps, written against roles and joins. Rules are what make the strict end of a template look like the real thing, and what the dials are allowed to loosen.
+
+- Each rule has an `id`, a `name` a person can read, and optionally `relaxedBy`: the dial and value from which it may be broken.
+- `make` checks every rule on the zone it made. A rule broken but not relaxed fails the attempt and the next is tried. Rules relaxed by the dials are still checked and reported, so the lab can show what the dials let go.
+- The zone's `rules` report lists every rule with `kept`, `relaxed` and, when broken, a `detail` naming the space ("Living room is 4 by 9.5 m").
+- A template with its dials at their strict end keeps every rule on every seed. That is checked over 40 seeds before export.
+
+Good rules are about relationships, not exact sizes: what opens onto what, what is on which floor, what share of the floor halls take, whether you can walk round in a loop. Rules about size give a range or a proportion.
+
+### Dials
+
+A dial moves a template away from its plain version in one direction. Design them like this:
+
+1. **Start from the strict template.** Make it convincing with every rule kept before adding dials.
+2. **Each dial loosens named rules in a fixed order**, written down as a table of thresholds (below). That way any setting can be explained by which rules are off.
+3. **Keep dials independent.** Sprawl (how far the house spreads) and Strangeness (how wrong it is) are separate, so a rambling but sensible farmhouse and a small but wrong house are both reachable.
+4. **A dial may switch arrangements at a threshold** (two storeys to one at Sprawl 55), but between thresholds it should change things continuously: sizes, counts, chances.
+5. **Presets** name points worth pointing at. They are plain dial values, nothing more.
+6. **Judge the middles.** Look at nine seeds at once (the gallery) at a few settings between presets, not just the ends.
+
+### The worked example: the Unreal house
+
+The house is decided in the order an architect works: what rooms it has, how they are arranged about a spine (entry, then the rooms everyone shares, then halls with the private rooms off them), where each opening goes, and then the rules.
+
+| Dial | Value | What happens |
+| --- | --- | --- |
+| Size | 0 to 100 | 2 bedrooms, 3 from 17, 4 from 50, 5 from 84; a dining room from 25 (by chance below); a WC from 35 in a two-storey house; a study from 45; a family room from 60; a main bathroom from 3 bedrooms, a second family bathroom from 4. |
+| Sprawl | 0 to 29 | A box on two storeys: a centre hall with the stair beside it, a back hall behind the stair that closes a loop through the kitchen. Shared rooms on the ground floor, all on one side of the hall or living and dining rooms either side of the entry; bedrooms upstairs, each with a closet where it fits. The box grows a little as the dial rises. |
+| | 30 | A one-storey wing grows from the back of the hall and takes a den. |
+| | 40 | The main bedroom suite moves into the wing. |
+| | 48 | The wing turns. |
+| | 55 to 100 | One storey: through the entry into the living room, through that into the dining room with the kitchen beside it, then halls that turn (alternately left and right), with bedrooms and bathrooms off them and the suite at the end. 1 hall at 55, up to 4 at 100, more of them with rooms on one side only. |
+| Strangeness | 20 | Rooms stray from their proportions. |
+| | 30 | Halls widen and run on past their rooms. |
+| | 40 | Halls branch; an odd wing grows from even a compact house. |
+| | 50 | Rooms repeat (extra bathrooms, store rooms). |
+| | 55 | Branches may lead nowhere. |
+| | 60 | Halls may turn the same way twice, so the house doubles back. |
+| | 70 | Rooms turn up in the wrong places: a kitchen off a hall, a bathroom off the living room. |
+| | 75 to 85 | Extra bedrooms, a second kitchen or living room; bedrooms open through bedrooms; ceilings change height from room to room. |
+
+Its rules, and what relaxes them:
+
+| Rule | Relaxed by |
+| --- | --- |
+| The front door opens into an entry hall | never |
+| The stair rises from a hall to a landing | never |
+| The living room, dining room and kitchen are on the ground floor | never |
+| The kitchen opens onto the dining room | Strangeness 70 |
+| The living and dining rooms open into each other, or off the same hall | Strangeness 70 |
+| Every bedroom opens off a hall or landing | Strangeness 85 |
+| No bedroom opens onto the entry, living room, dining room or kitchen | Strangeness 70 |
+| Bathrooms open off a hall, never onto the living room, dining room or kitchen | Strangeness 70 |
+| The main bathroom opens only from the main bedroom | Strangeness 70 |
+| One kitchen, one living room, and bathrooms to suit the bedrooms | Strangeness 50 |
+| Every room is a usable size and shape for what it is (least width and most elongation per role) | Strangeness 20 |
+| Halls take no more than a quarter of the floor | Sprawl 30 or Strangeness 30 |
+| No hall leads nowhere (the entry's other way out is the front door) | Strangeness 40 |
+| The house is a box, or a box with a wing (rooms cover 70% of the ground they stand in) | Sprawl 30 or Strangeness 40 |
+| The ground floor can be walked round in a loop | Sprawl 55 or Strangeness 40 |
+
+Presets: Suburban (40, 0, 0), Family home (75, 35, 0), Ranch (50, 65, 0), Rambling (85, 95, 15), Not quite right (45, 20, 55), Backrooms house (70, 90, 95), as size, sprawl, strangeness.
+
+### The rules of portable code
 
 1. **Only `stream` decides.** No `Math.random`, no dates or clocks, nothing read from the page.
-2. **Name a draw for what it decides**, not for when it happens. `"room/" + x0 + "," + y0 + "," + x1 + "," + y1` or `"living/depth"`, never a running counter. Then changing one part of a template does not reshuffle the rest.
+2. **Name a draw for what it decides**, not for when it happens: `"living/len"`, `"halls/2/turn"`, `"room/" + x0 + "," + y0`, never a running counter. Then changing one part of a template does not reshuffle the rest.
 3. **Whole numbers in every decision.** Sizes are units, heights are centimetres. To turn a dial into a size use `lo + Math.round((hi - lo) * dial / 100)` with `hi >= lo`. Divide only non-negative whole numbers, with `Math.floor`.
 4. **Sort with a complete order.** Every comparator must break ties down to something unique (the rectangle's coordinates, the id). JavaScript's sort keeps ties in place and C++'s does not.
 5. **Loop over arrays in a stated order.** Never let the order of an object's keys, a `Set` or a `Map` decide anything.
 6. **Bound every loop.** A fixed number of attempts, a fixed number of tries per room. On failure return `{ error }` naming the cause; never drop a required join quietly.
 7. **Pure.** The same `spec` gives a byte-identical file, however often and in whatever order templates are run.
 8. **Plain code.** One file per template, plain functions and arrays, no libraries, no classes, nothing asynchronous.
-9. **Dials are whole numbers 0 to 100** with a default. A dial changes sizes, counts and chances. It does not switch between unrelated layouts.
-10. **Stable ids.** A space's id says what it is (`kitchen`, `bedroom-2`, or `r-12-0-24-10` from its rectangle), so the same space keeps its id when other spaces come and go.
-11. **Keep the start room and stair landings plain** (`shape: "rect"`, no columns), so the joins that hold the zone together cannot fail.
-
-Two approaches the Unreal templates use, as starting points. `level0` splits one large rectangle in two again and again, across its longer side at a drawn position, until each piece is room sized; drops some pieces to leave solid blocks; then joins neighbours first as a tree (so everything connects) and then adds most of the remaining shared walls. `house` lays named rooms in three columns from a handful of drawn depths, mirrors the plan left to right by a draw, and joins rooms to the hall in a fixed order.
+9. **Dials are whole numbers 0 to 100** with a default. A dial may switch arrangement at a stated threshold; between thresholds it changes sizes, counts and chances.
+10. **Stable ids.** A space's id says what it is (`kitchen`, `bedroom-2`), so the same space keeps its id when other spaces come and go.
+11. **Keep the start room, stair landings and anything a required join depends on plain** (`shape: "rect"`, no columns), so those joins cannot fail.
+12. **Rules are code too.** Write each rule as a function of the zone made (spaces, roles, joins), not of the template's intentions, so Unreal can run the same check on the same zone.
 
 ## Checks before export
 
@@ -324,8 +468,10 @@ The lab must run these on every zone and refuse to export one that fails, saying
 8. **Entrances.** On a side of the space with no other space beyond it at that floor, with at least 4 units of free wall.
 9. **Counts.** At most 128 spaces and 256 joins.
 10. **Same again.** Making the zone twice from the same spec gives the same file, byte for byte.
+11. **Rules.** Every rule the dials do not relax is kept.
+12. **Outline.** Where a space has an `outline`, it is closed and lies inside `rect`.
 
-For a template, also run the checks over seeds 1 to 40 with the dials at their defaults, all at 10 and all at 90, and show how many of the 120 passed. The Unreal templates are held to 120 of 120.
+For a template, also run the checks over seeds 1 to 40 with the dials at their defaults, all at 10 and all at 90 (120 zones), and over seeds 1 to 40 with every dial at its strict end, where every rule must be kept. Show how many passed. The Unreal templates are held to all of them; the house is also swept over Sprawl and Strangeness (`Tools/ZoneLabCheck.cpp`).
 
 ## The lab's screen
 
@@ -335,6 +481,9 @@ The Unreal Zone Lab is the model: one sidebar, one plan. What the browser lab ne
 - **The plan**: spaces coloured by kind, their titles, the joins drawn on the shared walls and told apart by mode, the entrances and the start marked, a scale bar. Drag to move, wheel to zoom, a key to fit.
 - **A storey switch** when the zone has more than one floor height. A stair shows on the storey it starts on and as a stairwell on the one it reaches.
 - **Facts**: footprint in metres, floor area, counts of rooms, halls and stairs, counts of joins by mode.
+- **Presets** as buttons under the dials, the one the dials stand at marked.
+- **The rules**, always visible: each rule with a mark for kept or broken, and for a broken one what broke it and the dial setting that lets it.
+- **A gallery**: nine seeds side by side with the same dials (seeds 1 to 9, 10 to 18, ...), each with its spaces and how many rules it lets go; click to choose a seed. This is how a dial's middle is judged.
 - **The checks**, always visible: pass, or the list of failures with the space or join named and highlighted on the plan.
 - **Export** of the zone shown (`<id>.zone.json`), enabled only when the checks pass, and **import** of a zone file to look at it again.
 
@@ -344,8 +493,8 @@ Build it as a single page with no build step and no dependencies, so it runs fro
 
 ## What the lab should not do
 
-- **Walls, doors and frames as geometry.** Only rectangles and joins.
-- **Diagonal or curved rooms.** Not buildable yet.
+- **Walls, doors and frames as geometry** in the version 1 file. Rooms are rectangles and joins; a room's real shape goes in `outline`.
+- **Simplify a shape to fit version 1.** Angled and curved rooms are welcome as design: give them an `outline` (and their rectangle as the bound) rather than squaring them off. Unreal builds the rectangle until the adapter exists.
 - **Furniture and props.** Say what a room is with `role` and `title`; say what it should hold in `notes`.
 - **Lighting and materials.** A theme name is enough.
 - **Joining zones to each other.** Mark entrances; the zone graph and the transitions (passages, portal doors, ramps, drops) are Unreal's.
@@ -355,7 +504,19 @@ Build it as a single page with no build step and no dependencies, so it runs fro
 ## What to bring back
 
 1. **Zone files**: a handful you like (three to ten) rather than hundreds, each passing the checks, with a line in `notes` on what you like about it.
-2. **Template files**: the `.js` for each template, written to the rules above, with its 120-seed result.
-3. **A picture of each plan**, so the import can be checked against what you saw.
-4. **The lab itself**, so its zones can be made again.
-5. **What the format could not say**: kinds of space, features, joins or themes you wanted and had to leave out. This is as useful as the zones, because it says what to build next on the Unreal side.
+2. **Template files**: the `.js` for each template, written as in *Writing a template*, with its dials, presets and rules, its 120-seed result and its strict result.
+3. **Gallery pictures** of each template at each preset, so the port can be compared seed by seed.
+4. **A picture of each plan**, so the import can be checked against what you saw.
+5. **The lab itself**, so its zones can be made again.
+6. **What the format could not say**: kinds of space, features, joins or themes you wanted and had to leave out. This is as useful as the zones, because it says what to build next on the Unreal side.
+
+## Browser implementation notes — October 13, 2026
+
+The default exchange workbench accepts these optional additions without changing schema version 1. Older files without `rules` or `outline` remain valid. Full `br.zone` geometry remains a separate richer contract; outlines do not encode wall solids, holes, opening geometry or traversals.
+
+- **Outline convention:** start with `[x, y]`, then straight endpoints or `{arc: [cx, cy], to: [x, y]}`. Explicitly return to the first point (a closing arc is allowed). Arcs use the shorter circular sweep; a 180-degree tie goes counterclockwise in XY. Represent a full circle with two semicircular arcs; split longer sweeps into smaller arcs. Endpoints must share the same nonzero radius. At most 256 nodes are accepted per space. The complete arc, including its extrema, must lie in `rect`. Fractions are preserved exactly in JSON; geometric tolerance is 1e-7 plan units for bounds and relative radius agreement. A dashed gold outline shows the preserved design over its rectangular allocation. These checks do not establish outline support, opening clearance or actual-shape navigation in Unreal.
+- **Rule reports:** generated House and Office files embed their reports in `rules`; canonical JSON sorts them by id. Report `relaxedBy` is explanatory text; imported `{dial, from}` descriptions are also retained. Physical geometry and the portable compiler digest do not change. On import/edit, a known current-version template recomputes reports from geometry and recorded dials rather than trusting old flags. Reports from unavailable templates are retained and labelled unverified. Broken, unrelaxed external reports are refused. Files without a report remain supported.
+- **Strict audit:** each template is checked at 40 strict seeds in addition to the 120 acceptance configurations, with repeats, reordered lists and canonical round trips. Strict defaults to zero for each dial; templates may specify a numeric `strict` value per dial when the strict end is different. Every strict rule must be kept, even if its policy would permit a break. Level 0 currently has no architectural rulebook, so its strict rule condition is vacuous.
+- **Seed gallery:** compare nine consecutive seeds at the current template/dials, page the groups, select a seed, and export the group as a standalone SVG. Cards use the selected floor where it exists and the lowest floor otherwise. Imported one-off edits remain in the main plan; gallery cards show generated designs. Selected presets are marked.
+
+No runtime Unreal loader or curved-shape adapter is implemented by this browser update.

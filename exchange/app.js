@@ -7,6 +7,7 @@
   const api = globalThis.ZoneExchange, $ = id => document.getElementById(id), esc = api.escape;
   const state = { template: 'house', zone: null, draft: null, checks: null, floor: 0, rejected: false, saved: new Map(), drag: null, fitBox: null };
   const audits = new Map();
+  const gallery = { start: 1, key: '', samples: [] };
   function template() { return api.templates.find(t => t.id === state.template); }
   function settings() {
     if (!state.saved.has(state.template)) state.saved.set(state.template, { seed: 1, dials: Object.fromEntries(template().dials.map(d => [d.id, d.value])) });
@@ -36,12 +37,19 @@
     state.fitBox = svg.getAttribute('viewBox');
     const facts = api.facts(state.zone), index = facts.floors.indexOf(state.floor);
     $('floor').value = String(state.floor); $('floor-down').disabled = index <= 0; $('floor-up').disabled = index >= facts.floors.length - 1;
+    drawGallery();
   }
   function accept(zone, imported = false) {
-    const checks = api.validate(zone);
-    const policy = api.templates.find(t => (zone.source?.template ?? '').replace(/^(?:edited-)+/, '') === api.templateKey(t));
-    const report = checks.valid && policy ? api.ruleReport(policy, zone) : null;
+    const recordedTemplate = typeof zone?.source?.template === 'string' ? zone.source.template.replace(/^(?:edited-)+/, '') : '';
+    const policy = api.templates.find(t => recordedTemplate === api.templateKey(t) && typeof t.rules === 'function');
+    // Known reports are recomputed from geometry and recorded dials, including fixed edits.
+    const physical = policy && zone && typeof zone === 'object' ? { ...zone } : zone;
+    if (policy) delete physical.rules;
+    const checks = api.validate(physical);
+    const report = checks.valid && policy ? api.ruleReport(policy, physical) : null;
     if (report && !report.valid) { checks.valid = false; checks.errors.push(...report.rules.filter(r => !r.kept && !r.relaxed).map(r => ({ code: 'rule.' + r.id, message: r.name + ': ' + r.detail }))); }
+    if (checks.valid && report && policy.rules) zone = { ...zone, rules: report.rules };
+    if (checks.valid && !policy && zone.rules?.length) checks.warnings.push({ code: 'rules-unverified', message: 'Embedded rule report retained; its rule evaluator is unavailable, so the architectural claims cannot be recomputed here.' });
     state.checks = checks; showChecks(checks);
     if (!checks.valid) {
       state.rejected = true; state.draft = zone; message('Edit or import refused. The plan is the last accepted zone; export is disabled until the errors are resolved.');
@@ -49,7 +57,8 @@
       draw(); return false;
     }
     state.zone = zone; state.draft = null; state.rejected = false; message('');
-    $('rules').innerHTML = report?.rules.length ? '<p>' + report.kept + ' of ' + report.rules.length + ' rules kept</p>' + report.rules.map(r => '<p class="small">' + (r.kept ? '● ' : '◇ ') + esc(r.name) + (r.kept ? '' : '<br><span class="muted">' + esc(r.detail + ' · let go from ' + r.relaxedBy) + '</span>') + '</p>').join('') : '<p class="muted small">No architectural rulebook recorded for this template/version.</p>';
+    const shownRules = report?.rules ?? zone.rules ?? [];
+    $('rules').innerHTML = shownRules.length ? '<p>' + shownRules.filter(r => r.kept).length + ' of ' + shownRules.length + ' rules kept' + (!policy ? ' · imported claims, unverified' : '') + '</p>' + shownRules.map(r => '<p class="small">' + (r.kept ? '● ' : '◇ ') + esc(r.name) + (r.kept ? '' : '<br><span class="muted">' + esc((r.detail ?? '') + ' · let go from ' + (typeof r.relaxedBy === 'string' ? r.relaxedBy : r.relaxedBy.dial + ' ' + r.relaxedBy.from)) + '</span>') + '</p>').join('') : '<p class="muted small">No architectural rulebook recorded for this template/version.</p>';
     const facts = api.facts(zone);
     if (!facts.floors.includes(state.floor)) state.floor = facts.floors[0];
     $('floor').innerHTML = facts.floors.map(f => `<option value="${f}">Floor ${(f / 100).toFixed(1)} m</option>`).join('');
@@ -68,7 +77,8 @@
     if (zone.error) { reject(zone.error); return; }
     const again = template().make(current);
     if (again.error || api.serialize(zone) !== api.serialize(again)) { reject('Same-again check failed: identical inputs produced different files.'); return; }
-    accept(zone);
+    gallery.start = 1 + 9 * Math.floor((Math.max(1, current.seed) - 1) / 9);
+    updatePresets(); accept(zone);
   }
   function reject(error) {
     state.rejected = true; state.draft = null; state.checks = { valid: false, errors: [{ code: 'generation', message: error }], warnings: [], links: [] };
@@ -81,7 +91,35 @@
     for (const d of template().dials) $('dial-' + d.id).addEventListener('input', event => { settings().dials[d.id] = Number(event.target.value); $('value-' + d.id).value = event.target.value; generate(); });
     $('presets').innerHTML = (template().presets ?? []).map((p, i) => '<button id="preset-' + i + '">' + esc(p.name) + '</button>').join('');
     (template().presets ?? []).forEach((p, i) => $('preset-' + i).addEventListener('click', () => { settings().dials = { ...p.dials }; selectTemplate(); }));
-    if (regenerate) generate();
+    updatePresets();
+    if (regenerate) generate(); else { gallery.start = 1 + 9 * Math.floor((Math.max(1, settings().seed) - 1) / 9); drawGallery(); }
+  }
+  function updatePresets() {
+    (template().presets ?? []).forEach((p, i) => {
+      const selected = template().dials.every(d => p.dials[d.id] === settings().dials[d.id]);
+      $('preset-' + i).setAttribute('aria-pressed', String(selected));
+    });
+  }
+  function drawGallery() {
+    const t = template(), dials = { ...settings().dials }, key = JSON.stringify([api.templateKey(t), dials, gallery.start]);
+    if (gallery.key !== key) {
+      gallery.key = key; gallery.samples = [];
+      for (let seed = gallery.start; seed < gallery.start + 9 && seed <= 4294967295; ++seed) {
+        const zone = t.make({ seed, dials });
+        const checks = zone.error ? null : api.validate(zone);
+        const report = checks?.valid ? api.ruleReport(t, zone, dials) : null;
+        gallery.samples.push({ seed, zone, report, error: zone.error ?? (!checks.valid ? checks.errors.map(e => e.message).join('; ') : !report.valid ? 'Architectural rules failed.' : null) });
+      }
+    }
+    $('gallery-range').textContent = 'Seeds ' + gallery.start + '–' + gallery.samples.at(-1).seed + ' · ' + t.name;
+    $('gallery-prev').disabled = gallery.start === 1; $('gallery-next').disabled = gallery.start + 9 > 4294967295;
+    $('gallery-export').disabled = !gallery.samples.some(s => !s.error);
+    $('seed-cards').innerHTML = gallery.samples.map(s => {
+      if (s.error) return '<div class="seed-card failed"><strong>Seed ' + s.seed + ' · refused</strong><p>' + esc(s.error) + '</p></div>';
+      const floors = api.facts(s.zone).floors, floor = floors.includes(state.floor) ? state.floor : floors[0];
+      return '<button class="seed-card" id="gallery-seed-' + s.seed + '" aria-pressed="' + (s.seed === settings().seed) + '"><strong>Seed ' + s.seed + '</strong><span>' + s.report.kept + '/' + s.report.rules.length + ' rules kept · floor ' + floor / 100 + ' m</span>' + api.plan(s.zone, floor, { idPrefix: 'seed-' + s.seed + '-' }) + '</button>';
+    }).join('');
+    for (const s of gallery.samples) if (!s.error) $('gallery-seed-' + s.seed).addEventListener('click', () => { $('seed').value = String(s.seed); generate(); });
   }
   function download(name, contents, mime) {
     const url = URL.createObjectURL(new Blob([contents], { type: mime })), anchor = document.createElement('a');
@@ -90,13 +128,7 @@
   }
   function audit(t) {
     if (audits.has(t.id)) return audits.get(t.id);
-    const failures = []; let passed = 0;
-    for (const value of [null, 10, 90]) for (let seed = 1; seed <= 40; ++seed) {
-      const spec = { seed, dials: Object.fromEntries(t.dials.map(d => [d.id, value ?? d.value])) }, a = t.make(spec), b = t.make(spec);
-      const error = a.error ?? b.error ?? (api.serialize(a) === api.serialize(b) ? null : 'not byte-identical');
-      if (error) failures.push({ seed, dials: spec.dials, error }); else ++passed;
-    }
-    const report = { template: api.templateKey(t), passed, total: 120, failures }; audits.set(t.id, report); return report;
+    const report = api.auditTemplate(t); audits.set(t.id, report); return report;
   }
   function moveFloor(step) {
     if (!state.zone) return;
@@ -112,6 +144,10 @@
   $('floor').addEventListener('change', () => { state.floor = Number($('floor').value); draw(); });
   $('floor-down').addEventListener('click', () => moveFloor(-1)); $('floor-up').addEventListener('click', () => moveFloor(1));
   $('fit').addEventListener('click', () => $('plan').querySelector('svg')?.setAttribute('viewBox', state.fitBox));
+  for (const [id, step] of [['gallery-prev', -9], ['gallery-next', 9]]) $(id).addEventListener('click', () => { gallery.start += step; drawGallery(); });
+  $('gallery-export').addEventListener('click', () => {
+    download(template().id + '-seeds-' + gallery.start + '-floor-' + state.floor + '.svg', api.galleryPlan($('gallery-range').textContent, settings().dials, gallery.samples, state.floor), 'image/svg+xml');
+  });
   $('notes').addEventListener('input', () => {
     if (!state.zone || state.rejected) return;
     const edited = { ...state.zone, notes: $('notes').value }, checks = api.validate(edited);
@@ -126,7 +162,7 @@
     // a Blob download also works offline without fetching a local file.
     const code = api.exportTemplate(t);
     download(t.id + '.js', code, 'text/javascript');
-    message('The template also needs exchange/stream.js, exchange/checks.js and exchange/method.js. Its 120-case result is in Export check report.');
+    message('The template also needs exchange/stream.js, exchange/checks.js and exchange/method.js. Its 120-case acceptance and 40-case strict results are in Export check report.');
   });
   $('report').addEventListener('click', () => {
     const t = api.templates.find(t => state.zone?.source?.template === api.templateKey(t));

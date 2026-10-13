@@ -151,6 +151,128 @@
   ],
   "name": "House · seed 7",
   "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "baths",
+      "kept": true,
+      "name": "Bathrooms open off a hall, never onto the living room, dining room or kitchen",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "bedrooms",
+      "kept": true,
+      "name": "Every bedroom opens off a hall or landing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "compact",
+      "kept": true,
+      "name": "The house is a box, or a box with a wing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "counts",
+      "kept": true,
+      "name": "One kitchen, one living room, and bathrooms to suit the bedrooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "dead-ends",
+      "kept": true,
+      "name": "No hall leads nowhere",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "entry",
+      "kept": true,
+      "name": "The front door opens into an entry hall",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "ground",
+      "kept": true,
+      "name": "The living room, dining room and kitchen are on the ground floor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "halls",
+      "kept": true,
+      "name": "Halls take no more than a quarter of the floor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "kitchen",
+      "kept": true,
+      "name": "The kitchen opens onto the dining room",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "living",
+      "kept": true,
+      "name": "The living and dining rooms open into each other, or off the same hall",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "loop",
+      "kept": true,
+      "name": "The ground floor can be walked round in a loop",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "private",
+      "kept": true,
+      "name": "No bedroom opens onto the entry, living room, dining room or kitchen",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "proportions",
+      "kept": true,
+      "name": "Every room is a usable size and shape for what it is",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "stair",
+      "kept": true,
+      "name": "The stair rises from a hall to a landing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "suite",
+      "kept": true,
+      "name": "The main bathroom opens only from the main bedroom",
+      "relaxed": false,
+      "relaxedBy": ""
+    }
+  ],
   "source": {
     "dials": {
       "size": 40,

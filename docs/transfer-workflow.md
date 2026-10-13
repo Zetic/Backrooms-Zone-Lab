@@ -24,7 +24,7 @@ npm run batch:exchange
 npm run build
 ```
 
-The manifest records a SHA-256 of each exact UTF-8/LF file and the 120/120 result for each template. Node tooling is optional; the browser runs without it. `dist/` contains both workbenches and the example package when built. The browser's check-report action runs the same 120 configurations for the selected portable template.
+The manifest records a SHA-256 of each exact UTF-8/LF file and the 120/120 acceptance plus 40/40 strict result for each template. Node tooling is optional; the browser runs without it. `dist/` contains both workbenches and the example package when built. The browser's check-report action runs the same 120 acceptance and 40 strict configurations for the selected portable template.
 
 ## Unreal realization
 
@@ -34,9 +34,9 @@ The manifest records a SHA-256 of each exact UTF-8/LF file and the 120/120 resul
 npm run verify:unreal -- --core=C:/Dev/Backrooms/Source/Backrooms/Workshop
 ```
 
-On Windows this builds with Visual Studio 2022 Community by default. Pass `--vcvars=<path>` for another installation. No Engine headers or Editor process are required. `--emit-only=true` generates `.verification/ZoneExchangeCheck.cpp` for another C++20 compiler. It embeds the actual exported rectangles/joins, realizes them through `LayOne`, `LayLink` and `Generate`, checks every join, Human outward/return reachability, reversed-list compiled digests, and the six shared random draws. It covers all 240 acceptance configurations, the documented flat and a negative-coordinate/negative-height case. Results and compiler details go under `.verification/` rather than into generated zone files.
+On Windows this builds with Visual Studio 2022 Community by default. Pass `--vcvars=<path>` for another installation. No Engine headers or Editor process are required. `--emit-only=true` generates `.verification/ZoneExchangeCheck.cpp` for another C++20 compiler. It embeds the actual exported rectangles/joins, realizes them through `LayOne`, `LayLink` and `Generate`, checks every join, Human outward/return reachability, reversed-list compiled digests, and the six shared random draws. It covers all registered-template acceptance and strict configurations, the documented flat and a negative-coordinate/negative-height case. Results and compiler details go under `.verification/` rather than into generated zone files.
 
-The future loader should preserve zone/space ids, map `room` and `hall` to the `space` recipe, `stair` to `ramp` with `run = travel length - 4`, and use `foot` to orient it. It should apply the explicit heights, theme, roles and feature tags, realize joins using the compiler, and report required/optional failures. Zone placements, world graph connections, lighting, meshes and collision belong to Unreal. The harness is verification tooling, not a runtime JSON loader.
+The future loader should preserve zone/space ids, map `room` and `hall` to the `space` recipe, `stair` to `ramp` with `run = travel length - 4`, and use `foot` to orient it. It should apply the explicit heights, theme, roles and feature tags, realize joins using the compiler, and report required/optional failures. Zone placements, world graph connections, lighting, meshes and collision belong to Unreal. The harness includes 40 strict cases per template by default; `--strict=false` reproduces its earlier sample matrix. It is verification tooling, not a runtime JSON loader.
 
 ## Portable templates
 
@@ -52,3 +52,9 @@ House is now `house-v2`, with `source.lab = "exchange-2"`: the local Unreal Hous
 - Stair runs also respect the current ramp recipe's 80-unit maximum (84 units including the two landings); an overlong imported stair is refused before export.
 - Curves, arbitrary angles, wall solids, materials/UVs and gallery voids remain in the full geometry `br.zone` handoff. They require their own adapter and capability assessment, rather than silent rounding into version 1. The existing Unreal core already has faceted round interiors with straight doorway flats; arbitrary curved-face doors need additional work. See [design handoff](design-handoff.md).
 - The rectangular page remains a small checked exchange tool. The full geometry page retains physical geometry and 3D inspection. Use notes to explain intent alongside the actual exported geometry. Transfer reports should identify missing Unreal capabilities, and the chosen prototypes should guide implementation and physical verification there.
+
+## Updated exchange metadata and seed comparison
+
+Version 1 accepts optional `spaces[].outline` and zone-level `rules`. Outlines survive import/edit/export and are drawn over their allocations. Rectangular physical checks still use `rect`; their warnings identify the adapter requirement. Full geometry with walls, holes and openings must continue to use its original `br.zone` handoff. Rule reports are embedded in generated House/Office files and recomputed when a matching template is available; unknown reports remain unverified. This metadata does not add Unreal loader support.
+
+Use the nine-seed comparison beneath the plan at intermediate dial settings and each preset. Page groups, select a seed for full inspection, and export gallery SVGs. The batch handoff also includes preset gallery pictures, embedded reports and a separate strict audit.

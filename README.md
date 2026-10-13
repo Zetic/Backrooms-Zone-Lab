@@ -10,7 +10,7 @@ Use the [full geometry prototype](gallery.html) for curved/angled rooms, wall so
 
 Open **`index.html` directly** from the repository folder. No build, server, install, runtime dependency or network is needed. Select **House** or **Level 0**, change the seed and dials, inspect each storey, and export the checked `.zone.json` and its plan. Import files to reopen them; edit the exchange JSON for one-off layouts. A failed change preserves the last accepted plan and disables export.
 
-The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Ten example zones, fourteen plans, the templates and their 120-case reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
+The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Ten example zones, fourteen plans, the templates and thirteen preset galleries and their acceptance/strict reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
 
 **The Unreal JSON loader is not built yet.** These files target the documented loader contract. The optional integration check realizes the actual exchange layouts through the existing portable Unreal compiler and verifies physical compilation, all joins, Human reach and return, and order independence. It does not implement the runtime loader.
 
@@ -19,7 +19,7 @@ The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Ten ex
 - Integer rectangles in **50 cm units**, floor/ceiling/rise in **10 cm steps**, stable semantic ids, theme and role names, feature requests.
 - Shared-wall joins with movement modes, required/optional intent, start and uncut entrance opportunities.
 - One plain JavaScript file per template, using the exact named uint32 `Templates::Stream` draw, whole-number decisions, complete sort orders and bounded work.
-- Browser checks and a **120/120** seed/dial acceptance report per template; plan snapshots and notes on what the format cannot express.
+- Browser checks and **120/120** seed/dial acceptance and **40/40** strict-setting reports per template; plan snapshots and notes on what the format cannot express.
 
 In the rectangular exchange path, Unreal builds the walls, doors, collision, lights and final usable floors. That page reports allocation dimensions/area explicitly. Full geometry exports retain the prototype's richer geometry and connection intent for a dedicated Unreal adapter and any required core extensions.
 
@@ -51,3 +51,9 @@ The [full geometry workbench](gallery.html) preserves the procedural gallery hou
 The Unreal core already builds round interiors using faceted corner fills and straight doorway flats. Openings on curved faces and general line/arc footprints need separate assessment and implementation. A rectangular schema restriction does not mean Unreal has no curved geometry support.
 
 `exchange/stream.js`, `exchange/checks.js`, `exchange/method.js` and `exchange/templates/` are portable core. `exchange/plan.js` and `exchange/app.js` handle drawing and interaction. [Current status](docs/status.md) records verification and the remaining integration limits.
+
+## Updated exchange contract
+
+Optional `outline` preserves angled/curved design inside each space’s bounding allocation; the plan draws it with an explicit Unreal adapter warning. House and Office zone files embed their `rules` reports. Known imports/edits recompute them; unavailable-template claims remain labelled unverified. Old files remain importable. See [the updated contract](docs/unreal-exchange.md).
+
+Compare nine seeds at the same dials below the plan, page groups, select a seed and export a gallery SVG. Preset buttons indicate the selected setting. Check reports and the batch handoff include a separate 40-seed strict audit, requiring every architectural rule to be kept.

@@ -11,6 +11,50 @@
   const text = v => typeof v === 'string';
   const ceiling = (s, zone) => s.ceiling ?? ((s.theme ?? zone.theme) === 'backrooms' ? 270 : 250);
   const top = (s, zone) => s.floor + (s.kind === 'stair' ? s.rise : 0) + ceiling(s, zone);
+  const point = p => Array.isArray(p) && p.length === 2 && p.every(v => finite(v) && Math.abs(v) <= 10000000);
+  const samePoint = (a, b) => a[0] === b[0] && a[1] === b[1];
+  // An arc uses the shorter sweep; exactly 180 degrees goes counterclockwise in XY.
+  function outlineArc(from, node) {
+    const radius = Math.hypot(from[0] - node.arc[0], from[1] - node.arc[1]);
+    const endRadius = Math.hypot(node.to[0] - node.arc[0], node.to[1] - node.arc[1]);
+    if (radius === 0 || samePoint(from, node.to) || Math.abs(radius - endRadius) > 1e-7 * Math.max(1, radius)) return null;
+    const start = Math.atan2(from[1] - node.arc[1], from[0] - node.arc[0]);
+    let sweep = Math.atan2(node.to[1] - node.arc[1], node.to[0] - node.arc[0]) - start;
+    while (sweep <= -Math.PI) sweep += 2 * Math.PI;
+    while (sweep > Math.PI) sweep -= 2 * Math.PI;
+    return { radius, start, sweep };
+  }
+  function outlineErrors(outline, rect) {
+    const errors = [];
+    if (!Array.isArray(outline) || outline.length < 3 || outline.length > 256 || !point(outline[0])) return ['Use a closed outline of 3–256 nodes, starting with [x, y].'];
+    const inside = p => p[0] >= rect[0] - 1e-7 && p[0] <= rect[2] + 1e-7 && p[1] >= rect[1] - 1e-7 && p[1] <= rect[3] + 1e-7;
+    let from = outline[0], area = 0;
+    if (!inside(from)) errors.push('Outline lies outside rect.');
+    for (let i = 1; i < outline.length; ++i) {
+      const node = outline[i], arcNode = object(node);
+      if (!(point(node) || (arcNode && Object.keys(node).every(k => ['arc', 'to'].includes(k)) && point(node.arc) && point(node.to)))) { errors.push('Outline node ' + i + ' must be [x, y] or {arc: [cx, cy], to: [x, y]}.'); return errors; }
+      const to = arcNode ? node.to : node;
+      if (!inside(to)) errors.push('Outline lies outside rect.');
+      if (samePoint(from, to)) errors.push('Outline edge ' + i + ' has zero length.');
+      area += from[0] * to[1] - to[0] * from[1];
+      if (arcNode) {
+        const arc = outlineArc(from, node);
+        if (!arc) errors.push('Outline arc ' + i + ' needs distinct endpoints on the same nonzero-radius circle.');
+        else {
+          area += arc.radius * arc.radius * (arc.sweep - Math.sin(arc.sweep));
+          for (const angle of [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2]) {
+            const tau = 2 * Math.PI;
+            const travel = ((arc.sweep > 0 ? angle - arc.start : arc.start - angle) % tau + tau) % tau;
+            if (travel <= Math.abs(arc.sweep) + 1e-10 && !inside([node.arc[0] + arc.radius * Math.cos(angle), node.arc[1] + arc.radius * Math.sin(angle)])) errors.push('Outline arc extends outside rect.');
+          }
+        }
+      }
+      from = to;
+    }
+    if (!samePoint(from, outline[0])) errors.push('Outline must explicitly close at its first point.');
+    if (Math.abs(area) < 1e-10) errors.push('Outline must enclose nonzero area.');
+    return errors;
+  }
   function shared(a, b) {
     const r = a.rect, q = b.rect;
     if (r[2] === q[0] || q[2] === r[0]) {
@@ -56,7 +100,7 @@
     };
     const result = () => ({ valid: errors.length === 0, errors, warnings, links });
     if (!object(zone)) { fail('format', 'The zone must be an object.'); return result(); }
-    keys(zone, ['format', 'version', 'id', 'name', 'theme', 'notes', 'source', 'start', 'spaces', 'joins', 'entrances'], 'zone');
+    keys(zone, ['format', 'version', 'id', 'name', 'theme', 'notes', 'source', 'start', 'spaces', 'joins', 'entrances', 'rules'], 'zone');
     if (zone.format !== 'backrooms-zone' || zone.version !== 1) fail('format', 'Expected backrooms-zone version 1. Geometry-study JSON cannot be converted automatically.');
     if (!text(zone.id) || !identifier.test(zone.id)) fail('id', 'Zone id must use lowercase letters, digits and hyphens.');
     if (!text(zone.name) || !zone.name.trim()) fail('name', 'Zone name is required.');
@@ -66,6 +110,23 @@
       warn('theme', 'Unreal will use a fallback until theme ' + zone.theme + ' is implemented.');
     }
     if (zone.notes !== undefined && !text(zone.notes)) fail('notes', 'Notes must be text.');
+    if (zone.rules !== undefined) {
+      if (!Array.isArray(zone.rules) || zone.rules.length > 256) fail('rules', 'Rules must be an array of at most 256 reports.');
+      else {
+        const ids = new Set();
+        for (const r of zone.rules) {
+          if (!object(r)) { fail('rules', 'Each rule report must be an object.'); continue; }
+          keys(r, ['id', 'name', 'kept', 'relaxed', 'relaxedBy', 'detail'], 'rule');
+          if (!text(r.id) || !identifier.test(r.id) || ids.has(r.id) || !text(r.name) || !r.name.trim() || typeof r.kept !== 'boolean' || typeof r.relaxed !== 'boolean' || (r.detail !== undefined && !text(r.detail))) fail('rules', 'Rule reports need unique ids, names, Boolean kept/relaxed and text detail.');
+          ids.add(r.id);
+          const permission = r.relaxedBy;
+          const structuredPermission = object(permission) && Object.keys(permission).every(k => ['dial', 'from'].includes(k)) && text(permission.dial) && integer(permission.from) && permission.from >= 0 && permission.from <= 100;
+          if (permission !== undefined && !text(permission) && !structuredPermission) fail('rules', r.id + ': relaxedBy must be text or {dial, from}.');
+          if (r.relaxed && !(text(permission) && permission.trim() || structuredPermission)) fail('rules', r.id + ': relaxed rule needs its permission.');
+          if (!r.kept && !r.relaxed) fail('rules', r.id + ': broken rule has no relaxation.');
+        }
+      }
+    }
     if (zone.source !== undefined) {
       if (!object(zone.source)) fail('source', 'Source must be an object.');
       else {
@@ -83,7 +144,7 @@
       const s = zone.spaces[i], label = 'space ' + (s?.id ?? i);
       if (!object(s)) { fail('space', label + ' must be an object.'); continue; }
       const before = errors.length;
-      keys(s, ['id', 'title', 'kind', 'rect', 'floor', 'ceiling', 'role', 'theme', 'features', 'rise', 'foot'], label, s.id);
+      keys(s, ['id', 'title', 'kind', 'rect', 'floor', 'ceiling', 'role', 'theme', 'features', 'rise', 'foot', 'outline'], label, s.id);
       if (!text(s.id) || !identifier.test(s.id) || byId.has(s.id)) fail('id', label + ': invalid or duplicate id.', s.id);
       if (!text(s.title) || !s.title.trim()) fail('title', label + ': a title is required.', s.id);
       if (!kinds.includes(s.kind)) fail('kind', label + ': expected room, hall or stair.', s.id);
@@ -99,6 +160,10 @@
       }
       if (s.role !== undefined && !text(s.role)) fail('role', label + ': role must be text.', s.id);
       if (rectOK) {
+        if (s.outline !== undefined) {
+          for (const error of outlineErrors(s.outline, s.rect)) fail('outline', label + ': ' + error, s.id);
+          warn('outline', label + ': outline is preserved design geometry. Rectangular checks and Unreal version 1 realization use rect; actual shape, support and openings require an adapter.', s.id);
+        }
         const w = s.rect[2] - s.rect[0], h = s.rect[3] - s.rect[1];
         if (s.kind === 'stair') {
           const alongY = s.foot === 'n' || s.foot === 's', width = alongY ? w : h, length = alongY ? h : w;
@@ -207,6 +272,7 @@
     copy.joins = copy.joins.map(j => j.a < j.b ? j : { ...j, a: j.b, b: j.a });
     copy.joins.sort((a, b) => a.a < b.a ? -1 : a.a > b.a ? 1 : a.b < b.b ? -1 : a.b > b.b ? 1 : 0);
     if (copy.entrances) copy.entrances.sort((a, b) => { const x = [a.space, a.side, a.at, a.title].join('/'), y = [b.space, b.side, b.at, b.title].join('/'); return x < y ? -1 : x > y ? 1 : 0; });
+    if (copy.rules) copy.rules.sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
     return JSON.stringify(sorted(copy), null, 2) + '\n';
   }
   function facts(zone) {
@@ -219,5 +285,5 @@
       floors: [...new Set(spaces.flatMap(s => s.kind === 'stair' ? [s.floor, s.floor + s.rise] : [s.floor]))].sort((a, b) => a - b),
       joins: Object.fromEntries(modes.map(m => [m, links.filter(l => l.mode === m).length])) };
   }
-  Object.assign(api, { validate, serialize, facts, shared, endpointFloor, opposite, ceiling, freeStretches });
+  Object.assign(api, { validate, serialize, facts, shared, endpointFloor, opposite, ceiling, freeStretches, outlineArc });
 }());

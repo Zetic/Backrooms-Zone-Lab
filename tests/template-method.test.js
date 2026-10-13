@@ -15,9 +15,17 @@ test('House v2 preserves the local six presets and named-rule policy', () => {
     assert.ok(!z.error, z.error); assert.equal(z.spaces.length, expected[i]);
     assert.equal(z.source.template, 'house-v2');
     const r = api.ruleReport(house, z); assert.equal(r.rules.length, 15); assert.ok(r.valid);
+    assert.deepEqual(z.rules, r.rules);
     for (const id of ['entry', 'stair', 'ground']) assert.ok(r.rules.find(r => r.id === id).kept);
     if (p.dials.strange === 0 && p.dials.sprawl === 0) assert.equal(r.kept, 15);
   }
+});
+test('strict audit rejects a template that permits a broken rule even at its strict end', () => {
+  const t = { id: 'auditbad', dials: [{ id: 'strange', value: 50, strict: 0 }],
+    rules() { return [api.rule('always-broken', 'Always broken', false, 'Failure', [{ dial: 'strange', name: 'Strangeness', at: 0 }], { strange: 0 })]; },
+    make() { return house.make({ seed: 1 }); } };
+  const report = api.auditTemplate(t);
+  assert.equal(report.passed, 120); assert.equal(report.strict.passed, 0); assert.equal(report.strict.failures.length, 40);
 });
 test('House shaping matrix is reproducible, respects unrelaxed rules and switches storeys at 55', () => {
   for (const sprawl of [0, 20, 35, 45, 54, 55, 70, 85, 100]) for (const strange of [0, 25, 45, 65, 85, 100]) for (let seed = 1; seed <= 4; ++seed) {

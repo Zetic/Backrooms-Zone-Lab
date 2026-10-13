@@ -49,6 +49,7 @@ test('House presets change the accepted plan and expose preserved rule reports',
   await get('report').click();
   const report = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
   assert.equal(report.architecturalRules.rules.length, 15); assert.ok(report.architecturalRules.valid);
+  assert.equal(report.templateAudit.strict.passed, 40);
   await get('preset-0').click(); assert.ok(get('rules').innerHTML.includes('15 of 15'));
   // Repeated manual edits retain the known rule policy while dropping regeneration claims.
   await get('apply').click(); await get('apply').click();
@@ -56,6 +57,38 @@ test('House presets change the accepted plan and expose preserved rule reports',
   await get('report').click();
   const editedReport = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
   assert.equal(editedReport.architecturalRules.rules.length, 15); assert.equal(editedReport.templateAudit, null);
+});
+test('nine-seed gallery follows dials, selects and pages seeds, marks presets and exports a standalone picture', async () => {
+  const c = controller(), get = c.get;
+  assert.equal((get('seed-cards').innerHTML.match(/class="seed-card"/g) ?? []).length, 9);
+  assert.equal(get('preset-0').getAttribute('aria-pressed'), 'true');
+  await get('gallery-seed-7').click(); assert.equal(JSON.parse(get('editor').value).source.seed, 7);
+  const before = get('editor').value;
+  await get('gallery-next').click(); assert.ok(get('gallery-range').textContent.includes('10–18')); assert.equal(get('editor').value, before);
+  await get('gallery-seed-12').click(); assert.equal(JSON.parse(get('editor').value).source.seed, 12);
+  await get('preset-5').click(); assert.ok(get('seed-cards').innerHTML.includes('rules kept')); assert.equal(get('preset-5').getAttribute('aria-pressed'), 'true');
+  await get('gallery-export').click(); const svg = await (await fetch(c.downloads.at(-1).href)).text();
+  assert.ok(svg.includes('Seed 10')); assert.ok(svg.includes('Seed 18')); assert.ok(svg.includes('export-10-arrow')); assert.ok(svg.includes('export-18-arrow'));
+  get('seed').value = '4294967295'; await get('seed').emit('input'); assert.ok(get('gallery-next').disabled);
+});
+test('known imported reports are recomputed, unknown reports and outlines round trip without regeneration', async () => {
+  const c = controller(), get = c.get, known = JSON.parse(get('editor').value);
+  known.rules.forEach(r => { r.kept = false; r.relaxed = false; });
+  get('import').files = [{ size: 1, text: async () => JSON.stringify(known) }]; await get('import').emit('change');
+  assert.equal(get('status').textContent, 'PASS'); assert.ok(JSON.parse(get('editor').value).rules.every(r => r.kept));
+  const unknown = JSON.parse(await readFile(new URL('../exchange/flat.zone.json', import.meta.url), 'utf8'));
+  unknown.source.template = 'external-v1';
+  unknown.rules = [{ id: 'external', name: 'External convention', kept: true, relaxed: false, detail: '' }];
+  unknown.spaces[0].outline = [[8, 0], [14, 0], [13.5, 4], [8, 4], [8, 0]];
+  get('import').files = [{ size: 1, text: async () => JSON.stringify(unknown) }]; await get('import').emit('change');
+  assert.equal(get('status').textContent, 'PASS'); assert.ok(get('rules').innerHTML.includes('unverified'));
+  assert.ok(get('checks').innerHTML.includes('adapter')); assert.ok(get('plan').innerHTML.includes('design-outline'));
+  await get('export').click(); const exported = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
+  assert.deepEqual(exported.rules, unknown.rules); assert.deepEqual(exported.spaces.find(s => s.id === 'entry').outline, unknown.spaces[0].outline);
+  await get('preset-5').click(); const bad = JSON.parse(get('editor').value); bad.source.dials.strange = 0; bad.source.dials.sprawl = 0;
+  bad.rules.forEach(r => { r.kept = true; r.relaxed = false; });
+  get('import').files = [{ size: 1, text: async () => JSON.stringify(bad) }]; await get('import').emit('change');
+  assert.equal(get('status').textContent, 'REFUSED'); assert.ok(get('export').disabled);
 });
 
 test('Offices selection, presets, exports and imports keep the same accepted design and policy', async () => {

@@ -1,4 +1,4 @@
-// Portable zone-template method. Rule reports are diagnostics, never canonical zone fields.
+// Portable zone-template method. Exchange files embed reproducible diagnostic rule reports.
 (function () {
   'use strict';
   const api = globalThis.ZoneExchange;
@@ -36,10 +36,31 @@
         if (!checks.valid) throw new Error(checks.errors.map(e => e.message).join('; '));
         const report = ruleReport(t, zone, input.dials);
         if (!report.valid) throw new Error(report.rules.filter(r => !r.kept && !r.relaxed).map(r => r.name + ': ' + r.detail).join('; '));
+        if (zone.format === 'backrooms-zone' && t.rules) zone.rules = report.rules;
         return zone;
       } catch (error) { failures.push('attempt ' + attempt + ': ' + error.message); }
     }
     return { error: t.name + ': no attempt accepted. ' + failures.join(' | '), attempts: limit };
+  }
+  function strictDials(t) { return Object.fromEntries(t.dials.map(d => [d.id, d.strict ?? 0])); }
+  function auditTemplate(t) {
+    const report = { template: templateKey(t), passed: 0, total: 120, failures: [], strict: { dials: strictDials(t), passed: 0, total: 40, failures: [] } };
+    const check = (spec, target, strict) => {
+      try {
+        const a = t.make(spec), b = t.make(spec);
+        if (a.error || b.error) throw new Error(a.error ?? b.error);
+        const rules = ruleReport(t, a, spec.dials);
+        if (!rules.valid || (strict && rules.kept !== rules.rules.length)) throw new Error(strict ? 'Strict setting must keep every architectural rule.' : 'Unrelaxed architectural rule failed.');
+        const bytes = api.serialize(a), reordered = JSON.parse(bytes);
+        reordered.spaces.reverse(); reordered.joins.reverse(); reordered.entrances?.reverse(); reordered.rules?.reverse();
+        if (bytes !== api.serialize(b)) throw new Error('Same-again mismatch.');
+        if (bytes !== api.serialize(reordered) || bytes !== api.serialize(JSON.parse(bytes))) throw new Error('Order/round-trip mismatch.');
+        ++target.passed;
+      } catch (error) { target.failures.push({ spec, error: error.message }); }
+    };
+    for (const value of [null, 10, 90]) for (let seed = 1; seed <= 40; ++seed) check({ seed, dials: Object.fromEntries(t.dials.map(d => [d.id, value ?? d.value])) }, report, false);
+    for (let seed = 1; seed <= 40; ++seed) check({ seed, dials: report.strict.dials }, report.strict, true);
+    return report;
   }
   function exportTemplate(t) {
     const metadata = JSON.stringify(Object.fromEntries(Object.entries(t).filter(([, v]) => typeof v !== 'function')), null, 2);
@@ -49,5 +70,5 @@
     });
     return '// Portable template. Load stream.js, checks.js and method.js first.\n(function () {\n  \'use strict\';\n  const api = globalThis.ZoneExchange;\n  const ' + t.id + ' = ' + metadata.slice(0, -1) + ',\n' + methods.join(',\n') + '\n};\n  api.templates.push(' + t.id + ');\n}());\n';
   }
-  Object.assign(api, { templateKey, rule, ruleReport, generateTemplate, exportTemplate });
+  Object.assign(api, { templateKey, rule, ruleReport, generateTemplate, exportTemplate, strictDials, auditTemplate });
 }());

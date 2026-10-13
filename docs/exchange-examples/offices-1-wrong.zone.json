@@ -445,6 +445,136 @@
   ],
   "name": "Offices · seed 1 · Wrong workplace",
   "notes": "Office floor: visitor reception and meetings, staff workplaces, washrooms, break/copy/server/storage rooms. Dials explicitly relax architectural conventions. This prototype describes rooms and circulation; furniture is not placed.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "arrival",
+      "kept": true,
+      "name": "Visitors start in reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "Ceiling heights change between rooms.",
+      "id": "ceiling",
+      "kept": false,
+      "name": "Rooms share one consistent ceiling height",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 85"
+    },
+    {
+      "detail": "An empty corridor ends without a room.",
+      "id": "dead-ends",
+      "kept": false,
+      "name": "Corridors do not end beyond the last room",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 40"
+    },
+    {
+      "detail": "",
+      "id": "hall-share",
+      "kept": true,
+      "name": "Corridors take no more than 30% of the floor",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 35 or Strangeness 30"
+    },
+    {
+      "detail": "A corridor has an unusually broad cross section.",
+      "id": "hall-width",
+      "kept": false,
+      "name": "Corridors are a consistent 2–2.5 m wide",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 30"
+    },
+    {
+      "detail": "The circulation loop is interrupted.",
+      "id": "loop",
+      "kept": false,
+      "name": "Circulation has a loop without crossing staff rooms",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 40"
+    },
+    {
+      "detail": "A meeting room is inside the staff floor.",
+      "id": "meeting",
+      "kept": false,
+      "name": "Visitor meeting rooms open directly from reception",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 65"
+    },
+    {
+      "detail": "Meeting rooms are missing or repeat excessively.",
+      "id": "meeting-counts",
+      "kept": false,
+      "name": "There are one to three meeting rooms",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 50"
+    },
+    {
+      "detail": "",
+      "id": "program",
+      "kept": true,
+      "name": "The floor has workplaces and essential shared services",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "proportions",
+      "kept": true,
+      "name": "Work and meeting rooms have conventional proportions",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 20"
+    },
+    {
+      "detail": "A shared service is reached through a room or reception.",
+      "id": "service-access",
+      "kept": false,
+      "name": "Shared services open from a corridor",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 65"
+    },
+    {
+      "detail": "Shared services repeat in separate parts of the floor.",
+      "id": "service-counts",
+      "kept": false,
+      "name": "Shared services form one clear support group",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 50"
+    },
+    {
+      "detail": "",
+      "id": "single-level",
+      "kept": true,
+      "name": "The office floor occupies one level",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "A staff function opens directly onto reception.",
+      "id": "visitor-buffer",
+      "kept": false,
+      "name": "Reception opens onto meetings or circulation, not staff services",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 65"
+    },
+    {
+      "detail": "",
+      "id": "visitor-entry",
+      "kept": true,
+      "name": "The visitor entrance opens into reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "A workplace is reached only through another workplace.",
+      "id": "work-access",
+      "kept": false,
+      "name": "Every workplace opens from circulation",
+      "relaxed": true,
+      "relaxedBy": "Strangeness 75"
+    }
+  ],
   "source": {
     "dials": {
       "open": 65,

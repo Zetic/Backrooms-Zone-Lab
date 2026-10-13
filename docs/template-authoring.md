@@ -7,7 +7,7 @@ The browser now implements this method in `exchange/method.js`, with House v2 as
 ## Start tomorrow
 
 1. Copy [template-starter.js](template-starter.js) to `exchange/templates/office.js`. Rename its `starter` binding, references and `id` to `office`, and choose a name and explicit version. Use a simple lowercase JavaScript identifier for the template binding/id; space ids may contain hyphens.
-2. Load the new file after `stream.js`, `checks.js` and `method.js` in `index.html`. Add the same import in `scripts/exchange.mjs`. Registration makes its dials and presets appear automatically; it enters the 120-case audit automatically.
+2. Load the new file after `stream.js`, `checks.js` and `method.js` in `index.html`. Add the same import in `scripts/exchange.mjs`. Registration makes its dials and presets appear automatically; it enters the 120-case acceptance and 40-case strict audits automatically.
 3. Define the program: what spaces exist, their semantic roles, normal counts and relationships. Choose a few dials that explain the architecture, rather than an independent random knob for every dimension.
 4. Build an accepted composition and its circulation. Plan usable approaches before making required joins. Use bounded alternatives or reject with a named reason; never discard a required edge to make a result pass.
 5. Write the archetype's rules in `rules(zone, dials)`. State precisely which dial and threshold permits each convention to break. An empty rulebook is valid for a template that has none yet; do not copy house-specific rules into unrelated archetypes.
@@ -25,7 +25,7 @@ Separate program, geometry, connections and presentation decisions with meaningf
 
 `api.rule(id, name, kept, detail, relaxations, dials)` produces the rule report. A relaxation is `{dial: 'strange', name: 'Strangeness', at: 50}`; multiple entries mean any one can permit the break. A rule with no relaxations is always required. A permitted rule **may** break; it need not break for every seed. Reports distinguish kept, broken, permitted, failure detail and the permitting threshold. The method rejects a broken rule with no applicable permission.
 
-Rule reports are regenerated from the accepted zone and recorded dials. They belong in check reports and handoff manifests, not in canonical zone geometry or its digest. They are shown for edited/imported current-version designs as well. An older generator version remains a fixed import; the new template must not claim to regenerate it. The previous browser House v1 source is archived in `template-reference/house-v1.js`.
+Rule reports are regenerated from the accepted zone and recorded dials. Version 1 exchange files now embed them in optional `rules`, as well as check reports and handoff manifests. Canonical JSON sorts reports by id; they do not alter physical geometry or the portable compiled digest. Known imports/edits recompute them; unknown reports remain explicitly unverified. They are shown for edited/imported current-version designs as well. An older generator version remains a fixed import; the new template must not claim to regenerate it. The previous browser House v1 source is archived in `template-reference/house-v1.js`.
 
 Physical checks always run first. `generateTemplate` defaults to the version 1 exchange validator; its fourth argument can supply a physical validator for another representation, returning `{valid, errors}`. The shared method preserves that representation and evaluates its rules with the requested dials. This extension point does not add a full-geometry import UI or establish new Unreal geometry support. Dials never permit overlap, invalid stairs, blocked required passages or loss of Human reach/return. Browser topology checks remain preliminary; Unreal's compiler and walking tests establish actual clearance, support and movement. For a richer geometry template, preserve the original representation and use its physical validator and a dedicated adapter; do not flatten it to satisfy version 1.
 
@@ -59,7 +59,7 @@ The house's rooms are still plain rectangles; Strangeness does not currently act
 
 ## Evidence for a new template
 
-Keep the 120-case acceptance matrix (seeds 1–40 at defaults, all dials 10, all dials 90), same-input repeats, reversed-list/round-trip canonical exports, and tests that exercise every relaxation threshold and required convention. Add mixed-dial sweeps: setting all dials high or low cannot establish their interactions. Test the named presets, exhaustion of search bounds, negative coordinates/heights and actual physical transitions where used.
+Keep the separate 40-case strict audit (every rule kept, all dials zero unless a dial declares `strict`), the 120-case acceptance matrix (seeds 1–40 at defaults, all dials 10, all dials 90), same-input repeats, reversed-list/round-trip canonical exports, and tests that exercise every relaxation threshold and required convention. Add mixed-dial sweeps: setting all dials high or low cannot establish their interactions. Test the named presets, exhaustion of search bounds, negative coordinates/heights and actual physical transitions where used.
 
 Export template source, `stream.js`, `checks.js`, `method.js`, accepted layouts, plans, notes and rule reports together. The browser template download includes its metadata, presets and rule evaluator. It needs all three shared files, including `method.js`.
 
@@ -70,3 +70,5 @@ npm run verify:unreal -- --core=C:/Dev/Backrooms/Source/Backrooms/Workshop --lab
 ```
 
 Without the local ZoneLab v2 sources, omit `--lab-parity=true` to verify compilation and Human traversal against the portable compiler alone. This harness is verification tooling; the runtime JSON loaders are still to be built.
+
+The exchange subset can also preserve a space’s optional `outline` as design data. Follow the path/arc convention in [the exchange contract](unreal-exchange.md#browser-implementation-notes--october-13-2026); actual Unreal outline realization remains adapter work. Compare nine seeds at intermediate dial settings and export preset gallery pictures for the handoff.

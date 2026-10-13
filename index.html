@@ -30,6 +30,12 @@
       <p id="plan-state" class="muted" aria-live="polite"></p><div id="plan" tabindex="0" aria-label="Plan. Drag to pan, scroll to zoom, F to fit, Page Up or Down to change storey."></div>
       <div class="legend"><span class="room">Room</span><span class="hall">Hall</span><span class="stair">Stair / stairwell</span><span>○ Entrance</span><span>● Start</span><span>Join modes labelled on plan</span></div>
       <p class="muted small">Drag to pan · Wheel to zoom · F to fit · Page Up / Down storey · Hover a space or join for details. Openings show intended mode and approximate position.</p>
+      <details id="seed-gallery" open>
+        <summary>Compare nine seeds at the current dials</summary>
+        <div class="gallery-toolbar"><output id="gallery-range" aria-live="polite"></output><div><button id="gallery-prev" aria-label="Previous nine seeds">←</button><button id="gallery-next" aria-label="Next nine seeds">→</button><button id="gallery-export">Export gallery .svg ↓</button></div></div>
+        <p class="muted small">Select a seed to inspect its full plan. Each card shows the selected floor, or its lowest floor when that height is absent. These are generated comparisons; imported edits remain in the main plan.</p>
+        <div id="seed-cards" class="seed-cards"></div>
+      </details>
     </section>
   </main>
   <script src="./exchange/stream.js"></script><script src="./exchange/checks.js"></script><script src="./exchange/method.js"></script><script src="./exchange/templates/house.js"></script><script src="./exchange/templates/level0.js"></script><script src="./exchange/templates/offices.js"></script><script src="./exchange/plan.js"></script><script src="./exchange/app.js"></script>

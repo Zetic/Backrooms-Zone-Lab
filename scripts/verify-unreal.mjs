@@ -5,7 +5,7 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { cases, shapingCases, officeCases } from './exchange.mjs';
+import { cases, shapingCases, officeCases, strictCases } from './exchange.mjs';
 const api = globalThis.ZoneExchange;
 const args = Object.fromEntries(process.argv.slice(2).map(arg => { const split = arg.indexOf('='); return [arg.slice(0, split), arg.slice(split + 1)]; }));
 if (!args['--core']) throw new Error('Pass --core=<directory containing TemplateModel.h and the portable C++ sources>.');
@@ -15,7 +15,12 @@ const vcvars = args['--vcvars'] ?? 'C:/Program Files/Microsoft Visual Studio/202
 for (const path of [core, output, vcvars]) if (/["&|<>%!\r\n]/.test(path)) throw new Error('Unsupported character in build path.');
 await mkdir(output, { recursive: true });
 const selected = args['--templates']?.split(',');
-const samples = [...cases(), ...shapingCases(), ...officeCases()].filter(c => !selected || selected.includes(c.template.id)).map(c => ({ name: c.template.id + '-' + c.setting + '-' + c.spec.seed, spec: c.spec, zone: c.template.make(c.spec) }));
+const samples = [...cases(), ...(args['--strict'] === 'false' ? [] : strictCases()), ...shapingCases(), ...officeCases()].filter(c => !selected || selected.includes(c.template.id)).map(c => {
+  const zone = c.template.make(c.spec);
+  if (zone.error) throw new Error(zone.error);
+  if (c.setting === 'strict' && api.ruleReport(c.template, zone).broken.length) throw new Error('Strict case breaks architectural rules.');
+  return { name: c.template.id + '-' + c.setting + '-' + c.spec.seed, spec: c.spec, zone };
+});
 if (!samples.length) throw new Error('No templates matched --templates.');
 samples.push({ name: 'documented-flat', zone: JSON.parse(await readFile(new URL('../exchange/flat.zone.json', import.meta.url), 'utf8')) });
 const negative = structuredClone((samples.find(s => s.name === 'house-defaults-1') ?? samples.find(s => s.name.endsWith('-defaults-1'))).zone);

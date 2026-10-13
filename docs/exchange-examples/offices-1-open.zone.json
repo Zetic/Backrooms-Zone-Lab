@@ -325,6 +325,136 @@
   ],
   "name": "Offices · seed 1 · Open workplace",
   "notes": "Office floor: visitor reception and meetings, staff workplaces, washrooms, break/copy/server/storage rooms. Dials explicitly relax architectural conventions. This prototype describes rooms and circulation; furniture is not placed.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "arrival",
+      "kept": true,
+      "name": "Visitors start in reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "ceiling",
+      "kept": true,
+      "name": "Rooms share one consistent ceiling height",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "dead-ends",
+      "kept": true,
+      "name": "Corridors do not end beyond the last room",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "hall-share",
+      "kept": true,
+      "name": "Corridors take no more than 30% of the floor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "hall-width",
+      "kept": true,
+      "name": "Corridors are a consistent 2–2.5 m wide",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "loop",
+      "kept": true,
+      "name": "Circulation has a loop without crossing staff rooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "meeting",
+      "kept": true,
+      "name": "Visitor meeting rooms open directly from reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "meeting-counts",
+      "kept": true,
+      "name": "There are one to three meeting rooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "program",
+      "kept": true,
+      "name": "The floor has workplaces and essential shared services",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "proportions",
+      "kept": true,
+      "name": "Work and meeting rooms have conventional proportions",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "service-access",
+      "kept": true,
+      "name": "Shared services open from a corridor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "service-counts",
+      "kept": true,
+      "name": "Shared services form one clear support group",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "single-level",
+      "kept": true,
+      "name": "The office floor occupies one level",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "visitor-buffer",
+      "kept": true,
+      "name": "Reception opens onto meetings or circulation, not staff services",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "visitor-entry",
+      "kept": true,
+      "name": "The visitor entrance opens into reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "work-access",
+      "kept": true,
+      "name": "Every workplace opens from circulation",
+      "relaxed": false,
+      "relaxedBy": ""
+    }
+  ],
   "source": {
     "dials": {
       "open": 100,
