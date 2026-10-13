@@ -1,6 +1,6 @@
 {
   "name": "backrooms-zone-lab",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,6 +13,7 @@
     "examples:offices": "node scripts/office-examples.mjs",
     "examples:generic": "node scripts/generic-examples.mjs",
     "examples:generic:v2": "node scripts/generic-v2-examples.mjs",
+    "examples:resplan": "node scripts/resplan-examples.mjs",
     "batch:exchange": "node scripts/exchange.mjs",
     "verify:unreal": "node scripts/verify-unreal.mjs",
     "examples:cohesion": "node scripts/cohesion-examples.mjs"

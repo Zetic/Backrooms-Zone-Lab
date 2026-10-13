@@ -1,0 +1,7 @@
+#resplan-plan{height:68vh;min-height:420px;overflow:hidden;touch-action:none;border:1px solid var(--line);border-radius:6px;background:#151f24}
+#resplan-plan .floor-map{width:100%;height:100%;display:block}#resplan-plan .room:focus{outline:none;stroke:#faedb5;stroke-width:.08}
+#resplan-volume{height:420px;position:relative;border:1px solid var(--line);border-radius:6px;margin:14px 0}
+#resplan-volume[hidden]{display:none}#resplan-canvas{width:100%;height:100%;display:block;touch-action:none}
+#volume-error{position:absolute;inset:auto 12px 12px;padding:10px;background:#1d2833e6;color:#ffbc9d}
+#selection{padding:12px 0;color:#aabbbd;min-height:40px}#selection strong{display:block;color:#eedcaf}
+@media(max-width:800px){#resplan-plan{height:55vh;min-height:300px}}
