@@ -6,6 +6,9 @@
   }
   const api = globalThis.ZoneExchange, $ = id => document.getElementById(id), esc = api.escape;
   const requested = new URLSearchParams(location.search).get('template');
+  if ((requested === 'generic' && new URLSearchParams(location.search).get('version') !== '1') || requested === 'generic-v2') {
+    location.replace(new URL('generic.html' + location.search + location.hash, location.href).href); return;
+  }
   const state = { template: api.templates.some(t => t.id === requested) ? requested : 'house', zone: null, draft: null, checks: null, floor: 0, rejected: false, saved: new Map(), drag: null, fitBox: null };
   const audits = new Map();
   const gallery = { start: 1, key: '', samples: [] };
@@ -86,6 +89,7 @@
     showChecks(state.checks); message(error); $('plan-state').textContent = 'Last accepted plan · generation refused'; draw();
   }
   function selectTemplate(regenerate = true) {
+    if ($('template').value === 'generic-v2') { location.replace(new URL('generic.html', location.href).href); return; }
     state.template = $('template').value;
     $('seed').value = String(settings().seed); $('summary').textContent = template().summary;
     const groups = [...new Set(template().dials.map(d => d.group ?? 'Dials'))];
@@ -153,7 +157,7 @@
     const floors = api.facts(state.zone).floors, index = floors.indexOf(state.floor);
     state.floor = floors[Math.max(0, Math.min(floors.length - 1, index + step))]; draw();
   }
-  $('template').innerHTML = api.templates.map(t => `<option value="${t.id}">${esc(t.name)}</option>`).join('');
+  $('template').innerHTML = '<option value="generic-v2">Generic zone v2 · full geometry</option>' + api.templates.map(t => `<option value="${t.id}">${esc(t.id === 'generic' ? 'Generic zone v1 · rectangular exchange' : t.name)}</option>`).join('');
   $('template').value = state.template; $('template').addEventListener('change', () => selectTemplate());
   $('seed').addEventListener('input', generate);
   for (const [id, step] of [['seed-down', -1], ['seed-up', 1]]) $(id).addEventListener('click', () => { $('seed').value = String(Math.max(0, Math.min(4294967295, Number($('seed').value) + step))); generate(); });

@@ -37,6 +37,8 @@ test('classic scripts have local assets and preserve legacy study URLs', async (
   for (const match of html.matchAll(/<script src="\.\/([^"]+)"/g)) assert.ok((await readFile(new URL('../' + match[1], import.meta.url), 'utf8')).length);
   const c = controller('?profile=atrium-mansion&seed=7&generator=4');
   assert.equal(c.navigation[0], 'file:///lab/gallery.html?profile=atrium-mansion&seed=7&generator=4');
+  const generic = controller('?template=generic&seed=29');
+  assert.equal(generic.navigation[0], 'file:///lab/generic.html?template=generic&seed=29');
 });
 
 test('House presets change the accepted plan and expose preserved rule reports', async () => {
@@ -140,7 +142,7 @@ test('exchange controller exports the shown zone, keeps invalid proposals and ro
 });
 
 test('generic controls are grouped, module switches change generation and slider edits commit on release', async () => {
-  const c = controller('?template=generic'), get = c.get;
+  const c = controller('?template=generic&version=1'), get = c.get;
   assert.equal(get('template').value, 'generic'); assert.equal(get('status').textContent, 'PASS');
   assert.ok(get('dials').innerHTML.includes('dial-group')); assert.ok(get('dials').innerHTML.includes('type="checkbox"'));
   assert.equal(JSON.parse(get('editor').value).source.template, 'generic-v1');

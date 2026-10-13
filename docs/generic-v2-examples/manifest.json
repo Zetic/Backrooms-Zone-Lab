@@ -1,0 +1,467 @@
+{
+  "template": "generic-v2",
+  "preset": {
+    "name": "Explored Backrooms",
+    "dials": {
+      "rooms": 45,
+      "scale": 45,
+      "variety": 80,
+      "clusterSize": 55,
+      "moduleMix": 100,
+      "publicMix": 35,
+      "supportMix": 15,
+      "sprawl": 65,
+      "branching": 65,
+      "turns": 65,
+      "orientation": 80,
+      "cohesion": 35,
+      "corridorLength": 55,
+      "hallWidth": 25,
+      "loops": 55,
+      "open": 65,
+      "exits": 25,
+      "ceiling": 35,
+      "partitioned": 100,
+      "chains": 100,
+      "sideHalls": 100,
+      "chambers": 100
+    }
+  },
+  "scope": "Actual full geometry: floors, wall solids, supported apertures and walker outward/return paths. Unreal runtime adapter remains pending.",
+  "records": [
+    {
+      "seed": 1,
+      "fingerprint": "746b41cd395b102d",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          90,
+          135,
+          270
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 129.12499999999997,
+        "bentRoutes": 2,
+        "branchPoints": 1,
+        "widthM": 164.611219,
+        "depthM": 205.22161,
+        "roomAreaMinM2": 23.35718252731501,
+        "roomAreaMaxM2": 524.027900775456,
+        "cycleRank": 10
+      },
+      "physical": {
+        "spaces": 62,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3944.170343,
+        "reachableSpaces": 62,
+        "cycleRank": 10
+      },
+      "errors": []
+    },
+    {
+      "seed": 2,
+      "fingerprint": "5b614e9800cbf9d6",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          45,
+          135,
+          315
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 103.29999999999998,
+        "bentRoutes": 2,
+        "branchPoints": 3,
+        "widthM": 128.945648,
+        "depthM": 173.813204,
+        "roomAreaMinM2": 19.762097012280037,
+        "roomAreaMaxM2": 444.78237927960015,
+        "cycleRank": 4
+      },
+      "physical": {
+        "spaces": 61,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3721.370306,
+        "reachableSpaces": 61,
+        "cycleRank": 4
+      },
+      "errors": []
+    },
+    {
+      "seed": 3,
+      "fingerprint": "8e0ab5c1e8804369",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          45,
+          90,
+          270,
+          360
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 103.29999999999998,
+        "bentRoutes": 3,
+        "branchPoints": 2,
+        "widthM": 201.020266,
+        "depthM": 137.726062,
+        "roomAreaMinM2": 15.222418524999739,
+        "roomAreaMaxM2": 474.8207937129516,
+        "cycleRank": 13
+      },
+      "physical": {
+        "spaces": 63,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3817.283386,
+        "reachableSpaces": 63,
+        "cycleRank": 13
+      },
+      "errors": []
+    },
+    {
+      "seed": 4,
+      "fingerprint": "4b3572e38ca33c93",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          90,
+          180,
+          315
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 77.475,
+        "bentRoutes": 2,
+        "branchPoints": 2,
+        "widthM": 125.035875,
+        "depthM": 141.831795,
+        "roomAreaMinM2": 22.26182805877999,
+        "roomAreaMaxM2": 330.7288111000056,
+        "cycleRank": 12
+      },
+      "physical": {
+        "spaces": 60,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3645.459028,
+        "reachableSpaces": 60,
+        "cycleRank": 12
+      },
+      "errors": []
+    },
+    {
+      "seed": 5,
+      "fingerprint": "4d386247fed792d6",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          270,
+          315
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 129.12499999999997,
+        "bentRoutes": 3,
+        "branchPoints": 2,
+        "widthM": 183.120121,
+        "depthM": 84.87510082102409,
+        "roomAreaMinM2": 18.55240430620495,
+        "roomAreaMaxM2": 466.52031970110056,
+        "cycleRank": 16
+      },
+      "physical": {
+        "spaces": 64,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3848.317733,
+        "reachableSpaces": 64,
+        "cycleRank": 16
+      },
+      "errors": []
+    },
+    {
+      "seed": 6,
+      "fingerprint": "e03e9b509806b993",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          45,
+          135,
+          270,
+          315
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 77.475,
+        "bentRoutes": 1,
+        "branchPoints": 2,
+        "widthM": 149.11252,
+        "depthM": 146.45165,
+        "roomAreaMinM2": 23.306352901831985,
+        "roomAreaMaxM2": 524.3920360513114,
+        "cycleRank": 10
+      },
+      "physical": {
+        "spaces": 58,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3869.46976,
+        "reachableSpaces": 58,
+        "cycleRank": 10
+      },
+      "errors": []
+    },
+    {
+      "seed": 7,
+      "fingerprint": "1b7171f0a4b6895e",
+      "attempt": 1,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          90,
+          135,
+          180,
+          225,
+          270
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 51.64999999999999,
+        "bentRoutes": 1,
+        "branchPoints": 2,
+        "widthM": 199.866194,
+        "depthM": 80.70256400000001,
+        "roomAreaMinM2": 15.80619598768476,
+        "roomAreaMaxM2": 315.75341645194453,
+        "cycleRank": 13
+      },
+      "physical": {
+        "spaces": 57,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3485.85879,
+        "reachableSpaces": 57,
+        "cycleRank": 13
+      },
+      "errors": []
+    },
+    {
+      "seed": 8,
+      "fingerprint": "fbf211312793528d",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          45,
+          90,
+          135,
+          225,
+          315
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 129.12499999999997,
+        "bentRoutes": 5,
+        "branchPoints": 2,
+        "widthM": 206.700967,
+        "depthM": 136.251608,
+        "roomAreaMinM2": 15.165474754132447,
+        "roomAreaMaxM2": 426.17077416144014,
+        "cycleRank": 16
+      },
+      "physical": {
+        "spaces": 68,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3728.720559,
+        "reachableSpaces": 68,
+        "cycleRank": 16
+      },
+      "errors": []
+    },
+    {
+      "seed": 9,
+      "fingerprint": "f09bb8f32a55a43a",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          135,
+          180,
+          270
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 129.12499999999997,
+        "bentRoutes": 4,
+        "branchPoints": 2,
+        "widthM": 191.924835,
+        "depthM": 115.38959567216799,
+        "roomAreaMinM2": 17.250034566078,
+        "roomAreaMaxM2": 354.59505101407206,
+        "cycleRank": 9
+      },
+      "physical": {
+        "spaces": 66,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 3550.088873,
+        "reachableSpaces": 66,
+        "cycleRank": 9
+      },
+      "errors": []
+    },
+    {
+      "seed": 29,
+      "fingerprint": "ebcf7d92d84a4254",
+      "attempt": 0,
+      "diversity": {
+        "clusterCount": 8,
+        "roomCount": 47,
+        "headings": [
+          0,
+          90,
+          270
+        ],
+        "recipes": [
+          "chains",
+          "chambers",
+          "partitioned",
+          "sideHalls"
+        ],
+        "routeLengthM": 180.77499999999995,
+        "bentRoutes": 1,
+        "branchPoints": 3,
+        "widthM": 128.438967,
+        "depthM": 150.48475399665034,
+        "roomAreaMinM2": 20.380878912537923,
+        "roomAreaMaxM2": 434.312360816264,
+        "cycleRank": 10
+      },
+      "physical": {
+        "spaces": 62,
+        "floors": 1,
+        "arcs": 0,
+        "stairs": 0,
+        "portsRequested": 2,
+        "portsRealized": 2,
+        "netFootprintArea": 4083.475372,
+        "reachableSpaces": 62,
+        "cycleRank": 10
+      },
+      "errors": []
+    }
+  ],
+  "reviewExports": [
+    {
+      "seed": 1,
+      "path": "generic-1.zone.json.gz",
+      "compression": "gzip",
+      "format": "br.zone/0.4"
+    },
+    {
+      "seed": 7,
+      "path": "generic-7.zone.json.gz",
+      "compression": "gzip",
+      "format": "br.zone/0.4"
+    },
+    {
+      "seed": 29,
+      "path": "generic-29.zone.json.gz",
+      "compression": "gzip",
+      "format": "br.zone/0.4"
+    }
+  ]
+}
