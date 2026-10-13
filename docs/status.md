@@ -1,3 +1,13 @@
+# Generic v2 full geometry update — October 13, 2026
+
+The default Generic entry now uses `generic.html` and `generic-v2` generation. Unequal room programs, variable cluster outlines, 45-degree frames, real connecting runs/junctions and supported apertures are preserved in full `br.zone/0.4` exports. The old exchange generator is unchanged and available with `index.html?template=generic&version=1`.
+
+V2 includes a larger 8–96-room program with separate circulation, independent route-length and orientation controls, physical loop opportunities, worker generation/cancellation, on-demand nine-seed comparisons and 3D, independently validated imports, and source ZIP regeneration. [Guide and verification](generic-template.md) · [example manifest](generic-v2-examples/manifest.json).
+
+Browser checks cover full geometry and walker reach/return. Unreal import and engine verification remain pending. This is a single-floor layout pass; it does not claim new vertical connections or engine support.
+
+---
+
 # Implementation status
 
 Package 0.11.0 provides a full geometry prototype at `gallery.html` and a checked rectangular exchange subset at `index.html`. The [design handoff](design-handoff.md) records the owner's goal: preserve the intended prototype and extend Unreal where transfer exposes missing capabilities. The [exchange contract](unreal-exchange.md) governs version 1 files; [transfer workflow](transfer-workflow.md) explains both paths. The existing house studies remain intact; Office v2 adds its own full geometry workbench and checked fixtures.
