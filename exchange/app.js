@@ -5,7 +5,8 @@
     location.replace(new URL('gallery.html' + location.search + location.hash, location.href).href); return;
   }
   const api = globalThis.ZoneExchange, $ = id => document.getElementById(id), esc = api.escape;
-  const state = { template: 'house', zone: null, draft: null, checks: null, floor: 0, rejected: false, saved: new Map(), drag: null, fitBox: null };
+  const requested = new URLSearchParams(location.search).get('template');
+  const state = { template: api.templates.some(t => t.id === requested) ? requested : 'house', zone: null, draft: null, checks: null, floor: 0, rejected: false, saved: new Map(), drag: null, fitBox: null };
   const audits = new Map();
   const gallery = { start: 1, key: '', samples: [] };
   function template() { return api.templates.find(t => t.id === state.template); }
@@ -87,8 +88,25 @@
   function selectTemplate(regenerate = true) {
     state.template = $('template').value;
     $('seed').value = String(settings().seed); $('summary').textContent = template().summary;
-    $('dials').innerHTML = template().dials.map(d => `<div class="dial"><label for="dial-${d.id}" title="${esc(d.help)}">${esc(d.name)}<output id="value-${d.id}">${d.id === 'wings' ? 1 + Math.floor(settings().dials[d.id] * 5 / 100) : settings().dials[d.id]}</output></label><input id="dial-${d.id}" type="range" min="0" max="100" step="1" value="${settings().dials[d.id]}"><div class="ends"><span>${esc(d.low)}</span><span>${esc(d.high)}</span></div></div>`).join('');
-    for (const d of template().dials) $('dial-' + d.id).addEventListener('input', event => { settings().dials[d.id] = Number(event.target.value); $('value-' + d.id).value = d.id === 'wings' ? 1 + Math.floor(Number(event.target.value) * 5 / 100) : event.target.value; generate(); });
+    const groups = [...new Set(template().dials.map(d => d.group ?? 'Dials'))];
+    function display(d) { if (template().displayDial) return template().displayDial(d.id, settings().dials[d.id]); return d.id === 'wings' ? 1 + Math.floor(settings().dials[d.id] * 5 / 100) : settings().dials[d.id]; }
+    $('dials').innerHTML = groups.map(group => {
+      const controls = template().dials.filter(d => (d.group ?? 'Dials') === group).map(d => d.type === 'toggle'
+        ? `<label class="module-switch" for="dial-${d.id}" title="${esc(d.help)}"><input id="dial-${d.id}" type="checkbox"${settings().dials[d.id] >= 50 ? ' checked' : ''}><span>${esc(d.name)}</span></label>`
+        : `<div class="dial"><label for="dial-${d.id}" title="${esc(d.help)}">${esc(d.name)}<output id="value-${d.id}">${display(d)}</output></label><input id="dial-${d.id}" type="range" min="0" max="100" step="1" value="${settings().dials[d.id]}"><div class="ends"><span>${esc(d.low)}</span><span>${esc(d.high)}</span></div></div>`).join('');
+      return groups.length > 1 ? `<details class="dial-group" open><summary>${esc(group)}</summary>${controls}</details>` : controls;
+    }).join('');
+    for (const d of template().dials) {
+      const input = $('dial-' + d.id);
+      if (d.type === 'toggle') {
+        input.checked = settings().dials[d.id] >= 50;
+        input.addEventListener('change', event => { settings().dials[d.id] = event.target.checked ? 100 : 0; generate(); });
+      } else {
+        input.addEventListener('input', event => { settings().dials[d.id] = Number(event.target.value); $('value-' + d.id).value = display(d); updatePresets(); state.rejected = true; for (const id of ['export', 'snapshot', 'template-export', 'gallery-export']) $(id).disabled = true; $('status').textContent = 'PENDING'; $('plan-checks').textContent = 'Settings pending'; $('plan-state').textContent = 'Last accepted plan · release the control to generate'; });
+        // Generate on release rather than rebuilding nine plans for every slider movement.
+        input.addEventListener('change', generate);
+      }
+    }
     $('presets').innerHTML = (template().presets ?? []).map((p, i) => '<button id="preset-' + i + '">' + esc(p.name) + '</button>').join('');
     (template().presets ?? []).forEach((p, i) => $('preset-' + i).addEventListener('click', () => { settings().dials = { ...p.dials }; selectTemplate(); }));
     updatePresets();

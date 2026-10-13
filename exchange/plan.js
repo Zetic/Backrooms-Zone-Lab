@@ -75,9 +75,13 @@
     return parts.join('');
   }
   function galleryPlan(title, dials, samples, floor) {
-    const parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1140" viewBox="0 0 1440 1140"><rect width="1440" height="1140" fill="#19222e"/>', '<text x="20" y="28" fill="#e8edf5" font-family="sans-serif" font-size="18">' + escape(title + ' · ' + JSON.stringify(dials)) + '</text>'];
+    const settings = JSON.stringify(dials), longSettings = settings.length > 150, lines = [];
+    if (longSettings) { let line = ''; for (const [key, value] of Object.entries(dials)) { const item = key + ': ' + value; if (line && (line + ' · ' + item).length > 170) { lines.push(line); line = item; } else line += (line ? ' · ' : '') + item; } if (line) lines.push(line); }
+    const top = 60 + lines.length * 16, height = top + 1080;
+    const parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="' + height + '" viewBox="0 0 1440 ' + height + '"><rect width="1440" height="' + height + '" fill="#19222e"/>', '<text x="20" y="28" fill="#e8edf5" font-family="sans-serif" font-size="18">' + escape(longSettings ? title : title + ' · ' + settings) + '</text>'];
+    lines.forEach((line, i) => parts.push('<text x="20" y="' + (48 + i * 16) + '" fill="#afbecf" font-family="sans-serif" font-size="12">' + escape(line) + '</text>'));
     samples.forEach((s, i) => {
-      const x = i % 3 * 480, y = 60 + Math.floor(i / 3) * 360;
+      const x = i % 3 * 480, y = top + Math.floor(i / 3) * 360;
       if (s.error) { parts.push('<text x="' + (x + 15) + '" y="' + (y + 30) + '" fill="#ff9b91">Seed ' + s.seed + ' refused</text>'); return; }
       const floors = api.facts(s.zone).floors, shownFloor = floors.includes(floor) ? floor : floors[0];
       parts.push('<text x="' + (x + 15) + '" y="' + (y + 20) + '" fill="#e8edf5" font-family="sans-serif">Seed ' + s.seed + ' · ' + s.report.kept + '/' + s.report.rules.length + ' rules kept</text>');

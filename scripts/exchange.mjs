@@ -6,6 +6,7 @@ import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
 import '../exchange/templates/offices.js';
+import '../exchange/templates/generic.js';
 import '../exchange/plan.js';
 
 const api = globalThis.ZoneExchange;
@@ -85,7 +86,7 @@ async function main() {
     manifest.galleries.push({ file, template: api.templateKey(template), preset: preset.name, dials: preset.dials, seeds: samples.map(s => s.seed), sha256: createHash('sha256').update(svg).digest('hex') });
   }
   await writeFile(new URL('manifest.json', output), JSON.stringify(manifest, null, 2) + '\n');
-  for (const file of ['stream.js', 'checks.js', 'method.js', 'templates/house.js', 'templates/level0.js', 'templates/offices.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
+  for (const file of ['stream.js', 'checks.js', 'method.js', 'templates/house.js', 'templates/level0.js', 'templates/offices.js', 'templates/generic.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
   console.log('Handoff: ' + zones.length + ' zones, ' + manifest.zones.reduce((n, z) => n + z.plans.length, 0) + ' plan snapshots, template code, shared core and audit manifest in docs/exchange-examples/.');
 }
 if (process.argv[1] && new URL('file:///' + process.argv[1].replaceAll('\\', '/').replace(/^\//, '')).pathname === new URL(import.meta.url).pathname) await main();

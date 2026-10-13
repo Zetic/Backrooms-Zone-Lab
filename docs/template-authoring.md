@@ -74,3 +74,7 @@ Without the local ZoneLab v2 sources, omit `--lab-parity=true` to verify compila
 The exchange subset can also preserve a space’s optional `outline` as design data. Follow the path/arc convention in [the exchange contract](unreal-exchange.md#browser-implementation-notes--october-13-2026); actual Unreal outline realization remains adapter work. Compare nine seeds at intermediate dial settings and export preset gallery pictures for the handoff.
 
 Maximum cohesion is a geometry-derived rule, not a label attached to the chosen dial. Office checks consecutive room partitions and the requested departmental program count; House checks that every room shares a room partition. Strict audits set Cohesion to 100 explicitly.
+
+## Generic modular prototype
+
+[Generic zone](generic-template.md) is a larger runnable starting point with 19 grouped dials, five module switches, four builder recipes, reserved module frontage and separate rule evaluator registries. Its complete source is [`exchange/templates/generic.js`](../exchange/templates/generic.js). Start with this when testing combinations of room clusters, corridor crosses, courtyard rings, shared halls and functional programs. The small starter remains useful for a single simple archetype.

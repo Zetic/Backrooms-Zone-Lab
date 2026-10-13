@@ -4,15 +4,17 @@ Prototype the architecture you want to walk in Unreal. Preserve the complete des
 
 Use the [full geometry prototype](gallery.html) for curved/angled rooms, wall solids, galleries and a 3D view. Use the default rectangular exchange page for the currently tested **`backrooms-zone` version 1** subset, defined by the [ZoneLabExchange contract](docs/unreal-exchange.md). This subset is a first transfer path, not a limit on what may be designed.
 
+**Generic zone prototype:** select [Generic zone](index.html?template=generic) to combine four architectural recipes using **19 dials, five module switches and eight presets**. Controls cover room supply, cohesion, sprawl, branching, loops, function mix and raised sections. [Control guide and plug-in module/rule contracts](docs/generic-template.md).
+
 **Start a new template:** follow [template authoring](docs/template-authoring.md) and copy the [runnable starter](docs/template-starter.js). House v3 extends the local Unreal method: room program, circulation spine, required openings, physical checks and 16 named architectural rules. Size, Sprawl, Cohesion, Room Count and Strangeness, six presets and rule reports are available in the default workbench. Dials may relax named conventions; they never relax physical validity.
 
 **Offices v3** adds independent department wings, room dimensions based on function, and an explicit 1–6 Wings control alongside Size, Openness, Sprawl, Cohesion, Room Count and Strangeness. Its 19 conventions check program count and maximum-cohesion shared walls. Open the [angled Office workbench](office.html) for the reference-inspired two-wing plan, actual full geometry and 3D cutaway; use the rectangular exchange for its separate orthogonal layout. [Office guide and examples](docs/offices.md).
 
 See [Sprawl, Cohesion and Room Count](docs/cohesion.md) for the dial interaction and same-seed comparisons. Office generation, solid walls, navigation checks and 3D mesh preparation run in a cancellable worker on HTTP/static hosting.
 
-Open **`index.html` directly** from the repository folder. No build, server, install, runtime dependency or network is needed. Select **House** or **Level 0**, change the seed and dials, inspect each storey, and export the checked `.zone.json` and its plan. Import files to reopen them; edit the exchange JSON for one-off layouts. A failed change preserves the last accepted plan and disables export.
+Open **`index.html` directly** from the repository folder. No build, server, install, runtime dependency or network is needed. Select **Generic zone**, **House**, **Offices** or **Level 0**, change the seed and dials, inspect each storey, and export the checked `.zone.json` and its plan. Import files to reopen them; edit the exchange JSON for one-off layouts. A failed change preserves the last accepted plan and disables export.
 
-The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Ten example zones, fourteen plans, the templates and fourteen preset galleries and their acceptance/strict reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
+The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Thirteen example zones, seventeen plans, the templates and twenty-two preset galleries and their acceptance/strict reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
 
 **The Unreal JSON loader is not built yet.** These files target the documented loader contract. The optional integration check realizes the actual exchange layouts through the existing portable Unreal compiler and verifies physical compilation, all joins, Human reach and return, and order independence. It does not implement the runtime loader.
 
