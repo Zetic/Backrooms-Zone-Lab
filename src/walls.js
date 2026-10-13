@@ -1,4 +1,5 @@
 import { q, point, line, polygon, at, tangent, edgeDistance, distance, signedArea, validateFootprint, interiorsOverlap } from './geometry.js';
+import { insetRegion } from './polygon-regions.js';
 import { canonicalStringify } from './determinism.js';
 import { approachFor } from './structure.js';
 import { outerEnvelope, differenceUnion, edgeLength, edgeParameter } from './solid-geometry.js';
@@ -16,7 +17,7 @@ export function expectedPassage(plan, opening) {
 export function deriveWallGeometry(plan) {
   const thickness=plan.input.config.wallThickness, bodies=[];
   for(const floor of plan.floors){
-    const spaces=plan.spaces.filter(s=>s.floorIndex===floor.index),envelopes=spaces.map(s=>outerEnvelope(s.footprint,thickness)),clear=spaces.map(s=>({outer:s.footprint.outer,holes:[]}));
+    const spaces=plan.spaces.filter(s=>s.floorIndex===floor.index),envelopes=spaces.map(s=>plan.kind === 'generated-generic' && plan.input.generatorVersion === 3 ? insetRegion(s.footprint, -thickness) : outerEnvelope(s.footprint,thickness)),clear=spaces.map(s=>({outer:s.footprint.outer,holes:[]}));
     const passages=plan.passages.filter(p=>p.minZ===floor.elevation),top=q(floor.elevation+plan.input.config.floorHeight);
     const levels=[...new Set([floor.elevation,top,...passages.map(p=>Math.min(p.maxZ,top))])].sort((a,b)=>a-b);
     for(let level=1;level<levels.length;level++){
@@ -36,7 +37,7 @@ export function deriveWallGeometry(plan) {
   return bodies;
 }
 export function realizeWalls(plan) {
-  plan.geometryContract={roomFootprint:'clear-usable-floor',wallPlacement:'outside-clear-room-footprints',wallThickness:plan.input.config.wallThickness,wallJoin:'exact-union-with-round-exterior-corners',wallSolids:'wallBodies',tangentPredicates:'distance-tolerance',boundarySemantics:'walls',units:'metres'};
+  plan.geometryContract={roomFootprint:'clear-usable-floor',wallPlacement:'outside-clear-room-footprints',wallThickness:plan.input.config.wallThickness,wallJoin:plan.kind === 'generated-generic' && plan.input.generatorVersion === 3 ? 'exact-union-with-mitered-polygon-corners' : 'exact-union-with-round-exterior-corners',wallSolids:'wallBodies',tangentPredicates:'distance-tolerance',boundarySemantics:'walls',units:'metres'};
   plan.spaces.forEach(s=>{s.usableFloor={surfaceId:`floor:${s.id}`,areaM2:floorArea(s.footprint)};});
   plan.openings.forEach(o=>{o.hosts.forEach(h=>{h.center??=structuredClone(o.center);});});
   plan.passages=plan.openings.map(o=>expectedPassage(plan,o));

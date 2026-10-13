@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { generateGenericDesign, importGenericDesign } from '../src/generic.js';
-import { genericTemplate, genericInput } from '../src/generic-template.js';
-import { composeGeneric } from '../src/generic-layout.js';
+import { generateGenericDesign, importGenericDesign } from '../src/generic-v2.js';
+import { genericTemplate, genericInput } from '../src/generic-template-v2.js';
+import { composeGeneric } from '../src/generic-layout-v2.js';
 import { canonicalExport } from '../src/zone.js';
 import { validateArchitecture } from '../src/physical.js';
 import { validateFootprint, distance } from '../src/geometry.js';

@@ -1,3 +1,13 @@
+# Generic v3 polygon neighborhood — October 13, 2026
+
+The default Generic workbench now carves interlocking concave polygon rooms from a connected floor field, with angled shared cuts, offset supported doors and one variable-width winding corridor polygon. A canonical boundary graph owns the partitions and aperture intervals; allocation faces, clear floors and actual wall solids remain consistent. There are no physical parent rooms or separate interior-partition wall category.
+
+The first region solver supports 8–24 rooms (13 by default). It is deliberately one neighborhood; free-form multi-neighborhood composition, branched corridor routing and broader topology remain next steps. Generic gallery UI and batch-generation paths are removed so the workbench generates one seed at a time. Archived v2 inputs/exports remain replayable. [Guide](generic-template.md) · [single-seed example](generic-v3-example/layout.svg) · [verification manifest](generic-v3-example/manifest.json).
+
+Node tests cover polygon ownership, clearance, loops, wall reconstruction, legacy replay, imports, worker/controller flow and source regeneration. Static SVG review is performed; live browser/WebGL and Unreal runtime checks remain pending.
+
+---
+
 # Generic v2 full geometry update — October 13, 2026
 
 The default Generic entry now uses `generic.html` and `generic-v2` generation. Unequal room programs, variable cluster outlines, 45-degree frames, real connecting runs/junctions and supported apertures are preserved in full `br.zone/0.4` exports. The old exchange generator is unchanged and available with `index.html?template=generic&version=1`.

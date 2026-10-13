@@ -31,16 +31,4 @@ export class GenericRunner {
     if (this.WorkerClass) return this.request({ type: 'mesh', lowWalls });
     return Promise.resolve().then(() => ({ prepared: prepareViewerData(this.plan, genericViewOptions(lowWalls)), lowWalls }));
   }
-  compare(spec, seeds) {
-    this.cancel();
-    if (this.WorkerClass) return this.request({ type: 'compare', spec, seeds });
-    return Promise.resolve().then(() => compareGeneric(spec, seeds));
-  }
-}
-export function compareGeneric(spec, seeds) {
-  if (!Array.isArray(seeds) || seeds.length > 9) throw new Error('Comparison is bounded to nine seeds.');
-  return seeds.map(seed => {
-    try { const plan = generateGenericDesign({ ...spec, seed }); return { seed, fingerprint: plan.fingerprint, metrics: plan.layout.metrics, svg: genericSvg(plan, { idPrefix: 'seed-' + seed }) }; }
-    catch (error) { return { seed, error: error.message }; }
-  });
 }
