@@ -16,7 +16,7 @@ Export `.zone.json` only after the checks pass. Use **Export plan .svg** on each
 
 ## The handoff
 
-The repository includes [seven checked zones](exchange-examples/manifest.json), their eleven storey plans, both template files and shared core files in `docs/exchange-examples/`. Three seeds per template plus the documented small flat give a small review set. Regenerate with:
+The repository includes [ten checked zones](exchange-examples/manifest.json), their fourteen storey plans, all three template files and shared core files in `docs/exchange-examples/`. House and Level 0 have three seeds each; Offices has Standard/Open/Wrong examples, alongside the documented small flat. Regenerate with:
 
 ```sh
 npm test

@@ -6,9 +6,11 @@ Use the [full geometry prototype](gallery.html) for curved/angled rooms, wall so
 
 **Start a new template:** follow [template authoring](docs/template-authoring.md) and copy the [runnable starter](docs/template-starter.js). House v2 now follows the local Unreal method: room program, circulation spine, required openings, physical checks and 15 named architectural rules. Size, Sprawl and Strangeness, six presets and rule reports are available in the default workbench. Dials may relax named conventions; they never relax physical validity.
 
+**Offices** adds a conventional visitor/staff floor and increasingly strange variants. Size, Openness, Sprawl and Strangeness shape its program, office/open-plan bays, department wings and 16 named conventions. Begin with Standard office, then compare After hours or Wrong workplace. [Office guide and examples](docs/offices.md).
+
 Open **`index.html` directly** from the repository folder. No build, server, install, runtime dependency or network is needed. Select **House** or **Level 0**, change the seed and dials, inspect each storey, and export the checked `.zone.json` and its plan. Import files to reopen them; edit the exchange JSON for one-off layouts. A failed change preserves the last accepted plan and disables export.
 
-The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Seven example zones, eleven plans, the templates and their 120-case reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
+The [transfer workflow](docs/transfer-workflow.md) explains the handoff. [Ten example zones, fourteen plans, the templates and their 120-case reports](docs/exchange-examples/manifest.json) are ready under `docs/exchange-examples/`.
 
 **The Unreal JSON loader is not built yet.** These files target the documented loader contract. The optional integration check realizes the actual exchange layouts through the existing portable Unreal compiler and verifies physical compilation, all joins, Human reach and return, and order independence. It does not implement the runtime loader.
 

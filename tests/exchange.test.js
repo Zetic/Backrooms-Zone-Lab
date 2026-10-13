@@ -6,6 +6,7 @@ import '../exchange/checks.js';
 import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
+import '../exchange/templates/offices.js';
 import '../exchange/plan.js';
 import { audit } from '../scripts/exchange.mjs';
 const api = globalThis.ZoneExchange;
