@@ -1,6 +1,6 @@
 {
   "name": "backrooms-zone-lab",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,10 @@
     "batch:walls": "node scripts/batch-walls.mjs",
     "examples:offices": "node scripts/office-examples.mjs",
     "batch:exchange": "node scripts/exchange.mjs",
-    "verify:unreal": "node scripts/verify-unreal.mjs"
+    "verify:unreal": "node scripts/verify-unreal.mjs",
+    "examples:cohesion": "node scripts/cohesion-examples.mjs"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }

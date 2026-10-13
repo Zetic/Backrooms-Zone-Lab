@@ -1,26 +1,28 @@
-// Offices v2: independent department spines and functional room programs.
+// Offices v3: independent department spines and functional room programs.
 // All plan decisions use named integer draws; full geometry uses the same composition.
 (function () {
   'use strict';
   const api = globalThis.ZoneExchange;
   const offices = {
-    id: 'offices', version: 2, name: 'Offices', attempts: 16, workLimit: 20000,
+    id: 'offices', version: 3, name: 'Offices', attempts: 16, workLimit: 20000,
     summary: 'A central visitor/service hub with independent department wings, differently sized offices and team spaces. Compare the angled reference design as full geometry.',
     dials: [
-      { id: 'size', name: 'Size', low: 'Small company', high: 'Large departments', value: 40, help: 'Room capacities and the number of rooms in each department' },
+      { id: 'size', name: 'Size', low: 'Small company', high: 'Large departments', value: 40, help: 'Role-specific room dimensions; Room Count supplies the quantity' },
       { id: 'wings', name: 'Wings', low: '1 spine', high: '6 wings', value: 20, help: 'Independent sections: 1 at 0, 2 at 20, 3 at 40, 4 at 60, 5 at 80, 6 at 100. Extra wings branch from outer junctions.' },
       { id: 'open', name: 'Openness', low: 'Private offices', high: 'Team workplaces', value: 35, help: 'Workplace type and capacity: open team rooms receive larger floor allocations' },
-      { id: 'sprawl', name: 'Sprawl', low: 'Compact', high: 'Long / separated', value: 0, help: 'Approach length and breathing space between departmental groups, independently of wing count' },
+      { id: 'cohesion', name: 'Cohesion', low: 'Dispersed', high: 'Shared walls', value: 100, strict: 100, help: 'Closes gaps between neighbouring rooms; at 100 each row has continuous shared partitions. Intentional circulation and exterior space remain.' },
+      { id: 'rooms', name: 'Room Count', low: 'Few', high: 'Many', value: 40, help: '4–14 department rooms per wing (up to 8 with five/six wings to preserve the bounded zone), independently of Size. More rooms support longer populated branches.' },
+      { id: 'sprawl', name: 'Sprawl', low: 'Compact', high: 'Long branches', value: 0, help: 'Arranges available rooms into longer populated branches. Cohesion limits spacing and Room Count supplies the reach.' },
       { id: 'strange', name: 'Strangeness', low: 'Conventional', high: 'Wrong workplace', value: 0, help: 'Permits stretched rooms, repetition, displaced functions, chained access, empty branches and ceiling variation' }
     ],
     presets: [
-      { name: 'Standard office', dials: { size: 40, wings: 0, open: 35, sprawl: 0, strange: 0 } },
-      { name: 'Private practice', dials: { size: 15, wings: 0, open: 0, sprawl: 0, strange: 0 } },
-      { name: 'Open workplace', dials: { size: 70, wings: 20, open: 100, sprawl: 0, strange: 0 } },
-      { name: 'Department wings', dials: { size: 70, wings: 60, open: 45, sprawl: 40, strange: 0 } },
-      { name: 'After hours', dials: { size: 50, wings: 40, open: 20, sprawl: 35, strange: 60 } },
-      { name: 'Wrong workplace', dials: { size: 75, wings: 100, open: 65, sprawl: 90, strange: 95 } },
-      { name: 'Reference floor', dials: { size: 65, wings: 20, open: 15, sprawl: 20, strange: 0 } }
+      { name: 'Standard office', dials: { cohesion: 100, rooms: 40, size: 40, wings: 0, open: 35, sprawl: 0, strange: 0 } },
+      { name: 'Private practice', dials: { cohesion: 100, rooms: 15, size: 15, wings: 0, open: 0, sprawl: 0, strange: 0 } },
+      { name: 'Open workplace', dials: { cohesion: 100, rooms: 60, size: 70, wings: 20, open: 100, sprawl: 0, strange: 0 } },
+      { name: 'Department wings', dials: { cohesion: 100, rooms: 70, size: 70, wings: 60, open: 45, sprawl: 40, strange: 0 } },
+      { name: 'After hours', dials: { cohesion: 80, rooms: 50, size: 50, wings: 40, open: 20, sprawl: 35, strange: 60 } },
+      { name: 'Wrong workplace', dials: { cohesion: 20, rooms: 65, size: 75, wings: 100, open: 65, sprawl: 90, strange: 95 } },
+      { name: 'Reference floor', dials: { cohesion: 100, rooms: 70, size: 65, wings: 20, open: 15, sprawl: 20, strange: 0 } }
     ],
     make(spec) { return api.generateTemplate(offices, spec, d => offices.compose(d).zone); },
     design(spec) {
@@ -29,10 +31,10 @@
       return zone.error ? zone : { zone, layout: model.layout };
     },
     compose(d) {
-      const { size, wings, open, sprawl, strange } = d.dials;
+      const { size, wings, open, sprawl, strange, cohesion, rooms: roomDial } = d.dials;
       const count = 1 + Math.floor(wings * 5 / 100), hw = strange >= 30 ? 4 + 2 * Math.floor((strange - 30) / 40) : 4;
       const cx = 10 + Math.floor(size / 50), cy = 8 + Math.floor(size / 50), X = cx + hw, Y = cy + hw;
-      const spaces = [], joins = [], layout = { hw, cx, cy, wings: [], groups: {}, source: 'office-v2' };
+      const spaces = [], joins = [], layout = { hw, cx, cy, wings: [], groups: {}, source: 'office-v3' };
       const titles = { reception: 'Reception', meeting: 'Visitor meeting', conference: 'Team meeting', office: 'Private office', work: 'Team workplace', washroom: 'Washrooms', break: 'Break room', copy: 'Copy room', server: 'Server room', store: 'Supply store', team: 'Department lounge', hall: 'Corridor', exit: 'Exit / stair lobby' };
       const dx = [1, 0, -1, 0], dy = [0, 1, 0, -1];
       const uv = (f, u, v) => [f.x + u * dx[f.dir] - v * dy[f.dir], f.y + u * dy[f.dir] + v * dx[f.dir]];
@@ -72,7 +74,9 @@
       join(H.east, add('store', [0, hi, cx, cy], 'core-store'));
       const sizes = { office: [6, 9, 6, 10], work: [12, 18, 10, 16], conference: [9, 14, 8, 12], team: [8, 12, 7, 11], copy: [4, 5, 4, 6], store: [4, 6, 4, 8] };
       function program(index, side) {
-        const rooms = [], n = 4 + Math.floor(size / 65);
+        const rooms = [], total = 4 + Math.floor(roomDial * (count > 4 ? 4 : 10) / 100);
+        const longRow = Math.min(total - 2, Math.floor(total / 2) + Math.floor(sprawl * (total - 4) / 400));
+        const n = side === 0 ? longRow : total - longRow;
         for (let k = 0; k < n; ++k) {
           const id = 'wing-' + index + '-room-' + side + '-' + k;
           let role = k === n - 1 && side === 0 ? 'conference' : k === 0 && side === 1 ? 'team' : d.chance(id + '/open', open) ? 'work' : 'office';
@@ -86,12 +90,13 @@
       }
       function wing(index, f, parent, parentWing = null) {
         const group = 'wing-' + index, sides = [program(index, 0), program(index, 1)];
-        const lead = (count <= 2 ? 4 : 18) + Math.floor(sprawl / 12) + Math.floor(strange / 8), rooms = []; let length = lead;
+        const parentDepth = parentWing === null ? 0 : Math.max(...layout.wings.find(w => w.index === parentWing).rooms.map(r => r.depth)) + hw;
+        const lead = Math.max(count <= 2 ? 4 : 18, parentDepth) + Math.floor((Math.floor(sprawl / 12) + Math.floor(strange / 8)) * (100 - cohesion) / 100), rooms = []; let length = lead;
         for (let side = 0; side < 2; ++side) {
           let u = lead;
           for (let k = 0; k < sides[side].length; ++k) {
             const item = sides[side][k];
-            if (k === 2 && sprawl >= 35) u += 4 + Math.floor(sprawl / 25);
+            if (k > 0) u += Math.floor((4 + Math.floor(sprawl / 25) + Math.floor(strange / 20)) * sprawl * (100 - cohesion) / 10000);
             const r = side === 0 ? rect(f, u, u + item.length, hw, hw + item.depth) : rect(f, u, u + item.length, -item.depth, 0);
             rooms.push({ ...item, side, from: u, to: u + item.length, space: add(item.role, r, item.id, group) }); u += item.length;
           }
@@ -118,8 +123,8 @@
         }
         const junction = add('hall', rect(f, length, length + hw, 0, hw), group + '-junction', group); join(halls.at(-1), junction, 'open');
         const exit = add('exit', rect(f, length + hw, length + hw + 6, -2, hw + 2), group + '-exit', group); join(junction, exit);
-        if (strange >= 40) { const empty = add('hall', rect(f, length + hw + 6, length + hw + 14, 0, hw), group + '-empty', group); join(exit, empty, 'open'); }
-        const record = { index, group, frame: f, parentId: parent.id, parentWing, junctionId: junction.id, length, rooms: rooms.map(r => ({ id: r.id, role: r.role, side: r.side, length: r.length, depth: r.depth })) };
+        if (strange >= 40 && cohesion < 100) { const empty = add('hall', rect(f, length + hw + 6, length + hw + 14, 0, hw), group + '-empty', group); join(exit, empty, 'open'); }
+        const record = { lead, index, group, frame: f, parentId: parent.id, parentWing, junctionId: junction.id, length, rooms: rooms.map(r => ({ id: r.id, role: r.role, side: r.side, length: r.length, depth: r.depth })) };
         layout.wings.push(record); return record;
       }
       const primary = [ { x: X, y: -hw / 2, dir: 0, parent: H.east }, { x: -X, y: hw / 2, dir: 2, parent: H.west }, { x: -hw / 2, y: Y, dir: 1, parent: H.north }, { x: -hw / 2, y: -Y - 6, dir: 3, parent: reception } ];
@@ -129,8 +134,8 @@
         wing(i, { x: at[0], y: at[1], dir: (p.frame.dir + 1) % 4 }, parent, p.index);
       }
       const zone = { format: 'backrooms-zone', version: 1, id: 'offices-' + d.seed, name: 'Offices · seed ' + d.seed, theme: 'backrooms',
-        notes: 'Office v2: central visitor/service hub, ' + count + ' independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.',
-        source: { template: api.templateKey(offices), seed: d.seed, dials: d.dials, lab: 'exchange-4' }, start: { space: reception.id, x: 0, y: -Y - 3 }, spaces, joins,
+        notes: 'Office v3: central visitor/service hub, ' + count + ' independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.',
+        source: { template: api.templateKey(offices), seed: d.seed, dials: d.dials, lab: 'exchange-5' }, start: { space: reception.id, x: 0, y: -Y - 3 }, spaces, joins,
         entrances: [{ title: 'Visitor entrance', space: reception.id, side: 's', at: count >= 4 ? -hw / 2 - 2 : 0 }] };
       // Multiple wings have independent future zone-connection opportunities at their ends.
       for (const w of layout.wings) {
@@ -168,6 +173,11 @@
       add('ceiling', 'Rooms share one consistent ceiling height', new Set(S.map(s => s.ceiling ?? 270)).size === 1, 'Ceiling heights change between rooms.', [relax('strange', 85)]);
       add('single-level', 'The office floor occupies one level', new Set(S.map(s => s.floor)).size === 1, 'The floor changes level.');
       add('wing-count', 'The requested number of independent wings is realized', S.filter(s => /^wing-[0-9]+-exit$/.test(s.id)).length === 1 + Math.floor((dials.wings ?? 20) * 5 / 100), 'The wing count differs from the requested setting.');
+      const departments = S.filter(s => /^wing-[0-9]+-room-[01]-[0-9]+$/.test(s.id));
+      const wings = 1 + Math.floor((dials.wings ?? 20) * 5 / 100), expectedRooms = wings * (4 + Math.floor((dials.rooms ?? 40) * (wings > 4 ? 4 : 10) / 100));
+      add('room-program', 'The requested departmental room program is realized', departments.length === expectedRooms, 'Department room count differs from Room Count.');
+      const touch = departments.every(s => { const m = s.id.match(/^(wing-[0-9]+-room-[01]-)([0-9]+)$/), k = Number(m[2]); if (!k) return true; const previous = departments.find(p => p.id === m[1] + (k - 1)); return previous && Boolean(api.shared(previous, s)); });
+      add('cohesion', 'Maximum cohesion gives contiguous room rows with shared walls', (dials.cohesion ?? 100) < 100 || touch, 'Neighbouring department rooms leave an unallocated gap.');
       return R;
     }
   };

@@ -31,3 +31,5 @@ Extend the importer and portable compiler for the useful design, keeping determi
 Transfer fixed layouts first so they can be inspected and walked. Port the generator after that geometry contract is accepted, preserving explicit versions, stable identities, seed/dial decisions and bounded work. Compare representative seeds and complete journeys in Unreal. Keep the original prototype available throughout that process.
 
 Office v2 has a dedicated `office.html` workbench with actual rotated clear floors, wall bodies and supported apertures. Preserve its full `br.zone/0.4` files. Its separately generated rectangular exchange is not an approximation to substitute for the angled design.
+
+The [Sprawl/Cohesion/Room Count pass](cohesion.md) extends portable House and both Office workbenches. Current template identities are `house-v3` and `offices-v3`; earlier v2 sources remain archived. Office full exports preserve actual rotated geometry, including the shared core, rather than claiming the separate rectangles reproduce it.

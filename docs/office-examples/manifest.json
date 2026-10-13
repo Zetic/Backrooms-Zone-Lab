@@ -1,12 +1,14 @@
 {
-  "format": "office-v2-full-handoff",
+  "format": "office-v3-full-handoff",
   "version": 1,
-  "template": "offices-v2",
+  "template": "offices-v3",
   "examples": [
     {
       "id": "reference",
       "seed": 1,
       "dials": {
+        "cohesion": 100,
+        "rooms": 70,
         "size": 65,
         "wings": 20,
         "open": 15,
@@ -15,16 +17,18 @@
       },
       "file": "reference.zone.json",
       "plan": "reference.svg",
-      "sha256": "252307ba96dfdb7dac40392e37ab859f98b2e39bffbab010f1138dc6123201dc",
+      "sha256": "2d5fdb12979ac17f11b12213f8b0af3e0fee9fb1c66680a3ab8d3eb3ea4444f4",
       "wingCount": 2,
-      "spaces": 50,
-      "reachable": 50,
-      "returnable": 50
+      "spaces": 53,
+      "reachable": 53,
+      "returnable": 53
     },
     {
       "id": "departments",
       "seed": 7,
       "dials": {
+        "cohesion": 100,
+        "rooms": 70,
         "size": 70,
         "wings": 60,
         "open": 45,
@@ -33,11 +37,11 @@
       },
       "file": "departments.zone.json",
       "plan": "departments.svg",
-      "sha256": "e6b3ecc0d4d0614e8fbccde9c9a3c51cb9c76446592e2741fecc4cd155e349a8",
+      "sha256": "6b4dab6e66525c2abf474702e839aaf68d542434e4aa8800557dd1b53ea0c9d6",
       "wingCount": 4,
-      "spaces": 81,
-      "reachable": 81,
-      "returnable": 81
+      "spaces": 85,
+      "reachable": 85,
+      "returnable": 85
     },
     {
       "id": "six-wings",
@@ -46,16 +50,18 @@
         "size": 65,
         "wings": 100,
         "open": 35,
-        "sprawl": 20,
-        "strange": 0
+        "sprawl": 100,
+        "strange": 0,
+        "cohesion": 100,
+        "rooms": 100
       },
       "file": "six-wings.zone.json",
       "plan": "six-wings.svg",
-      "sha256": "bde98d94de06c51194bb6d7af29387f371032de3db5b5cc8037924243ac0dba0",
+      "sha256": "352e4fe7b118d883c823e308844d0476972b8d28c7bc77a773e5c728e5598787",
       "wingCount": 6,
-      "spaces": 110,
-      "reachable": 110,
-      "returnable": 110
+      "spaces": 98,
+      "reachable": 98,
+      "returnable": 98
     }
   ],
   "limitations": [

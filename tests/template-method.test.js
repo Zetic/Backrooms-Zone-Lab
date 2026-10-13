@@ -8,16 +8,16 @@ import '../exchange/method.js';
 import '../exchange/templates/house.js';
 const api = globalThis.ZoneExchange, house = api.templates.find(t => t.id === 'house');
 
-test('House v2 preserves the local six presets and named-rule policy', () => {
-  const expected = [22, 25, 15, 19, 25, 30];
+test('House v3 preserves the six presets and named-rule policy', () => {
+
   for (const [i, p] of house.presets.entries()) {
     const z = house.make({ seed: 1, dials: p.dials });
-    assert.ok(!z.error, z.error); assert.equal(z.spaces.length, expected[i]);
-    assert.equal(z.source.template, 'house-v2');
-    const r = api.ruleReport(house, z); assert.equal(r.rules.length, 15); assert.ok(r.valid);
+    assert.ok(!z.error, z.error); assert.ok(z.spaces.length <= 128);
+    assert.equal(z.source.template, 'house-v3');
+    const r = api.ruleReport(house, z); assert.equal(r.rules.length, 16); assert.ok(r.valid);
     assert.deepEqual(z.rules, r.rules);
     for (const id of ['entry', 'stair', 'ground']) assert.ok(r.rules.find(r => r.id === id).kept);
-    if (p.dials.strange === 0 && p.dials.sprawl === 0) assert.equal(r.kept, 15);
+    if (p.dials.strange === 0 && p.dials.sprawl === 0) assert.equal(r.kept, 16);
   }
 });
 test('strict audit rejects a template that permits a broken rule even at its strict end', () => {

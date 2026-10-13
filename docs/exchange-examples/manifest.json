@@ -4,13 +4,15 @@
   "contract": "../unreal-exchange.md",
   "templates": [
     {
-      "template": "house-v2",
+      "template": "house-v3",
       "passed": 120,
       "total": 120,
       "failures": [],
       "strict": {
         "dials": {
           "size": 0,
+          "cohesion": 100,
+          "rooms": 0,
           "sprawl": 0,
           "strange": 0
         },
@@ -37,7 +39,7 @@
       }
     },
     {
-      "template": "offices-v2",
+      "template": "offices-v3",
       "passed": 120,
       "total": 120,
       "failures": [],
@@ -46,6 +48,8 @@
           "size": 0,
           "wings": 0,
           "open": 0,
+          "cohesion": 100,
+          "rooms": 0,
           "sprawl": 0,
           "strange": 0
         },
@@ -58,14 +62,14 @@
   "zones": [
     {
       "file": "house-1.zone.json",
-      "sha256": "f83babd0b3f000b607b805d4cbd3128c75a30546409a008a2c1cfecf684492a2",
+      "sha256": "3d986d2f4decaa24c4618580f0a8a282b2ff58999704f7badd5ccfa2384519a8",
       "plans": [
         "house-1-floor-0.svg",
         "house-1-floor-290.svg"
       ],
-      "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+      "notes": "House v3: Room Count supplies bedrooms and additional study/den rooms; Sprawl arranges the program into branches; Cohesion suppresses unallocated row gaps without stretching rooms. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
       "architecturalRules": {
-        "template": "house-v2",
+        "template": "house-v3",
         "rules": [
           {
             "id": "entry",
@@ -186,23 +190,31 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion gives every room a shared room partition",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 15,
+        "kept": 16,
         "valid": true,
         "broken": []
       }
     },
     {
       "file": "house-7.zone.json",
-      "sha256": "43140b8136a71f69ea21034bdbcdcae271fef5ffecb4ce42e9cfa4ced64d001f",
+      "sha256": "22053a547c6e8bce1f6f05deca41e803315ab5a1dbb4af66861301fdd7b3e9c1",
       "plans": [
         "house-7-floor-0.svg",
         "house-7-floor-290.svg"
       ],
-      "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+      "notes": "House v3: Room Count supplies bedrooms and additional study/den rooms; Sprawl arranges the program into branches; Cohesion suppresses unallocated row gaps without stretching rooms. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
       "architecturalRules": {
-        "template": "house-v2",
+        "template": "house-v3",
         "rules": [
           {
             "id": "entry",
@@ -323,23 +335,31 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion gives every room a shared room partition",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 15,
+        "kept": 16,
         "valid": true,
         "broken": []
       }
     },
     {
       "file": "house-29.zone.json",
-      "sha256": "b5967efc90d5bcadb36684871b826bb366392a1a5101df3a8a16399c88b8ec5b",
+      "sha256": "06980cff62348ca4142870dc376d239dd2949829b6dad34e8ffb0ba1c9d59d54",
       "plans": [
         "house-29-floor-0.svg",
         "house-29-floor-290.svg"
       ],
-      "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+      "notes": "House v3: Room Count supplies bedrooms and additional study/den rooms; Sprawl arranges the program into branches; Cohesion suppresses unallocated row gaps without stretching rooms. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
       "architecturalRules": {
-        "template": "house-v2",
+        "template": "house-v3",
         "rules": [
           {
             "id": "entry",
@@ -460,9 +480,17 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion gives every room a shared room partition",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 15,
+        "kept": 16,
         "valid": true,
         "broken": []
       }
@@ -514,13 +542,13 @@
     },
     {
       "file": "offices-1.zone.json",
-      "sha256": "adcab10656101aba9b8755706ae62514423ce150f2813294b126704a126bac94",
+      "sha256": "9d618a58c5bd20bfd888f1c2884920553e05bce4df729cc223b6fc5a64a0de17",
       "plans": [
         "offices-1-floor-0.svg"
       ],
-      "notes": "Office v2: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
+      "notes": "Office v3: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
       "architecturalRules": {
-        "template": "offices-v2",
+        "template": "offices-v3",
         "rules": [
           {
             "id": "arrival",
@@ -657,22 +685,38 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "room-program",
+            "name": "The requested departmental room program is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion gives contiguous room rows with shared walls",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 17,
+        "kept": 19,
         "valid": true,
         "broken": []
       }
     },
     {
       "file": "offices-1-open.zone.json",
-      "sha256": "1816aa5f7ce28984c3743e5297aad283323dda2c38d36ac41d0f5dd0244b8510",
+      "sha256": "41ff87c46d019f1f3f33cf29ff43802812fc682b314083e72323f92f12b8d6ad",
       "plans": [
         "offices-1-open-floor-0.svg"
       ],
-      "notes": "Office v2: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
+      "notes": "Office v3: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
       "architecturalRules": {
-        "template": "offices-v2",
+        "template": "offices-v3",
         "rules": [
           {
             "id": "arrival",
@@ -809,22 +853,38 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "room-program",
+            "name": "The requested departmental room program is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion gives contiguous room rows with shared walls",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 17,
+        "kept": 19,
         "valid": true,
         "broken": []
       }
     },
     {
       "file": "offices-1-wrong.zone.json",
-      "sha256": "485c220768c029da1c6ece47eda8c4b6421c79398fff4faceef4f54116949c37",
+      "sha256": "dce8d7533cbef699387b84c0011d25282154acb74c7f10286398a69a53794d08",
       "plans": [
         "offices-1-wrong-floor-0.svg"
       ],
-      "notes": "Office v2: central visitor/service hub, 6 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
+      "notes": "Office v3: central visitor/service hub, 6 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
       "architecturalRules": {
-        "template": "offices-v2",
+        "template": "offices-v3",
         "rules": [
           {
             "id": "arrival",
@@ -869,8 +929,8 @@
           {
             "id": "work-access",
             "name": "Every workplace opens from circulation",
-            "kept": false,
-            "detail": "A workplace is reached only through another workplace.",
+            "kept": true,
+            "detail": "",
             "relaxed": true,
             "relaxedBy": "Strangeness 75"
           },
@@ -961,9 +1021,25 @@
             "detail": "",
             "relaxed": false,
             "relaxedBy": ""
+          },
+          {
+            "id": "room-program",
+            "name": "The requested departmental room program is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion gives contiguous room rows with shared walls",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
           }
         ],
-        "kept": 7,
+        "kept": 10,
         "valid": true,
         "broken": [
           {
@@ -981,14 +1057,6 @@
             "detail": "A staff function opens directly onto reception.",
             "relaxed": true,
             "relaxedBy": "Strangeness 65"
-          },
-          {
-            "id": "work-access",
-            "name": "Every workplace opens from circulation",
-            "kept": false,
-            "detail": "A workplace is reached only through another workplace.",
-            "relaxed": true,
-            "relaxedBy": "Strangeness 75"
           },
           {
             "id": "service-access",
@@ -1069,9 +1137,11 @@
   "galleries": [
     {
       "file": "gallery-house-suburban.svg",
-      "template": "house-v2",
+      "template": "house-v3",
       "preset": "Suburban",
       "dials": {
+        "cohesion": 100,
+        "rooms": 40,
         "size": 40,
         "sprawl": 0,
         "strange": 0
@@ -1087,13 +1157,15 @@
         8,
         9
       ],
-      "sha256": "234e7043368d9abbe2ad13ba1b4fa86ce331af4363176da3f673d18c14d4534c"
+      "sha256": "cd22c7a97476511fae1d1f65b3d15f17bc510bbe01cee4e70635fc94fb385703"
     },
     {
       "file": "gallery-house-family-home.svg",
-      "template": "house-v2",
+      "template": "house-v3",
       "preset": "Family home",
       "dials": {
+        "cohesion": 100,
+        "rooms": 65,
         "size": 75,
         "sprawl": 35,
         "strange": 0
@@ -1109,13 +1181,15 @@
         8,
         9
       ],
-      "sha256": "b4720948a6c999825c49e3c260b495974e60548fa3a7c7047f878994a25ed27c"
+      "sha256": "2016738e9b1d9e253ce4c85ef23a9cc46a4c1b164192258748a8606fb16ae7a0"
     },
     {
       "file": "gallery-house-ranch.svg",
-      "template": "house-v2",
+      "template": "house-v3",
       "preset": "Ranch",
       "dials": {
+        "cohesion": 100,
+        "rooms": 40,
         "size": 50,
         "sprawl": 65,
         "strange": 0
@@ -1131,13 +1205,15 @@
         8,
         9
       ],
-      "sha256": "98cacd55b2c4c5e4d3356077e6e880750e22c5b0c13430741216b2aabb129ff0"
+      "sha256": "c12104252023b1c65a91d039be4b121e4b87579077c1360c4af99d0f728dc10d"
     },
     {
       "file": "gallery-house-rambling.svg",
-      "template": "house-v2",
+      "template": "house-v3",
       "preset": "Rambling",
       "dials": {
+        "cohesion": 100,
+        "rooms": 100,
         "size": 85,
         "sprawl": 95,
         "strange": 15
@@ -1153,13 +1229,15 @@
         8,
         9
       ],
-      "sha256": "ff0f5a9b49dd7932a1591ced881ffefcaacce413391e09cbd31f80206e9b941e"
+      "sha256": "2949a87c680e7ba145510befd32675b48384dfd071a96db1899a8e9c9f92dc64"
     },
     {
       "file": "gallery-house-not-quite-right.svg",
-      "template": "house-v2",
+      "template": "house-v3",
       "preset": "Not quite right",
       "dials": {
+        "cohesion": 60,
+        "rooms": 40,
         "size": 45,
         "sprawl": 20,
         "strange": 55
@@ -1175,13 +1253,15 @@
         8,
         9
       ],
-      "sha256": "c8e35a0fe62d99d3d267f7fcb9d0cd5d2dd29bf717ee6eaddbd195b508567a6b"
+      "sha256": "2b451912a6374bf7a2d57105ea4d048ca6e47f8a166559f5dc19d292085f75de"
     },
     {
       "file": "gallery-house-backrooms-house.svg",
-      "template": "house-v2",
+      "template": "house-v3",
       "preset": "Backrooms house",
       "dials": {
+        "cohesion": 20,
+        "rooms": 80,
         "size": 70,
         "sprawl": 90,
         "strange": 95
@@ -1197,7 +1277,7 @@
         8,
         9
       ],
-      "sha256": "99ddd9b03f968fef0a2fa08765b2bb32693f79317b692475140c8ec82cb3919a"
+      "sha256": "5386b8957d2f1fc9cbcc01ad07d0a43db3a1f21200d2b02c366e2f1f1e218210"
     },
     {
       "file": "gallery-level0-defaults.svg",
@@ -1224,9 +1304,11 @@
     },
     {
       "file": "gallery-offices-standard-office.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "Standard office",
       "dials": {
+        "cohesion": 100,
+        "rooms": 40,
         "size": 40,
         "wings": 0,
         "open": 35,
@@ -1244,13 +1326,15 @@
         8,
         9
       ],
-      "sha256": "3e4114bfa6b2c3de512b32b688c51b50a91aef6ce7335cd54e6adf0011140c22"
+      "sha256": "e420375a8f63293b51c7005bf47d3993a3f537df784cc3d03a8c6217d9c9bf3e"
     },
     {
       "file": "gallery-offices-private-practice.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "Private practice",
       "dials": {
+        "cohesion": 100,
+        "rooms": 15,
         "size": 15,
         "wings": 0,
         "open": 0,
@@ -1268,13 +1352,15 @@
         8,
         9
       ],
-      "sha256": "02225730b424a952b96870fdc6035d23dd7e3cb501098b8182cc59cf95221809"
+      "sha256": "10de07030bdc94f0b9c8e9008ed47d46a2bc1a73905d1b58d8834edeb162fb9e"
     },
     {
       "file": "gallery-offices-open-workplace.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "Open workplace",
       "dials": {
+        "cohesion": 100,
+        "rooms": 60,
         "size": 70,
         "wings": 20,
         "open": 100,
@@ -1292,13 +1378,15 @@
         8,
         9
       ],
-      "sha256": "2675a9f984795d1204baf0c09f0a5597e212333d45cd9d12ea02f6022614dd4a"
+      "sha256": "418b0082bddcef1bc159e95e38653cc24a34e26906398bbf1387bc2e8e2b6c5e"
     },
     {
       "file": "gallery-offices-department-wings.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "Department wings",
       "dials": {
+        "cohesion": 100,
+        "rooms": 70,
         "size": 70,
         "wings": 60,
         "open": 45,
@@ -1316,13 +1404,15 @@
         8,
         9
       ],
-      "sha256": "ee4adcfc8702c219b37eb00807d18a0e6ca6926a4c990d3345fdc14d324efde7"
+      "sha256": "9650c14050be218770694aa2e959c5803eb66c1d26d44160bf3ac40d5a5ebd46"
     },
     {
       "file": "gallery-offices-after-hours.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "After hours",
       "dials": {
+        "cohesion": 80,
+        "rooms": 50,
         "size": 50,
         "wings": 40,
         "open": 20,
@@ -1340,13 +1430,15 @@
         8,
         9
       ],
-      "sha256": "9a56ac97069dc054a953dbfafe6e5253e283644e746d727a46d7dd2af96c8cb5"
+      "sha256": "5f48e53da2a801e840099311d067af80e9d37873c2f46b6233cfb1a2ff4ef299"
     },
     {
       "file": "gallery-offices-wrong-workplace.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "Wrong workplace",
       "dials": {
+        "cohesion": 20,
+        "rooms": 65,
         "size": 75,
         "wings": 100,
         "open": 65,
@@ -1364,13 +1456,15 @@
         8,
         9
       ],
-      "sha256": "f2992684be9cd39f6437c7308a243e14a3537fb6d1de9a3b24d6be3e97070df3"
+      "sha256": "eb546deb2714837e70734d757cfe295853ddb28cdc381b2e6671accc5c6f4485"
     },
     {
       "file": "gallery-offices-reference-floor.svg",
-      "template": "offices-v2",
+      "template": "offices-v3",
       "preset": "Reference floor",
       "dials": {
+        "cohesion": 100,
+        "rooms": 70,
         "size": 65,
         "wings": 20,
         "open": 15,
@@ -1388,7 +1482,7 @@
         8,
         9
       ],
-      "sha256": "b1f066a03424d03597bf0086a6c0b198672f31b44bca1675fbdb4a9b45615113"
+      "sha256": "2274b8edba11c8cccd6129f32bf554a74e87e00a21a5a7ef4df2fab34c075fd8"
     }
   ]
 }

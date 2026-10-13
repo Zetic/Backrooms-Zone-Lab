@@ -1,0 +1,109 @@
+{
+  "seed": 7,
+  "size": 60,
+  "sprawl": 100,
+  "examples": [
+    {
+      "file": "house-few-cohesive.zone.json",
+      "plan": "house-few-cohesive.svg",
+      "template": "house-v3",
+      "dials": {
+        "size": 60,
+        "sprawl": 100,
+        "rooms": 0,
+        "cohesion": 100,
+        "strange": 0
+      },
+      "roomSpaces": 8,
+      "roomsSharingPartitions": 8,
+      "sha256": "df57f2d688acc3aad891352ee14b4858b31c93bb8c8da8626a3fba4b08457396",
+      "svgSha256": "5e2d1f64dbe86071756785c503eb2531859e45ac5ca30280ddc6148fc079bc5b"
+    },
+    {
+      "file": "house-many-cohesive.zone.json",
+      "plan": "house-many-cohesive.svg",
+      "template": "house-v3",
+      "dials": {
+        "size": 60,
+        "sprawl": 100,
+        "rooms": 100,
+        "cohesion": 100,
+        "strange": 0
+      },
+      "roomSpaces": 21,
+      "roomsSharingPartitions": 21,
+      "sha256": "b83e97bbcb9f650bc1c59cfe3cfe25f686f2f9951be286b8078392b17544c64a",
+      "svgSha256": "257d689d0615889a668a7d942538e547caba0bc6f11b5cd1f6772b03a5053da2"
+    },
+    {
+      "file": "house-many-dispersed.zone.json",
+      "plan": "house-many-dispersed.svg",
+      "template": "house-v3",
+      "dials": {
+        "size": 60,
+        "sprawl": 100,
+        "rooms": 100,
+        "cohesion": 0,
+        "strange": 0
+      },
+      "roomSpaces": 21,
+      "roomsSharingPartitions": 11,
+      "sha256": "df07615ac739f7065a9bfa3b4cf414a48b14a7517b335f77a0c50534d287aa33",
+      "svgSha256": "40892fb71c29d4dc6c3f7c51636bb66652ad93832024b9f02240e5e36934e294"
+    },
+    {
+      "file": "offices-few-cohesive.zone.json",
+      "plan": "offices-few-cohesive.svg",
+      "template": "offices-v3",
+      "dials": {
+        "size": 60,
+        "sprawl": 100,
+        "rooms": 0,
+        "cohesion": 100,
+        "strange": 0,
+        "wings": 20,
+        "open": 35
+      },
+      "roomSpaces": 16,
+      "roomsSharingPartitions": 16,
+      "sha256": "17fccdd3c2b8bf8ec78706fd61a1bbd346c3cb8227b3f8c72adcf4db2837c781",
+      "svgSha256": "7850fc5e5ce92eb8bf87f19306a2cc1002d5e5568bcc0a988e145ea2ac208703"
+    },
+    {
+      "file": "offices-many-cohesive.zone.json",
+      "plan": "offices-many-cohesive.svg",
+      "template": "offices-v3",
+      "dials": {
+        "size": 60,
+        "sprawl": 100,
+        "rooms": 100,
+        "cohesion": 100,
+        "strange": 0,
+        "wings": 20,
+        "open": 35
+      },
+      "roomSpaces": 36,
+      "roomsSharingPartitions": 36,
+      "sha256": "1f840b0171a8cd6283c6b038219a20e70ab45d1a33578218fb6a36ac8dec0994",
+      "svgSha256": "098d646f7daa2308a2180d226c8c70581fe9a012e4ecfeaf285065cb15701398"
+    },
+    {
+      "file": "offices-many-dispersed.zone.json",
+      "plan": "offices-many-dispersed.svg",
+      "template": "offices-v3",
+      "dials": {
+        "size": 60,
+        "sprawl": 100,
+        "rooms": 100,
+        "cohesion": 0,
+        "strange": 0,
+        "wings": 20,
+        "open": 35
+      },
+      "roomSpaces": 36,
+      "roomsSharingPartitions": 8,
+      "sha256": "69264bf3d2c659f49fb1142d0dd6c27feda8db401fed16632437ca838d5cafb9",
+      "svgSha256": "5a6e79a7d6d62ddc83ab8f02f6212f2e5d210a0c55f176e858e53433255d43be"
+    }
+  ]
+}

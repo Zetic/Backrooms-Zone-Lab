@@ -1,0 +1,367 @@
+{
+  "entrances": [
+    {
+      "at": -1.5,
+      "side": "s",
+      "space": "entry",
+      "title": "Front door"
+    },
+    {
+      "at": 19.5,
+      "side": "e",
+      "space": "kitchen",
+      "title": "Back door"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "house-7",
+  "joins": [
+    {
+      "a": "bath",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "closet",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "hall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "utility",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hall",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    }
+  ],
+  "name": "House · seed 7",
+  "notes": "House v3: Room Count supplies bedrooms and additional study/den rooms; Sprawl arranges the program into branches; Cohesion suppresses unallocated row gaps without stretching rooms. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "baths",
+      "kept": true,
+      "name": "Bathrooms open off a hall, never onto the living room, dining room or kitchen",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "bedrooms",
+      "kept": true,
+      "name": "Every bedroom opens off a hall or landing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "cohesion",
+      "kept": true,
+      "name": "Maximum cohesion gives every room a shared room partition",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "64% of the bounds is occupied.",
+      "id": "compact",
+      "kept": false,
+      "name": "The house is a box, or a box with a wing",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 30"
+    },
+    {
+      "detail": "",
+      "id": "counts",
+      "kept": true,
+      "name": "One kitchen, one living room, and bathrooms to suit the bedrooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "dead-ends",
+      "kept": true,
+      "name": "No hall leads nowhere",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "entry",
+      "kept": true,
+      "name": "The front door opens into an entry hall",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "ground",
+      "kept": true,
+      "name": "The living room, dining room and kitchen are on the ground floor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "halls",
+      "kept": true,
+      "name": "Halls take no more than a quarter of the floor",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 30"
+    },
+    {
+      "detail": "",
+      "id": "kitchen",
+      "kept": true,
+      "name": "The kitchen opens onto the dining room",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "living",
+      "kept": true,
+      "name": "The living and dining rooms open into each other, or off the same hall",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "Every route returns by the way it came.",
+      "id": "loop",
+      "kept": false,
+      "name": "The ground floor can be walked round in a loop",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 55"
+    },
+    {
+      "detail": "",
+      "id": "private",
+      "kept": true,
+      "name": "No bedroom opens onto the entry, living room, dining room or kitchen",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "proportions",
+      "kept": true,
+      "name": "Every room is a usable size and shape for what it is",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "stair",
+      "kept": true,
+      "name": "The stair rises from a hall to a landing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "suite",
+      "kept": true,
+      "name": "The main bathroom opens only from the main bedroom",
+      "relaxed": false,
+      "relaxedBy": ""
+    }
+  ],
+  "source": {
+    "dials": {
+      "cohesion": 100,
+      "rooms": 0,
+      "size": 60,
+      "sprawl": 100,
+      "strange": 0
+    },
+    "lab": "exchange-5",
+    "seed": 7,
+    "template": "house-v3"
+  },
+  "spaces": [
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bath",
+      "kind": "room",
+      "rect": [
+        -11,
+        23,
+        -3,
+        28
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bedroom",
+      "kind": "room",
+      "rect": [
+        0,
+        23,
+        8,
+        30
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "closet",
+      "kind": "room",
+      "rect": [
+        -11,
+        36,
+        -3,
+        40
+      ],
+      "role": "closet",
+      "title": "Walk-in closet"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "dining",
+      "kind": "room",
+      "rect": [
+        -6,
+        16,
+        3,
+        23
+      ],
+      "role": "dining",
+      "title": "Dining room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "entry",
+      "kind": "hall",
+      "rect": [
+        -5,
+        0,
+        2,
+        4
+      ],
+      "role": "entry",
+      "title": "Entry hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall",
+      "kind": "hall",
+      "rect": [
+        -3,
+        23,
+        0,
+        40
+      ],
+      "role": "hall",
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "kitchen",
+      "kind": "room",
+      "rect": [
+        3,
+        16,
+        10,
+        23
+      ],
+      "role": "kitchen",
+      "title": "Kitchen"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "living",
+      "kind": "room",
+      "rect": [
+        -6,
+        4,
+        4,
+        16
+      ],
+      "role": "living",
+      "title": "Living room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "main",
+      "kind": "room",
+      "rect": [
+        -11,
+        28,
+        -3,
+        36
+      ],
+      "role": "main",
+      "title": "Main bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "utility",
+      "kind": "room",
+      "rect": [
+        -11,
+        16,
+        -6,
+        23
+      ],
+      "role": "utility",
+      "title": "Utility room"
+    }
+  ],
+  "start": {
+    "space": "entry",
+    "x": -1.5,
+    "y": 2
+  },
+  "theme": "residential",
+  "version": 1
+}

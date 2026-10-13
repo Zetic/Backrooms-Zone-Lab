@@ -1,4 +1,5 @@
-import { buildMesh, sceneBounds, cameraBasis, cameraMatrix } from './mesh.js';
+import { prepareViewerData } from './viewer-data.js';
+import { sceneBounds, cameraBasis, cameraMatrix } from './mesh.js';
 
 const vertexSource = `
 attribute vec3 a_position; attribute vec3 a_normal; attribute vec3 a_color; attribute vec3 a_pick;
@@ -55,15 +56,9 @@ export class Viewer3D {
   }
   update(plan, options) {
     this.plan = plan; this.options = options;
-    const gl = this.gl, mesh = buildMesh(plan, options), ids = new Map(plan.spaces.map((s, i) => [s.id, i + 1]));
-    const packed = [];
-    for (const face of mesh.faces) {
-      const id = ids.get(face.spaceId) ?? 0, pick = [(id & 255) / 255, ((id >> 8) & 255) / 255, ((id >> 16) & 255) / 255];
-      for (const position of face.points) packed.push(...position, ...face.normal, ...face.color, ...pick);
-    }
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(packed), gl.STATIC_DRAW); this.vertexCount = packed.length / 12;
-    const lines = mesh.lines.flatMap(line => [line.a, line.b].flatMap(position => [...position, 0, 0, 0, ...line.color, 0, 0, 0]));
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.lineBuffer); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lines), gl.STATIC_DRAW); this.lineCount = lines.length / 12;
+    const gl = this.gl, { vertices, lines } = options.prepared ?? prepareViewerData(plan, options);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer); gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW); this.vertexCount = vertices.length / 12;
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.lineBuffer); gl.bufferData(gl.ARRAY_BUFFER, lines, gl.STATIC_DRAW); this.lineCount = lines.length / 12;
     this.invalidate();
   }
   reset() {

@@ -45,3 +45,12 @@ test('physical validation rejects a moved required door and actual overlapping a
   b.footprint = structuredClone(a.footprint); b.clearVolumes[0].footprint = structuredClone(a.footprint);
   assert.ok(interiorsOverlap(a.footprint, b.footprint)); assert.ok(validateArchitecture(overlap).errors.some(e => e.code === 'VOLUME_COLLISION'));
 });
+
+test('full angled cohesion and room count preserve real partitions across bounded wing combinations', () => {
+  for (const wings of [0, 20, 60, 100]) for (const cohesion of [0, 100]) for (const rooms of [0, 100]) {
+    const p = generateOfficeDesign({ seed: 7, dials: { size: 60, wings, cohesion, rooms, sprawl: 100, strange: 0, open: 35 } }, { walls: false });
+    assert.equal(p.diagnostics.errors.length, 0); assert.equal(p.diagnostics.navigation.returnable.length, p.spaces.length);
+    assert.ok(p.layout.architecturalRules.find(r => r.id === 'cohesion').kept);
+    assert.ok(p.layout.architecturalRules.find(r => r.id === 'room-program').kept);
+  }
+});

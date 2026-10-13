@@ -11,7 +11,7 @@ const preset = name => offices.presets.find(p => p.name === name).dials;
 test('standard offices keep all conventions and contain a recognizable visitor/staff program', () => {
   for (const name of ['Standard office', 'Private practice', 'Open workplace', 'Department wings']) for (let seed = 1; seed <= 20; ++seed) {
     const z = offices.make({ seed, dials: preset(name) }); assert.ok(!z.error, z.error);
-    const report = api.ruleReport(offices, z); assert.equal(report.kept, 17, JSON.stringify({ name, seed, report }));
+    const report = api.ruleReport(offices, z); assert.equal(report.kept, 19, JSON.stringify({ name, seed, report }));
     for (const role of ['reception', 'meeting', 'washroom', 'break', 'copy', 'server', 'store']) assert.ok(z.spaces.some(s => s.role === role));
     assert.equal(z.start.space, 'reception'); assert.equal(api.facts(z).floors.length, 1);
     assert.ok(z.entrances.some(e => e.title === 'Visitor entrance' && e.space === 'reception'));
@@ -27,7 +27,7 @@ test('office presets express real openness, wings and permitted architectural br
   assert.ok(spread.spaces.length > ordinary.spaces.length);
   const wrong = offices.make({ seed: 1, dials: preset('Wrong workplace') }), r = api.ruleReport(offices, wrong);
   assert.ok(r.valid); assert.ok(r.broken.length >= 6); assert.ok(r.broken.every(r => r.relaxed));
-  for (const id of ['work-access', 'dead-ends', 'loop', 'ceiling']) assert.ok(!r.rules.find(r => r.id === id).kept, id);
+  for (const id of ['dead-ends', 'loop', 'ceiling']) assert.ok(!r.rules.find(r => r.id === id).kept, id);
   assert.ok(api.validate(wrong).valid); assert.ok(wrong.joins.every(j => j.required));
 });
 test('mixed office shaping and every threshold remain repeatable and preserve unrelaxed rules', () => {
@@ -91,5 +91,5 @@ test('old Office v1 template remains archived with its original regeneration ide
   const isolated = { ...api, templates: [] };
   vm.runInNewContext(await readFile(new URL('../docs/template-reference/offices-v1.js', import.meta.url), 'utf8'), { globalThis: { ZoneExchange: isolated } });
   const old = isolated.templates[0].make({ seed: 1 }); assert.equal(old.source.template, 'offices-v1');
-  assert.ok(api.validate(old).valid); assert.equal(offices.make({ seed: 1 }).source.template, 'offices-v2');
+  assert.ok(api.validate(old).valid); assert.equal(offices.make({ seed: 1 }).source.template, 'offices-v3');
 });

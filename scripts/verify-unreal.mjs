@@ -31,7 +31,7 @@ const string = s => JSON.stringify(s), roles = ['living', 'bedroom', 'closet', '
 const aliases = { main: 'bedroom', ensuite: 'bath', wc: 'bath', utility: 'storage', store: 'storage' };
 // Optional parity additionally requires the local ZoneLabVersion 2 sources.
 const parity = args['--lab-parity'] === 'true';
-if (parity && !samples.some(s => s.spec && s.zone.source?.template === 'house-v2')) throw new Error('--lab-parity needs House cases; no native Office generator exists yet.');
+if (parity && !samples.some(s => s.spec && s.zone.source?.template === 'house-v2')) throw new Error('--lab-parity only applies to archived house-v2 and the local C++ v2 source. Current house-v3 needs a native generator port; use the physical compiler check without --lab-parity.');
 const functions = samples.map(({ name, zone, spec }, index) => {
   const checks = api.validate(zone); if (!checks.valid) throw new Error(name + ': ' + JSON.stringify(checks.errors));
   const lines = [`bool case${index}(){`, `const char* name=${string(name)}; const std::string zone=${string(zone.id)}; Arrangement arrangement; std::vector<LayPiece> pieces; std::vector<Instance> instances; std::vector<Footprint> footprints;`];

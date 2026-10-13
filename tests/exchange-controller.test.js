@@ -40,23 +40,23 @@ test('classic scripts have local assets and preserve legacy study URLs', async (
 
 test('House presets change the accepted plan and expose preserved rule reports', async () => {
   const c = controller(), get = c.get;
-  assert.ok(get('rules').innerHTML.includes('15 of 15'));
+  assert.ok(get('rules').innerHTML.includes('16 of 16'));
   await get('preset-5').click();
   const zone = JSON.parse(get('editor').value);
-  assert.equal(zone.source.template, 'house-v2'); assert.equal(zone.source.dials.sprawl, 90); assert.equal(zone.source.dials.strange, 95);
+  assert.equal(zone.source.template, 'house-v3'); assert.equal(zone.source.dials.sprawl, 90); assert.equal(zone.source.dials.strange, 95);
   assert.equal(globalThis.ZoneExchange.facts(zone).floors.length, 1);
   assert.ok(get('rules').innerHTML.includes('let go from'));
   await get('report').click();
   const report = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
-  assert.equal(report.architecturalRules.rules.length, 15); assert.ok(report.architecturalRules.valid);
+  assert.equal(report.architecturalRules.rules.length, 16); assert.ok(report.architecturalRules.valid);
   assert.equal(report.templateAudit.strict.passed, 40);
-  await get('preset-0').click(); assert.ok(get('rules').innerHTML.includes('15 of 15'));
+  await get('preset-0').click(); assert.ok(get('rules').innerHTML.includes('16 of 16'));
   // Repeated manual edits retain the known rule policy while dropping regeneration claims.
   await get('apply').click(); await get('apply').click();
-  assert.ok(get('rules').innerHTML.includes('15 of 15')); assert.ok(get('template-export').disabled);
+  assert.ok(get('rules').innerHTML.includes('16 of 16')); assert.ok(get('template-export').disabled);
   await get('report').click();
   const editedReport = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
-  assert.equal(editedReport.architecturalRules.rules.length, 15); assert.equal(editedReport.templateAudit, null);
+  assert.equal(editedReport.architecturalRules.rules.length, 16); assert.equal(editedReport.templateAudit, null);
 });
 test('nine-seed gallery follows dials, selects and pages seeds, marks presets and exports a standalone picture', async () => {
   const c = controller(), get = c.get;
@@ -93,9 +93,9 @@ test('known imported reports are recomputed, unknown reports and outlines round 
 
 test('Offices selection, presets, exports and imports keep the same accepted design and policy', async () => {
   const c = controller(), get = c.get; get('template').value = 'offices'; await get('template').emit('change');
-  assert.equal(get('status').textContent, 'PASS'); assert.ok(get('rules').innerHTML.includes('17 of 17'));
+  assert.equal(get('status').textContent, 'PASS'); assert.ok(get('rules').innerHTML.includes('19 of 19'));
   assert.ok(get('dials').innerHTML.includes('dial-open')); await get('preset-5').click();
-  const bytes = get('editor').value, z = JSON.parse(bytes); assert.equal(z.source.template, 'offices-v2');
+  const bytes = get('editor').value, z = JSON.parse(bytes); assert.equal(z.source.template, 'offices-v3');
   assert.equal(z.source.dials.strange, 95); assert.ok(get('rules').innerHTML.includes('let go from'));
   await get('export').click(); assert.equal(await (await fetch(c.downloads.at(-1).href)).text(), bytes);
   await get('template-export').click();
@@ -106,7 +106,7 @@ test('Offices selection, presets, exports and imports keep the same accepted des
   get('import').files = [{ size: bytes.length, text: async () => bytes }]; await get('import').emit('change');
   assert.equal(get('template').value, 'offices'); assert.equal(get('editor').value, bytes);
   await get('report').click(); const r = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
-  assert.equal(r.architecturalRules.rules.length, 17); assert.ok(r.architecturalRules.valid); assert.equal(r.templateAudit.passed, 120);
+  assert.equal(r.architecturalRules.rules.length, 19); assert.ok(r.architecturalRules.valid); assert.equal(r.templateAudit.passed, 120);
 });
 test('exchange controller exports the shown zone, keeps invalid proposals and round-trips imports', async () => {
   const c = controller(), get = c.get, initial = get('editor').value;

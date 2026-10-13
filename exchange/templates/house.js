@@ -1,24 +1,26 @@
-// House v2: program -> circulation spine -> openings -> physical checks -> named rules.
+// House v3: program -> circulation spine -> openings -> physical checks -> named rules.
 // Port of the local ZoneLabVersion 2 grammar; reference snapshot in docs/template-reference/.
 // Dependencies: stream.js, checks.js, method.js. No renderer, classes or global RNG.
 (function () {
   'use strict';
   const api = globalThis.ZoneExchange;
   const house = {
-    id: 'house', version: 2, name: 'House', attempts: 16, workLimit: 20000,
+    id: 'house', version: 3, name: 'House', attempts: 16, workLimit: 20000,
     summary: 'A home grown along a spine: compact to sprawling, familiar to strange. Dials explicitly relax named house rules.',
     dials: [
-      { id: 'size', name: 'Size', low: 'Modest', high: 'Large', value: 40, help: 'Room dimensions and the normal bedroom program (2–5)' },
-      { id: 'sprawl', name: 'Sprawl', low: 'Compact', high: 'Sprawling', value: 0, help: 'Two storeys below 55; a wing at 30, main bedroom downstairs at 40, turning wing at 48; one storey at 55' },
+      { id: 'size', name: 'Size', low: 'Modest', high: 'Large', value: 40, help: 'Room dimensions; Room Count controls the household program' },
+      { id: 'cohesion', name: 'Cohesion', low: 'Dispersed', high: 'Shared walls', value: 100, strict: 100, help: 'Keeps room rows contiguous and suppresses empty spacing and detached side halls. Intentional circulation remains.' },
+      { id: 'rooms', name: 'Room Count', low: 'Few', high: 'Many', value: 40, help: '2–5 normal bedrooms and up to 6 additional study/den rooms; supplies the program for populated branches independently of Size.' },
+      { id: 'sprawl', name: 'Sprawl', low: 'Compact', high: 'Sprawling', value: 0, help: 'Populated branches limited by Room Count and Cohesion. Two storeys below 55; a wing at 30, main bedroom downstairs at 40, turning wing at 48; one storey at 55' },
       { id: 'strange', name: 'Strangeness', low: 'Expected', high: 'Wrong', value: 0, help: 'Permits proportions, hall excess, branches, repetition, misplaced rooms and bedroom chains in a fixed order' }
     ],
     presets: [
-      { name: 'Suburban', dials: { size: 40, sprawl: 0, strange: 0 } },
-      { name: 'Family home', dials: { size: 75, sprawl: 35, strange: 0 } },
-      { name: 'Ranch', dials: { size: 50, sprawl: 65, strange: 0 } },
-      { name: 'Rambling', dials: { size: 85, sprawl: 95, strange: 15 } },
-      { name: 'Not quite right', dials: { size: 45, sprawl: 20, strange: 55 } },
-      { name: 'Backrooms house', dials: { size: 70, sprawl: 90, strange: 95 } }
+      { name: 'Suburban', dials: { cohesion: 100, rooms: 40, size: 40, sprawl: 0, strange: 0 } },
+      { name: 'Family home', dials: { cohesion: 100, rooms: 65, size: 75, sprawl: 35, strange: 0 } },
+      { name: 'Ranch', dials: { cohesion: 100, rooms: 40, size: 50, sprawl: 65, strange: 0 } },
+      { name: 'Rambling', dials: { cohesion: 100, rooms: 100, size: 85, sprawl: 95, strange: 15 } },
+      { name: 'Not quite right', dials: { cohesion: 60, rooms: 40, size: 45, sprawl: 20, strange: 55 } },
+      { name: 'Backrooms house', dials: { cohesion: 20, rooms: 80, size: 70, sprawl: 90, strange: 95 } }
     ],
     // title, kind, minimum narrow side (50 cm units), maximum aspect ratio.
     roles: {
@@ -32,7 +34,7 @@
     },
     make(spec) {
       return api.generateTemplate(house, spec, d => {
-        const { size, sprawl, strange } = d.dials, pick = d.pick, chance = d.chance, lerp = api.dialSize;
+        const { size, sprawl, strange, cohesion, rooms: roomDial } = d.dials, pick = d.pick, chance = d.chance, lerp = api.dialSize;
         const div = (a, b) => Math.trunc(a / b), RISE = 290, LONG = 14;
         const everyone = r => ['living', 'dining', 'kitchen', 'family'].includes(r);
         const sleeping = r => r === 'bedroom' || r === 'main';
@@ -53,8 +55,8 @@
         const move = (f, u, v) => { const l = left(f.dir); return frame(f.x + u * dx[f.dir] + v * dx[l], f.y + u * dy[f.dir] + v * dy[l], f.dir); };
         const turned = (f, len, hw, turn, next) => { const m = turn === 1 ? move(f, len, hw) : move(f, len - next, 0); return frame(m.x, m.y, turn === 1 ? left(f.dir) : (f.dir + 1) & 3); };
         // Stage 1: room program, independent of layout and presentation.
-        const g = { bedrooms: 2 + div(size * 3 + 50, 100), walkIn: size >= 30, dining: size >= 25 || chance('program/dining', 50),
-          family: size >= 60, study: size >= 45, wc: sprawl < 55 && size >= 35, extraBaths: 0, extraStores: 0, extraBedrooms: 0,
+        const g = { bedrooms: 2 + div(roomDial * 3 + 50, 100), walkIn: roomDial >= 30, dining: roomDial >= 25 || chance('program/dining', 50),
+          family: roomDial >= 60, study: roomDial >= 45, wc: sprawl < 55 && roomDial >= 35, extraBaths: 0, extraStores: 0, extraBedrooms: 0,
           secondKitchen: false, secondLiving: false };
         g.ensuite = g.bedrooms >= 3; g.familyBaths = g.bedrooms >= 4 ? 2 : 1;
         if (strange >= 50) { g.extraBaths = pick('program/extra-baths', 0, 1 + div(strange - 50, 25)); g.extraStores = pick('program/extra-stores', 1, 1 + div(strange - 50, 20)); }
@@ -78,8 +80,11 @@
           const out = [];
           items.forEach((item, k) => {
             const at = name + '/' + k;
-            if (strange >= 30 && chance(at + '/gap', strange - 20)) out.push({ kind: 'gap', len: pick(at + '/gap-len', 2, 2 + div(strange - 30, 8)) });
-            if (strange >= 40 && chance(at + '/branch', div(strange - 30, 2))) {
+            const spreadGap = k ? div((4 + div(sprawl, 20)) * sprawl * (100 - cohesion), 10000) : 0;
+            if (spreadGap) out.push({ kind: 'gap', len: spreadGap });
+            const gap = div(pick(at + '/gap-len', 2, 2 + Math.max(0, div(strange - 30, 8))) * (100 - cohesion), 100);
+            if (gap && strange >= 30 && chance(at + '/gap', strange - 20)) out.push({ kind: 'gap', len: gap });
+            if (cohesion < 100 && strange >= 40 && chance(at + '/branch', div(strange - 30, 2))) {
               const b = { kind: 'branch', depth, branchLen: depth + pick(at + '/branch-len', 3, 3 + div(strange - 40, 6)), branch: [] };
               if (!(strange >= 55 && chance(at + '/branch-empty', strange - 45))) b.branch.push(roomItem(chance(at + '/branch-what', 50) ? 'store' : 'bath', pick(at + '/branch-room', 4, 5), pick(at + '/branch-deep', 4, 6)));
               out.push(b);
@@ -103,6 +108,7 @@
                 const it = sides[side][k]; if (it.kind === 'gap') { cursor += it.len; touching = false; continue; }
                 let placed = false;
                 for (let tries = 0; tries < 20 && !placed; ++tries, ++cursor, touching = false) {
+                  if (cohesion === 100 && tries > 0 && k > 0) break;
                   d.step();
                   if (it.kind === 'branch') {
                     const m = side === 0 ? move(f, cursor + 3, hw) : move(f, cursor, 0), bf = frame(m.x, m.y, side === 0 ? left(f.dir) : (f.dir + 1) & 3), outer = ended;
@@ -146,10 +152,10 @@
         let entry;
         const drift = strange >= 20 ? div(strange - 10, 15) : 0;
         if (sprawl < 55) {
-          const hw = 3, E = size >= 40 ? 6 : 5, grow = Math.min(sprawl, 30);
-          const LA = lerp(8, 11, size) + pick('compact/wing-a', 0, 1) + div(grow, 15), LB = lerp(8, 10, size) + pick('compact/wing-b', 0, 1) + div(grow, 15);
+          const hw = 3, E = size >= 40 ? 6 : 5;
+          const LA = lerp(8, 11, size) + pick('compact/wing-a', 0, 1), LB = lerp(8, 10, size) + pick('compact/wing-b', 0, 1);
           const xS = LA, xH = LA + 3, xB = LA + 6, xE = xB + LB, colonial = chance('compact/colonial', 40);
-          const wing = sprawl >= 30 || strange >= 40, mainDown = sprawl >= 40, shuffle = strange >= 70 && chance('compact/shuffle', strange - 40), ga = [], gb = [], ub = [];
+          const wing = sprawl >= 30 || strange >= 40 || roomDial >= 50, mainDown = sprawl >= 40, shuffle = strange >= 70 && chance('compact/shuffle', strange - 40), ga = [], gb = [], ub = [];
           if (!colonial) {
             ga.push(slot('living', Math.max(9, E), 12 + drift, false, true)); if (g.dining) ga.push(slot('dining', 6, 8 + drift)); ga.push(slot('kitchen', 7, 9 + drift, false, true));
             const front = g.study ? 'study' : 'den'; gb.push(slot(front, Math.max(6, E), 9 + drift, false, true)); if (g.wc) gb.push(slot('wc', 4, 4, true));
@@ -163,7 +169,7 @@
           for (let k = 0; k < Math.max(1, upstairs - 2); ++k) { ub.push(slot('bedroom', 7, 8 + drift, false, true)); if (k === 0) for (let b = 0; b < g.familyBaths; ++b) ub.push(slot('bath', 4, 5)); }
           if (!g.study || colonial) ub.push(slot('study', 6, 8, true, true)); ub.push(slot('store', 4, 5, true));
           const least = a => a.filter(s => !s.optional).reduce((n, s) => n + s.lo, 0);
-          const D = Math.max(E + 18, least(ga), least(gb), least(ub)) + pick('compact/deep', 0, 1 + div(size, 50)) + div(grow, 10);
+          const D = Math.max(E + 18, least(ga), least(gb), least(ub)) + pick('compact/deep', 0, 1 + div(size, 50));
           if (!fit(ga, D, 'compact/ga') || !fit(gb, D, 'compact/gb') || !fit(ub, D, 'compact/ub')) fail('Wings do not fill the house depth.');
           entry = add('entry', [xS, 0, xB, E]); const stair = add('stair', [xS, E, xH, E + LONG]); P.rooms[stair].foot = 's';
           const back = add('backhall', [xS, E + LONG, xH, D]), hall = add('hall', [xH, E, xB, D]);
@@ -197,6 +203,7 @@
             if (g.secondKitchen) l.push(roomItem('kitchen', 8, depth));
             const suite = suiteItem(pick('wing/suite', 11, 13), Math.max(8, depth)), turns = sprawl >= 48 || (strange >= 60 && chance('wing/turn-odd', strange - 40));
             l = unsettle(l, 'wing/left', depth); r = unsettle(r, 'wing/right', depth); if (!l.length && !r.length && !mainDown) l.push(roomItem('store', 4, depth));
+            for (let k = 0; k < div(roomDial, 15); ++k) (k % 2 ? r : l).push(roomItem(k % 2 ? 'den' : 'study', pick('wing/program/' + k, 6, 8), depth));
             const f = frame(xB, D);
             if (!turns) { if (mainDown) (chance('wing/suite-side', 50) ? l : r).push(suite); const q = run(f, hw, [l, r], 0, 0, 'wing'); link(hall, q.hall, 'open'); }
             else { const turn = chance('wing/turn', 50) ? 1 : 2, q = run(f, hw, [l, r], turn, hw, 'wing', 0, 6), last = ended; link(hall, q.hall, 'open'); const l2 = [], r2 = []; if (mainDown) (turn === 1 ? r2 : l2).push(suite); else r2.push(roomItem('store', 4, depth)); const q2 = run(turned(f, q.len, hw, turn, hw), hw, [l2, r2], 0, 0, 'wing/turned'); link(last, q2.hall, 'open'); }
@@ -228,9 +235,10 @@
           for (let k = 0; k < others; ++k) { items.push(roomItem('bedroom', pick('halls/bedroom/' + k, 7, 8 + drift), depth)); if (k === 0) for (let b = 0; b < g.familyBaths; ++b) items.push(roomItem('bath', pick('halls/bath/' + b, 4, 5), depth)); }
           for (let k = 0; k < g.extraBaths; ++k) items.push(roomItem('bath', 4, depth));
           for (let k = 0; k < g.extraStores; ++k) items.push(roomItem('store', 4, depth)); if (g.secondKitchen) items.push(roomItem('kitchen', 8, depth));
-          const runs = Math.max(1, Math.min(6, 1 + div(sprawl - 55, 15) + (strange >= 60 ? pick('halls/extra', 0, 1 + div(strange - 60, 20)) : 0))), single = Math.max(0, div((sprawl - 55) * 3, 2));
+          for (let k = 0; k < div(roomDial, 15); ++k) items.push(roomItem(k % 2 ? 'den' : 'study', pick('halls/program/' + k, 6, 8), depth));
+          const runs = Math.max(1, Math.min(1 + div(roomDial, 25), 1 + div(sprawl - 55, 15) + (strange >= 60 ? pick('halls/extra', 0, 1 + div(strange - 60, 20)) : 0))), single = Math.max(0, div((sprawl - 55) * 3, 2));
           const sides = Array.from({ length: runs }, () => [[], []]), per = Math.ceil(items.length / runs);
-          items.forEach((it, k) => { const r = Math.min(runs - 1, div(k, Math.max(1, per))), at = 'halls/' + r; const one = chance(at + '/single', single), toLeft = one ? pick(at + '/single-side', 0, 1) === 0 : (k + pick(at + '/first-side', 0, 1)) % 2 === 0; sides[r][toLeft ? 0 : 1].push(it); });
+          items.forEach((it, k) => { const r = Math.min(runs - 1, div(k, Math.max(1, per))), at = 'halls/' + r; const one = chance(at + '/single', div(single * (100 - cohesion), 100)), toLeft = one ? pick(at + '/single-side', 0, 1) === 0 : (k + pick(at + '/first-side', 0, 1)) % 2 === 0; sides[r][toLeft ? 0 : 1].push(it); });
           sides[runs - 1][chance('halls/suite-side', 50) ? 0 : 1].push(suiteItem(pick('halls/suite', 11, 13), Math.max(8, depth)));
           for (let r = 0; r < runs; ++r) for (let side = 0; side < 2; ++side) sides[r][side] = unsettle(sides[r][side], 'halls/' + r + '/' + (side ? 'right' : 'left'), depth);
           let at = move(f, cursor, 0), prev = last, lastTurn = chance('halls/first-turn', 50) ? 2 : 1;
@@ -247,8 +255,8 @@
         if (strange >= 85) P.rooms.forEach((r, k) => { const stacked = P.rooms.some(o => o.floor !== r.floor && overlap(o.rect, r.rect)); if (!stacked && r.role !== 'stair' && chance('ceiling/' + k, strange - 70)) r.ceiling = 220 + 10 * pick('ceiling-height/' + k, 0, 13); });
         const counts = {}, spaces = P.rooms.map(r => { const n = counts[r.role] = (counts[r.role] ?? 0) + 1, info = house.roles[r.role]; const s = { id: r.role + (n === 1 ? '' : '-' + n), title: info[0], kind: info[1], role: r.role, rect: r.rect, floor: r.floor, ceiling: r.ceiling }; if (r.role === 'stair') { s.rise = RISE; s.foot = r.foot; } return s; });
         const e = spaces[entry], zone = { format: 'backrooms-zone', version: 1, id: 'house-' + d.seed, name: 'House · seed ' + d.seed, theme: 'residential',
-          notes: 'House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.',
-          source: { template: api.templateKey(house), seed: d.seed, dials: d.dials, lab: 'exchange-2' },
+          notes: 'House v3: Room Count supplies bedrooms and additional study/den rooms; Sprawl arranges the program into branches; Cohesion suppresses unallocated row gaps without stretching rooms. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.',
+          source: { template: api.templateKey(house), seed: d.seed, dials: d.dials, lab: 'exchange-5' },
           start: { space: e.id, x: (e.rect[0] + e.rect[2]) / 2, y: (e.rect[1] + e.rect[3]) / 2 }, spaces,
           joins: P.doors.map(j => ({ ...j, a: spaces[j.a].id, b: spaces[j.b].id })),
           entrances: [{ title: 'Front door', space: e.id, side: 's', at: (e.rect[0] + e.rect[2]) / 2 }] };
@@ -289,6 +297,9 @@
       const group = S.map((_, k) => k), find = k => { while (group[k] !== k) { group[k] = group[group[k]]; k = group[k]; } return k; }; let cycle = false;
       for (let k = 0; k < S.length; ++k) if (S[k].floor === lowest && S[k].kind !== 'stair') for (const n of next[k]) if (n > k && S[n].floor === lowest && S[n].kind !== 'stair') { const a = find(k), b = find(n); if (a === b) cycle = true; else group[a] = b; }
       add('loop', 'The ground floor can be walked round in a loop', cycle, 'Every route returns by the way it came.', [relax('sprawl', 55), relax('strange', 40)]);
+      const rooms = S.filter(s => s.kind === 'room');
+      const adjoining = rooms.every(s => rooms.some(other => other !== s && other.floor === s.floor && Boolean(api.shared(s, other))));
+      add('cohesion', 'Maximum cohesion gives every room a shared room partition', (dials.cohesion ?? 100) < 100 || adjoining, 'A room is isolated from the other room partitions.');
       return R;
     }
   };
