@@ -8,6 +8,7 @@ import '../exchange/method.js';
 import '../exchange/templates/house.js';
 import '../exchange/templates/level0.js';
 import '../exchange/templates/offices.js';
+import '../exchange/templates/generic.js';
 import '../exchange/plan.js';
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 const app = await readFile(new URL('../exchange/app.js', import.meta.url), 'utf8');
@@ -136,4 +137,25 @@ test('exchange controller exports the shown zone, keeps invalid proposals and ro
   get('notes').value = 'I like this sequence; I wanted a curved room that format 1 cannot express.'; await get('notes').emit('input');
   assert.equal(JSON.parse(get('editor').value).notes, get('notes').value);
   await get('report').click(); assert.equal(JSON.parse(await (await fetch(c.downloads.at(-1).href)).text()).checks.valid, true);
+});
+
+test('generic controls are grouped, module switches change generation and slider edits commit on release', async () => {
+  const c = controller('?template=generic'), get = c.get;
+  assert.equal(get('template').value, 'generic'); assert.equal(get('status').textContent, 'PASS');
+  assert.ok(get('dials').innerHTML.includes('dial-group')); assert.ok(get('dials').innerHTML.includes('type="checkbox"'));
+  assert.equal(JSON.parse(get('editor').value).source.template, 'generic-v1');
+  const previous = get('editor').value;
+  get('dial-rooms').value = '100'; await get('dial-rooms').emit('input');
+  assert.equal(get('value-rooms').value, '48');
+  assert.equal(get('editor').value, previous); assert.ok(get('export').disabled); assert.ok(get('gallery-export').disabled); assert.equal(get('status').textContent, 'PENDING');
+  await get('dial-rooms').emit('change'); assert.equal(get('status').textContent, 'PASS');
+  assert.equal(JSON.parse(get('editor').value).spaces.filter(s => s.kind === 'room').length, 48);
+  get('dial-support').checked = false; await get('dial-support').emit('change');
+  assert.equal(JSON.parse(get('editor').value).spaces.filter(s => s.role === 'support').length, 0);
+  await get('preset-3').click(); assert.ok(JSON.parse(get('editor').value).spaces.some(s => s.title === 'Courtyard walk'));
+  await get('template-export').click();
+  const isolated = { ...globalThis.ZoneExchange, templates: [] };
+  vm.runInNewContext(await (await fetch(c.downloads.at(-1).href)).text(), { globalThis: { ZoneExchange: isolated } });
+  const zone = JSON.parse(get('editor').value);
+  assert.equal(isolated.serialize(isolated.templates[0].make({ seed: zone.source.seed, dials: zone.source.dials })), get('editor').value);
 });

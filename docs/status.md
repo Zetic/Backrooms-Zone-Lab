@@ -1,6 +1,14 @@
 # Implementation status
 
-Package 0.10.0 provides a full geometry prototype at `gallery.html` and a checked rectangular exchange subset at `index.html`. The [design handoff](design-handoff.md) records the owner's goal: preserve the intended prototype and extend Unreal where transfer exposes missing capabilities. The [exchange contract](unreal-exchange.md) governs version 1 files; [transfer workflow](transfer-workflow.md) explains both paths. The existing house studies remain intact; Office v2 adds its own full geometry workbench and checked fixtures.
+Package 0.11.0 provides a full geometry prototype at `gallery.html` and a checked rectangular exchange subset at `index.html`. The [design handoff](design-handoff.md) records the owner's goal: preserve the intended prototype and extend Unreal where transfer exposes missing capabilities. The [exchange contract](unreal-exchange.md) governs version 1 files; [transfer workflow](transfer-workflow.md) explains both paths. The existing house studies remain intact; Office v2 adds its own full geometry workbench and checked fixtures.
+
+## Generic modular template — October 13
+
+- Generic v1 adds 19 dials in program/composition/circulation/height groups, five module switches and eight presets. Four recipe builders create occupied adjoining clusters, corridor crosses, courtyard rings and shared halls. Exact room count supplies branch reach; Cohesion joins module boundaries without stretching rooms. Support grouping, seeded height variation, raised sections and external ports change actual exported geometry/program/contracts.
+- `modules` and `ruleModules` are real registries included in downloadable source. Recipes must supply exact room quantities, declared circulation cost, occupied envelopes and four reserved edge frontages; registered rule evaluators check the resulting geometry and program. Independent physical validation remains mandatory. Source registration and re-export are exercised by an additional architecture/rule module test.
+- The workbench adds grouped controls and module checkboxes, accepts `?template=generic`, and regenerates on slider release. Pending settings disable exports; presets, nine-seed comparisons, imports and standalone template/report downloads retain their checked behavior. Long gallery settings wrap within the SVG header.
+- A 1,500-case mixed-control stress check passed; local generation averaged about 1.1 ms, excluding rendering and Unreal realization. All eight preset galleries and three Generic handoff zones are generated alongside the existing templates. Full geometry and native Unreal support are not established by this rectangular prototype.
+- [Control guide, module contracts and rule extension workflow](generic-template.md). **126/126 Node tests pass**; all four templates pass 120/120 acceptance and 40/40 strict cases. Static build and generated handoff checks pass. Live browser/WebGL and native Unreal verification remain pending.
 
 ## Cohesion and Room Count pass — October 13
 

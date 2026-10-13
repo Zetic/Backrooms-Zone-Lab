@@ -57,6 +57,43 @@
         "total": 40,
         "failures": []
       }
+    },
+    {
+      "template": "generic-v1",
+      "passed": 120,
+      "total": 120,
+      "failures": [],
+      "strict": {
+        "dials": {
+          "rooms": 0,
+          "scale": 0,
+          "variety": 0,
+          "clusterSize": 0,
+          "publicMix": 0,
+          "supportMix": 0,
+          "centrality": 0,
+          "sprawl": 0,
+          "branching": 0,
+          "turns": 0,
+          "cohesion": 100,
+          "moduleMix": 0,
+          "loops": 0,
+          "hallWidth": 0,
+          "open": 0,
+          "exits": 0,
+          "ceiling": 0,
+          "heightVariety": 0,
+          "levelChange": 0,
+          "spines": 0,
+          "courts": 0,
+          "halls": 0,
+          "support": 0,
+          "crossLinks": 0
+        },
+        "passed": 40,
+        "total": 40,
+        "failures": []
+      }
     }
   ],
   "zones": [
@@ -704,6 +741,318 @@
           }
         ],
         "kept": 19,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "generic-1.zone.json",
+      "sha256": "25a118c8b51373641cc28ba0a94b8c65a4e10258d876ad638f410e3ab8e59260",
+      "plans": [
+        "generic-1-floor-0.svg"
+      ],
+      "notes": "Generic modular prototype: 24 rooms in 5 clusters. Recipes: hall, cluster, hall, hall, spine. Maximum Cohesion joins envelopes without stretching rooms. Courtyards are unbuilt exterior space. Raised sections use climb contracts, not generated stairs. Full angled/curved geometry requires a richer adapter.",
+      "architecturalRules": {
+        "template": "generic-v1",
+        "rules": [
+          {
+            "id": "room-program",
+            "name": "The complete requested room program is present",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "support-program",
+            "name": "Support facilities match the enabled program",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "module-contracts",
+            "name": "Every module realizes its occupied envelope and recipe program",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion uses touching cluster envelopes",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "module-switches",
+            "name": "Disabled modules do not leave their circulation structures",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "arrival",
+            "name": "Arrival starts at an actual external entrance owner",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "ports",
+            "name": "The requested external port count is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "secondary-passages",
+            "name": "Disabled secondary passages leave required routes only",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "floors",
+            "name": "Raised sections match the declared level range",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "headroom",
+            "name": "All spaces preserve compatible movement headroom",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "plain-geometry",
+            "name": "Required movement uses plain checked rectangular geometry",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          }
+        ],
+        "kept": 11,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "generic-7.zone.json",
+      "sha256": "50a70269c92114dd4c58e1acd3c27160920e1046b7219c3a192430393edf3f61",
+      "plans": [
+        "generic-7-floor-0.svg"
+      ],
+      "notes": "Generic modular prototype: 24 rooms in 5 clusters. Recipes: hall, hall, cluster, cluster, hall. Maximum Cohesion joins envelopes without stretching rooms. Courtyards are unbuilt exterior space. Raised sections use climb contracts, not generated stairs. Full angled/curved geometry requires a richer adapter.",
+      "architecturalRules": {
+        "template": "generic-v1",
+        "rules": [
+          {
+            "id": "room-program",
+            "name": "The complete requested room program is present",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "support-program",
+            "name": "Support facilities match the enabled program",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "module-contracts",
+            "name": "Every module realizes its occupied envelope and recipe program",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion uses touching cluster envelopes",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "module-switches",
+            "name": "Disabled modules do not leave their circulation structures",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "arrival",
+            "name": "Arrival starts at an actual external entrance owner",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "ports",
+            "name": "The requested external port count is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "secondary-passages",
+            "name": "Disabled secondary passages leave required routes only",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "floors",
+            "name": "Raised sections match the declared level range",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "headroom",
+            "name": "All spaces preserve compatible movement headroom",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "plain-geometry",
+            "name": "Required movement uses plain checked rectangular geometry",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          }
+        ],
+        "kept": 11,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "generic-29.zone.json",
+      "sha256": "087c8532d064a32764551faab0b2570bedfb0bdca65c6c40b541e58020084242",
+      "plans": [
+        "generic-29-floor-0.svg"
+      ],
+      "notes": "Generic modular prototype: 24 rooms in 5 clusters. Recipes: spine, court, cluster, spine, spine. Maximum Cohesion joins envelopes without stretching rooms. Courtyards are unbuilt exterior space. Raised sections use climb contracts, not generated stairs. Full angled/curved geometry requires a richer adapter.",
+      "architecturalRules": {
+        "template": "generic-v1",
+        "rules": [
+          {
+            "id": "room-program",
+            "name": "The complete requested room program is present",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "support-program",
+            "name": "Support facilities match the enabled program",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "module-contracts",
+            "name": "Every module realizes its occupied envelope and recipe program",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "cohesion",
+            "name": "Maximum cohesion uses touching cluster envelopes",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "module-switches",
+            "name": "Disabled modules do not leave their circulation structures",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "arrival",
+            "name": "Arrival starts at an actual external entrance owner",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "ports",
+            "name": "The requested external port count is realized",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "secondary-passages",
+            "name": "Disabled secondary passages leave required routes only",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "floors",
+            "name": "Raised sections match the declared level range",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "headroom",
+            "name": "All spaces preserve compatible movement headroom",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "plain-geometry",
+            "name": "Required movement uses plain checked rectangular geometry",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          }
+        ],
+        "kept": 11,
         "valid": true,
         "broken": []
       }
@@ -1483,6 +1832,350 @@
         9
       ],
       "sha256": "2274b8edba11c8cccd6129f32bf554a74e87e00a21a5a7ef4df2fab34c075fd8"
+    },
+    {
+      "file": "gallery-generic-mixed-zone.svg",
+      "template": "generic-v1",
+      "preset": "Mixed zone",
+      "dials": {
+        "rooms": 40,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 65,
+        "publicMix": 45,
+        "supportMix": 35,
+        "centrality": 80,
+        "sprawl": 30,
+        "branching": 40,
+        "turns": 40,
+        "cohesion": 100,
+        "moduleMix": 65,
+        "loops": 45,
+        "hallWidth": 20,
+        "open": 40,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 100,
+        "courts": 100,
+        "halls": 100,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "b7708fd6b668896fa3055f139c2edf99298d27365ae3332ddac877a47731b6cd"
+    },
+    {
+      "file": "gallery-generic-compact-clusters.svg",
+      "template": "generic-v1",
+      "preset": "Compact clusters",
+      "dials": {
+        "rooms": 35,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 65,
+        "publicMix": 45,
+        "supportMix": 35,
+        "centrality": 80,
+        "sprawl": 0,
+        "branching": 65,
+        "turns": 65,
+        "cohesion": 100,
+        "moduleMix": 100,
+        "loops": 80,
+        "hallWidth": 20,
+        "open": 40,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 0,
+        "courts": 0,
+        "halls": 0,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "13664705ce349948677967e0b2a42d9741e6ab6d45b7d64a9b07e3c34b49cff9"
+    },
+    {
+      "file": "gallery-generic-branching-wings.svg",
+      "template": "generic-v1",
+      "preset": "Branching wings",
+      "dials": {
+        "rooms": 85,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 35,
+        "publicMix": 45,
+        "supportMix": 35,
+        "centrality": 80,
+        "sprawl": 100,
+        "branching": 80,
+        "turns": 35,
+        "cohesion": 100,
+        "moduleMix": 0,
+        "loops": 45,
+        "hallWidth": 20,
+        "open": 40,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 100,
+        "courts": 0,
+        "halls": 0,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "25bd9acc157b13c01c8da863d4717fd7e5c26cf7d27071526170e930eb5376f8"
+    },
+    {
+      "file": "gallery-generic-courtyard-compound.svg",
+      "template": "generic-v1",
+      "preset": "Courtyard compound",
+      "dials": {
+        "rooms": 70,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 100,
+        "publicMix": 45,
+        "supportMix": 35,
+        "centrality": 80,
+        "sprawl": 10,
+        "branching": 75,
+        "turns": 80,
+        "cohesion": 100,
+        "moduleMix": 100,
+        "loops": 90,
+        "hallWidth": 20,
+        "open": 40,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 0,
+        "courts": 100,
+        "halls": 0,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "a114e1b95ae874069f4490b83e3bf39f778c6e8380c2b921a255f9b4896f1081"
+    },
+    {
+      "file": "gallery-generic-shared-halls.svg",
+      "template": "generic-v1",
+      "preset": "Shared halls",
+      "dials": {
+        "rooms": 60,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 90,
+        "publicMix": 100,
+        "supportMix": 0,
+        "centrality": 80,
+        "sprawl": 45,
+        "branching": 40,
+        "turns": 40,
+        "cohesion": 100,
+        "moduleMix": 0,
+        "loops": 45,
+        "hallWidth": 20,
+        "open": 90,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 0,
+        "courts": 0,
+        "halls": 100,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "1d727e0037628af990d8b53648886ae2c3a2efa9db90a79d8d45b48d38bfcc3c"
+    },
+    {
+      "file": "gallery-generic-quiet-passages.svg",
+      "template": "generic-v1",
+      "preset": "Quiet passages",
+      "dials": {
+        "rooms": 65,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 65,
+        "publicMix": 0,
+        "supportMix": 15,
+        "centrality": 80,
+        "sprawl": 75,
+        "branching": 15,
+        "turns": 40,
+        "cohesion": 100,
+        "moduleMix": 65,
+        "loops": 0,
+        "hallWidth": 20,
+        "open": 0,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 0,
+        "courts": 0,
+        "halls": 0,
+        "support": 100,
+        "crossLinks": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "6e81d917bb1fa47978d69af8ce8106a2ef6dd6456327b5adf4f6d65502a72472"
+    },
+    {
+      "file": "gallery-generic-dispersed-compound.svg",
+      "template": "generic-v1",
+      "preset": "Dispersed compound",
+      "dials": {
+        "rooms": 65,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 65,
+        "publicMix": 45,
+        "supportMix": 35,
+        "centrality": 80,
+        "sprawl": 90,
+        "branching": 85,
+        "turns": 90,
+        "cohesion": 0,
+        "moduleMix": 100,
+        "loops": 45,
+        "hallWidth": 20,
+        "open": 40,
+        "exits": 30,
+        "ceiling": 25,
+        "heightVariety": 25,
+        "levelChange": 0,
+        "spines": 100,
+        "courts": 100,
+        "halls": 100,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "f95dc6aee7b968f5040868771cdb07078f1fb1366e3d4db71efddd4870e2382b"
+    },
+    {
+      "file": "gallery-generic-raised-sections.svg",
+      "template": "generic-v1",
+      "preset": "Raised sections",
+      "dials": {
+        "rooms": 40,
+        "scale": 40,
+        "variety": 50,
+        "clusterSize": 65,
+        "publicMix": 45,
+        "supportMix": 35,
+        "centrality": 80,
+        "sprawl": 35,
+        "branching": 40,
+        "turns": 40,
+        "cohesion": 100,
+        "moduleMix": 65,
+        "loops": 45,
+        "hallWidth": 20,
+        "open": 25,
+        "exits": 30,
+        "ceiling": 50,
+        "heightVariety": 80,
+        "levelChange": 65,
+        "spines": 100,
+        "courts": 100,
+        "halls": 100,
+        "support": 100,
+        "crossLinks": 100
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "465e74098f2a83ceee9a2b445ad37cbcd873f84701b8fb745263c50ca84b9c39"
     }
   ]
 }

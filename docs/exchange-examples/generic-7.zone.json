@@ -1,0 +1,656 @@
+{
+  "entrances": [
+    {
+      "at": 36,
+      "side": "n",
+      "space": "module-1-hall-room-0",
+      "title": "Secondary port 1"
+    },
+    {
+      "at": 36,
+      "side": "s",
+      "space": "module-1-hall-room-0",
+      "title": "Secondary port 2"
+    },
+    {
+      "at": 14,
+      "side": "w",
+      "space": "module-4-hall-room-0",
+      "title": "Arrival entrance"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "generic-7",
+  "joins": [
+    {
+      "a": "module-0-hall-room-0",
+      "b": "module-0-hall-room-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-0",
+      "b": "module-0-hall-room-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-0",
+      "b": "module-0-hall-room-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-0",
+      "b": "module-2-cluster-room-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-0",
+      "b": "module-3-cluster-room-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-0",
+      "b": "module-4-hall-room-2",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-1",
+      "b": "module-0-hall-room-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-0-hall-room-3",
+      "b": "module-1-hall-room-0",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "module-1-hall-room-0",
+      "b": "module-1-hall-room-1",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "module-1-hall-room-0",
+      "b": "module-1-hall-room-2",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "module-1-hall-room-0",
+      "b": "module-1-hall-room-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-1-hall-room-1",
+      "b": "module-1-hall-room-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-1-hall-room-2",
+      "b": "module-1-hall-room-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-2-cluster-room-0",
+      "b": "module-2-cluster-room-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-2-cluster-room-0",
+      "b": "module-2-cluster-room-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-2-cluster-room-1",
+      "b": "module-2-cluster-room-4",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "module-2-cluster-room-2",
+      "b": "module-2-cluster-room-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-2-cluster-room-3",
+      "b": "module-2-cluster-room-4",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-3-cluster-room-0",
+      "b": "module-3-cluster-room-1",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "module-3-cluster-room-0",
+      "b": "module-3-cluster-room-2",
+      "mode": "open",
+      "required": false
+    },
+    {
+      "a": "module-3-cluster-room-1",
+      "b": "module-3-cluster-room-3",
+      "mode": "door",
+      "required": false
+    },
+    {
+      "a": "module-3-cluster-room-1",
+      "b": "module-3-cluster-room-4",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "module-3-cluster-room-2",
+      "b": "module-3-cluster-room-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-3-cluster-room-3",
+      "b": "module-3-cluster-room-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "module-4-hall-room-0",
+      "b": "module-4-hall-room-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "module-4-hall-room-1",
+      "b": "module-4-hall-room-2",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "module-4-hall-room-2",
+      "b": "module-4-hall-room-3",
+      "mode": "door",
+      "required": true
+    }
+  ],
+  "name": "Generic zone · seed 7",
+  "notes": "Generic modular prototype: 24 rooms in 5 clusters. Recipes: hall, hall, cluster, cluster, hall. Maximum Cohesion joins envelopes without stretching rooms. Courtyards are unbuilt exterior space. Raised sections use climb contracts, not generated stairs. Full angled/curved geometry requires a richer adapter.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "arrival",
+      "kept": true,
+      "name": "Arrival starts at an actual external entrance owner",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "cohesion",
+      "kept": true,
+      "name": "Maximum cohesion uses touching cluster envelopes",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "floors",
+      "kept": true,
+      "name": "Raised sections match the declared level range",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "headroom",
+      "kept": true,
+      "name": "All spaces preserve compatible movement headroom",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "module-contracts",
+      "kept": true,
+      "name": "Every module realizes its occupied envelope and recipe program",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "module-switches",
+      "kept": true,
+      "name": "Disabled modules do not leave their circulation structures",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "plain-geometry",
+      "kept": true,
+      "name": "Required movement uses plain checked rectangular geometry",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "ports",
+      "kept": true,
+      "name": "The requested external port count is realized",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "room-program",
+      "kept": true,
+      "name": "The complete requested room program is present",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "secondary-passages",
+      "kept": true,
+      "name": "Disabled secondary passages leave required routes only",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "support-program",
+      "kept": true,
+      "name": "Support facilities match the enabled program",
+      "relaxed": false,
+      "relaxedBy": ""
+    }
+  ],
+  "source": {
+    "dials": {
+      "branching": 40,
+      "ceiling": 25,
+      "centrality": 80,
+      "clusterSize": 65,
+      "cohesion": 100,
+      "courts": 100,
+      "crossLinks": 100,
+      "exits": 30,
+      "hallWidth": 20,
+      "halls": 100,
+      "heightVariety": 25,
+      "levelChange": 0,
+      "loops": 45,
+      "moduleMix": 65,
+      "open": 40,
+      "publicMix": 45,
+      "rooms": 40,
+      "scale": 40,
+      "spines": 100,
+      "sprawl": 30,
+      "support": 100,
+      "supportMix": 35,
+      "turns": 40,
+      "variety": 50
+    },
+    "lab": "exchange-6",
+    "seed": 7,
+    "template": "generic-v1"
+  },
+  "spaces": [
+    {
+      "ceiling": 320,
+      "floor": 0,
+      "id": "module-0-hall-room-0",
+      "kind": "room",
+      "rect": [
+        0,
+        0,
+        16,
+        28
+      ],
+      "role": "shared",
+      "title": "Gathering hall"
+    },
+    {
+      "ceiling": 320,
+      "floor": 0,
+      "id": "module-0-hall-room-1",
+      "kind": "room",
+      "rect": [
+        16,
+        0,
+        28,
+        6
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 300,
+      "floor": 0,
+      "id": "module-0-hall-room-2",
+      "kind": "room",
+      "rect": [
+        16,
+        6,
+        28,
+        12
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 300,
+      "floor": 0,
+      "id": "module-0-hall-room-3",
+      "kind": "room",
+      "rect": [
+        16,
+        12,
+        28,
+        20
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-0-hall-room-4",
+      "kind": "room",
+      "rect": [
+        16,
+        20,
+        28,
+        28
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 320,
+      "floor": 0,
+      "id": "module-1-hall-room-0",
+      "kind": "room",
+      "rect": [
+        28,
+        0,
+        44,
+        28
+      ],
+      "role": "support",
+      "title": "Support room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-1-hall-room-1",
+      "kind": "room",
+      "rect": [
+        44,
+        0,
+        56,
+        12
+      ],
+      "role": "support",
+      "title": "Support room"
+    },
+    {
+      "ceiling": 300,
+      "floor": 0,
+      "id": "module-1-hall-room-2",
+      "kind": "room",
+      "rect": [
+        44,
+        12,
+        50,
+        20
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 320,
+      "floor": 0,
+      "id": "module-1-hall-room-3",
+      "kind": "room",
+      "rect": [
+        50,
+        12,
+        56,
+        20
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 310,
+      "floor": 0,
+      "id": "module-1-hall-room-4",
+      "kind": "room",
+      "rect": [
+        44,
+        20,
+        56,
+        28
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-2-cluster-room-0",
+      "kind": "room",
+      "rect": [
+        0,
+        -28,
+        11,
+        -16
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 310,
+      "floor": 0,
+      "id": "module-2-cluster-room-1",
+      "kind": "room",
+      "rect": [
+        0,
+        -16,
+        11,
+        0
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-2-cluster-room-2",
+      "kind": "room",
+      "rect": [
+        11,
+        -28,
+        19,
+        -16
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 290,
+      "floor": 0,
+      "id": "module-2-cluster-room-3",
+      "kind": "room",
+      "rect": [
+        19,
+        -28,
+        28,
+        -16
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 290,
+      "floor": 0,
+      "id": "module-2-cluster-room-4",
+      "kind": "room",
+      "rect": [
+        11,
+        -16,
+        28,
+        0
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 320,
+      "floor": 0,
+      "id": "module-3-cluster-room-0",
+      "kind": "room",
+      "rect": [
+        0,
+        28,
+        12,
+        44
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-3-cluster-room-1",
+      "kind": "room",
+      "rect": [
+        12,
+        28,
+        28,
+        44
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 300,
+      "floor": 0,
+      "id": "module-3-cluster-room-2",
+      "kind": "room",
+      "rect": [
+        0,
+        44,
+        12,
+        56
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-3-cluster-room-3",
+      "kind": "room",
+      "rect": [
+        12,
+        44,
+        20,
+        56
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 310,
+      "floor": 0,
+      "id": "module-3-cluster-room-4",
+      "kind": "room",
+      "rect": [
+        20,
+        44,
+        28,
+        56
+      ],
+      "role": "quiet",
+      "title": "Quiet room"
+    },
+    {
+      "ceiling": 310,
+      "floor": 0,
+      "id": "module-4-hall-room-0",
+      "kind": "room",
+      "rect": [
+        -28,
+        0,
+        -12,
+        28
+      ],
+      "role": "shared",
+      "title": "Gathering hall"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-4-hall-room-1",
+      "kind": "room",
+      "rect": [
+        -12,
+        0,
+        0,
+        8
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 290,
+      "floor": 0,
+      "id": "module-4-hall-room-2",
+      "kind": "room",
+      "rect": [
+        -12,
+        8,
+        0,
+        16
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    },
+    {
+      "ceiling": 280,
+      "floor": 0,
+      "id": "module-4-hall-room-3",
+      "kind": "room",
+      "rect": [
+        -12,
+        16,
+        0,
+        28
+      ],
+      "role": "shared",
+      "title": "Shared room"
+    }
+  ],
+  "start": {
+    "space": "module-4-hall-room-0",
+    "x": -20,
+    "y": 14
+  },
+  "theme": "backrooms",
+  "version": 1
+}
