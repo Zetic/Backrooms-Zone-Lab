@@ -30,7 +30,10 @@ test('worked Unreal example validates, round trips and ignores listing order', (
   assert.deepEqual(JSON.parse(api.serialize(metadata)).source.dials, metadata.source.dials);
 });
 test('each portable template passes the documented 120 cases twice and in reversed listing order', () => {
-  for (const result of audit()) assert.equal(result.passed, 120, JSON.stringify(result.failures));
+  for (const result of audit()) {
+    assert.equal(result.passed, 120, JSON.stringify(result.failures));
+    assert.equal(result.strict.passed, 40, JSON.stringify(result.strict.failures));
+  }
 });
 test('seed/dial bounds are explicit failures and one template does not affect another', () => {
   const [house, level0] = api.templates;
@@ -100,4 +103,39 @@ test('SVG snapshots distinguish stair support from upper void and escape user la
   const z = copy(); z.name = '<script>alert(1)</script>';
   assert.ok(api.plan(z, 0).includes('start')); assert.ok(api.plan(z, 290).includes('Stairwell')); assert.ok(api.plan(z, 290).includes('no floor here'));
   assert.ok(api.plan(z, 0).includes('&lt;script&gt;')); assert.ok(!api.plan(z, 0).includes('<script>'));
+});
+test('polygon and circular outline design survives canonical exports and remains an explicit adapter requirement', () => {
+  const z = copy(), s = z.spaces[0];
+  s.outline = [[8, 0], [14, 0], [13.5, 4], [8, 4], [8, 0]];
+  assert.ok(api.validate(z).valid);
+  assert.deepEqual(JSON.parse(api.serialize(z)).spaces.find(a => a.id === s.id).outline, s.outline);
+  assert.ok(api.validate(z).warnings.some(e => e.code === 'outline' && e.space === s.id));
+  assert.ok(api.plan(z, 0).includes('class="design-outline"'));
+  s.outline = [[13, 2], { arc: [11, 2], to: [9, 2] }, { arc: [11, 2], to: [13, 2] }];
+  assert.ok(api.validate(z).valid, JSON.stringify(api.validate(z)));
+  assert.ok(api.plan(z, 0).includes('A40 40'));
+  assert.deepEqual(JSON.parse(api.serialize(z)).spaces.find(a => a.id === s.id).outline, s.outline);
+});
+test('outline checks reject open paths, malformed nodes, mismatched radii, escaping arcs and work excess', () => {
+  for (const outline of [null, [], [[8, 0], [14, 0], [14, 4]], [[8, 0], [8, 0], [8, 0]],
+    [[8, 0], { arc: [10, 0], to: [14, 0] }, [8, 0]],
+    [[14, 0], { arc: [13, 1], to: [14, 2] }, [8, 2], [8, 0], [14, 0]],
+    [[8, 0], { arc: [10, 0], to: [12, NaN] }, [8, 0]],
+    [[8, 0], { arc: [10, 0], to: [12, 0], extra: true }, [8, 0]],
+    Array(257).fill([8, 0])]) {
+    const z = copy(); z.spaces[0].outline = outline; fails(z, 'outline'); assert.throws(() => api.serialize(z));
+  }
+});
+test('embedded rule metadata validates, sorts independently and preserves external relaxation descriptions', () => {
+  const z = copy(); z.rules = [
+    { id: 'z', name: 'Z', kept: false, relaxed: true, relaxedBy: { dial: 'strange', from: 70 }, detail: 'Permitted deviation' },
+    { id: 'a', name: 'A', kept: true, relaxed: false, relaxedBy: '', detail: '' }
+  ];
+  assert.ok(api.validate(z).valid);
+  const bytes = api.serialize(z); z.rules.reverse(); assert.equal(api.serialize(z), bytes);
+  assert.deepEqual(JSON.parse(bytes).rules.find(r => r.id === 'z').relaxedBy, { dial: 'strange', from: 70 });
+  z.rules[1].relaxed = false; fails(z, 'rules');
+  for (const rules of [null, [null], [{ id: 'bad', name: 'Bad', kept: false, relaxed: true }], Array(257).fill({})]) {
+    const bad = copy(); bad.rules = rules; fails(bad, 'rules');
+  }
 });

@@ -7,25 +7,57 @@
       "template": "house-v2",
       "passed": 120,
       "total": 120,
-      "failures": []
+      "failures": [],
+      "strict": {
+        "dials": {
+          "size": 0,
+          "sprawl": 0,
+          "strange": 0
+        },
+        "passed": 40,
+        "total": 40,
+        "failures": []
+      }
     },
     {
       "template": "level0-v1",
       "passed": 120,
       "total": 120,
-      "failures": []
+      "failures": [],
+      "strict": {
+        "dials": {
+          "size": 0,
+          "scale": 0,
+          "open": 0,
+          "gaps": 0
+        },
+        "passed": 40,
+        "total": 40,
+        "failures": []
+      }
     },
     {
       "template": "offices-v1",
       "passed": 120,
       "total": 120,
-      "failures": []
+      "failures": [],
+      "strict": {
+        "dials": {
+          "size": 0,
+          "open": 0,
+          "sprawl": 0,
+          "strange": 0
+        },
+        "passed": 40,
+        "total": 40,
+        "failures": []
+      }
     }
   ],
   "zones": [
     {
       "file": "house-1.zone.json",
-      "sha256": "5d7fd7b3a5a3016c28222b98e710404041169edf7c9a3d943def5d8ce534e73c",
+      "sha256": "f83babd0b3f000b607b805d4cbd3128c75a30546409a008a2c1cfecf684492a2",
       "plans": [
         "house-1-floor-0.svg",
         "house-1-floor-290.svg"
@@ -162,7 +194,7 @@
     },
     {
       "file": "house-7.zone.json",
-      "sha256": "5e40472316f0b16b77c31a55adf8d54e7d59c0901c606ffdff42f930cccc8939",
+      "sha256": "43140b8136a71f69ea21034bdbcdcae271fef5ffecb4ce42e9cfa4ced64d001f",
       "plans": [
         "house-7-floor-0.svg",
         "house-7-floor-290.svg"
@@ -299,7 +331,7 @@
     },
     {
       "file": "house-29.zone.json",
-      "sha256": "952824b264d18fed2a7e28c0daed9bb873b47d7743349ea3c873deda9f7ef055",
+      "sha256": "b5967efc90d5bcadb36684871b826bb366392a1a5101df3a8a16399c88b8ec5b",
       "plans": [
         "house-29-floor-0.svg",
         "house-29-floor-290.svg"
@@ -481,7 +513,7 @@
     },
     {
       "file": "offices-1.zone.json",
-      "sha256": "80e78e974e1e47202fb27b5761d813052fb17840580a8f38f49e04a5257514d4",
+      "sha256": "025ce1fb87287c5bb6b23cdfee28b6ed452d58c58b7323c962ebf1b59d338f6b",
       "plans": [
         "offices-1-floor-0.svg"
       ],
@@ -625,7 +657,7 @@
     },
     {
       "file": "offices-1-open.zone.json",
-      "sha256": "bd02abc841c0e04343cf05f1588ffa62d06f2925b3d67e29cc9a1b60eaf369eb",
+      "sha256": "6b7e8881b1c6eab736890d3d5098f336fa9b76811feba9392a4359291bc1afe0",
       "plans": [
         "offices-1-open-floor-0.svg"
       ],
@@ -769,7 +801,7 @@
     },
     {
       "file": "offices-1-wrong.zone.json",
-      "sha256": "33c73ff84bb406c06f47b721a42a5e6c1b1e1deced36551976e69407b059153e",
+      "sha256": "5eb96b975c450e55727381799f2a67df6931ee4fa50529c760461ae20ae0a69e",
       "plans": [
         "offices-1-wrong-floor-0.svg"
       ],
@@ -1008,5 +1040,300 @@
     "Browser checks do not resolve feature-dependent physical openings.",
     "Plan floor allocation includes walls; Unreal measures usable support.",
     "Full br.zone geometry preserves design intent for a dedicated Unreal adapter."
+  ],
+  "galleries": [
+    {
+      "file": "gallery-house-suburban.svg",
+      "template": "house-v2",
+      "preset": "Suburban",
+      "dials": {
+        "size": 40,
+        "sprawl": 0,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "234e7043368d9abbe2ad13ba1b4fa86ce331af4363176da3f673d18c14d4534c"
+    },
+    {
+      "file": "gallery-house-family-home.svg",
+      "template": "house-v2",
+      "preset": "Family home",
+      "dials": {
+        "size": 75,
+        "sprawl": 35,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "b4720948a6c999825c49e3c260b495974e60548fa3a7c7047f878994a25ed27c"
+    },
+    {
+      "file": "gallery-house-ranch.svg",
+      "template": "house-v2",
+      "preset": "Ranch",
+      "dials": {
+        "size": 50,
+        "sprawl": 65,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "98cacd55b2c4c5e4d3356077e6e880750e22c5b0c13430741216b2aabb129ff0"
+    },
+    {
+      "file": "gallery-house-rambling.svg",
+      "template": "house-v2",
+      "preset": "Rambling",
+      "dials": {
+        "size": 85,
+        "sprawl": 95,
+        "strange": 15
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "ff0f5a9b49dd7932a1591ced881ffefcaacce413391e09cbd31f80206e9b941e"
+    },
+    {
+      "file": "gallery-house-not-quite-right.svg",
+      "template": "house-v2",
+      "preset": "Not quite right",
+      "dials": {
+        "size": 45,
+        "sprawl": 20,
+        "strange": 55
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "c8e35a0fe62d99d3d267f7fcb9d0cd5d2dd29bf717ee6eaddbd195b508567a6b"
+    },
+    {
+      "file": "gallery-house-backrooms-house.svg",
+      "template": "house-v2",
+      "preset": "Backrooms house",
+      "dials": {
+        "size": 70,
+        "sprawl": 90,
+        "strange": 95
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "99ddd9b03f968fef0a2fa08765b2bb32693f79317b692475140c8ec82cb3919a"
+    },
+    {
+      "file": "gallery-level0-defaults.svg",
+      "template": "level0-v1",
+      "preset": "Defaults",
+      "dials": {
+        "size": 35,
+        "scale": 45,
+        "open": 70,
+        "gaps": 40
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "94cb34ac5bd13e2c3b14984461412fb938152181e5004495e39c6b40dbad16d5"
+    },
+    {
+      "file": "gallery-offices-standard-office.svg",
+      "template": "offices-v1",
+      "preset": "Standard office",
+      "dials": {
+        "size": 40,
+        "open": 35,
+        "sprawl": 0,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "ef1abd3ccc6f0cb087d68f3f6c290bcc692c2977708d628e89f1406ec2fe6e66"
+    },
+    {
+      "file": "gallery-offices-private-practice.svg",
+      "template": "offices-v1",
+      "preset": "Private practice",
+      "dials": {
+        "size": 15,
+        "open": 0,
+        "sprawl": 0,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "83bd98eee6d08f8cd011342f403e396ae4b7f1795794561366522ebc2e4e3e6e"
+    },
+    {
+      "file": "gallery-offices-open-workplace.svg",
+      "template": "offices-v1",
+      "preset": "Open workplace",
+      "dials": {
+        "size": 70,
+        "open": 100,
+        "sprawl": 0,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "f300cfe5e8c8b4a5b1c5f4f2147631403972d0cd9b43f28407f33547944b9978"
+    },
+    {
+      "file": "gallery-offices-department-wings.svg",
+      "template": "offices-v1",
+      "preset": "Department wings",
+      "dials": {
+        "size": 70,
+        "open": 45,
+        "sprawl": 85,
+        "strange": 0
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "a567459e6d14e60bb855bccc4a7e27a7debcaebd4b6d7d20a37078504904ef9f"
+    },
+    {
+      "file": "gallery-offices-after-hours.svg",
+      "template": "offices-v1",
+      "preset": "After hours",
+      "dials": {
+        "size": 50,
+        "open": 20,
+        "sprawl": 35,
+        "strange": 60
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "1703ad0447f15d5cf1a276f0541e0b0eea094c52d8f63f41d4b5e5e3c3a5f3e7"
+    },
+    {
+      "file": "gallery-offices-wrong-workplace.svg",
+      "template": "offices-v1",
+      "preset": "Wrong workplace",
+      "dials": {
+        "size": 75,
+        "open": 65,
+        "sprawl": 90,
+        "strange": 95
+      },
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "sha256": "083f5871d80fa5c651871dca2bcf444a56356f4dff59e567fb2d3451c65d78b7"
+    }
   ]
 }

@@ -24,6 +24,9 @@ export function shapingCases() {
   for (const [i, preset] of template.presets.entries()) samples.push({ template, setting: 'preset-' + i, spec: { seed: 1, dials: preset.dials } });
   return samples;
 }
+export function strictCases() {
+  return api.templates.flatMap(template => Array.from({ length: 40 }, (_, i) => ({ template, setting: 'strict', spec: { seed: i + 1, dials: api.strictDials(template) } })));
+}
 export function officeCases() {
   const template = api.templates.find(t => t.id === 'offices'), samples = [];
   if (!template) return samples;
@@ -33,26 +36,12 @@ export function officeCases() {
   return samples;
 }
 export function audit() {
-  const reports = api.templates.map(t => ({ template: api.templateKey(t), passed: 0, total: 120, failures: [] }));
-  for (const sample of cases()) {
-    const report = reports.find(r => r.template === api.templateKey(sample.template));
-    try {
-      const a = sample.template.make(sample.spec), b = sample.template.make(sample.spec);
-      if (a.error || b.error) throw new Error(a.error ?? b.error);
-      if (!api.ruleReport(sample.template, a).valid) throw new Error('unrelaxed architectural rule failed');
-      if (api.serialize(a) !== api.serialize(b)) throw new Error('same-again mismatch');
-      // Reordered input arrays and a round trip cannot alter the canonical file.
-      const reordered = structuredClone(a); reordered.spaces.reverse(); reordered.joins.reverse(); reordered.entrances.reverse();
-      if (api.serialize(a) !== api.serialize(reordered) || api.serialize(a) !== api.serialize(JSON.parse(api.serialize(a)))) throw new Error('order/round-trip mismatch');
-      ++report.passed;
-    } catch (error) { report.failures.push({ spec: sample.spec, error: error.message }); }
-  }
-  return reports;
+  return api.templates.map(t => api.auditTemplate(t));
 }
 async function main() {
   const reports = audit();
-  for (const r of reports) console.log(`${r.template}: ${r.passed}/${r.total} · repeat, order and round-trip checks`);
-  if (reports.some(r => r.failures.length)) { console.error(JSON.stringify(reports.filter(r => r.failures.length), null, 2)); process.exitCode = 1; return; }
+  for (const r of reports) console.log(`${r.template}: ${r.passed}/${r.total}, strict ${r.strict.passed}/${r.strict.total} · repeat, order and round-trip checks`);
+  if (reports.some(r => r.failures.length || r.strict.failures.length)) { console.error(JSON.stringify(reports.filter(r => r.failures.length || r.strict.failures.length), null, 2)); process.exitCode = 1; return; }
   const output = new URL('../docs/exchange-examples/', import.meta.url);
   await mkdir(output, { recursive: true });
   const zones = [];
@@ -79,6 +68,21 @@ async function main() {
     const template = api.templates.find(t => api.templateKey(t) === zone.source?.template);
     manifest.zones.push({ file, sha256: createHash('sha256').update(serialized).digest('hex'), plans, notes: zone.notes,
       architecturalRules: template ? api.ruleReport(template, zone) : null });
+  }
+  manifest.galleries = [];
+  for (const template of api.templates) for (const preset of template.presets ?? [{ name: 'Defaults', dials: Object.fromEntries(template.dials.map(d => [d.id, d.value])) }]) {
+    const samples = [];
+    for (let seed = 1; seed <= 9; ++seed) {
+      const zone = template.make({ seed, dials: preset.dials });
+      if (zone.error || !api.validate(zone).valid) throw new Error('Preset gallery failed: ' + template.id + '/' + preset.name + '/' + seed);
+      const report = api.ruleReport(template, zone);
+      if (!report.valid) throw new Error('Preset gallery rules failed.');
+      samples.push({ seed, zone, report });
+    }
+    const file = 'gallery-' + template.id + '-' + preset.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.svg';
+    const svg = api.galleryPlan(template.name + ' · ' + preset.name + ' · seeds 1–9', preset.dials, samples, 0);
+    await writeFile(new URL(file, output), svg);
+    manifest.galleries.push({ file, template: api.templateKey(template), preset: preset.name, dials: preset.dials, seeds: samples.map(s => s.seed), sha256: createHash('sha256').update(svg).digest('hex') });
   }
   await writeFile(new URL('manifest.json', output), JSON.stringify(manifest, null, 2) + '\n');
   for (const file of ['stream.js', 'checks.js', 'method.js', 'templates/house.js', 'templates/level0.js', 'templates/offices.js']) await cp(new URL('../exchange/' + file, import.meta.url), new URL(file.replace('templates/', ''), output));
