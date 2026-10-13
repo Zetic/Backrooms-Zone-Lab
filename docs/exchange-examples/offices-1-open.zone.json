@@ -300,7 +300,7 @@
     }
   ],
   "name": "Offices · seed 1 · Open workplace",
-  "notes": "Office v2: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
+  "notes": "Office v3: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
   "rules": [
     {
       "detail": "",
@@ -315,6 +315,14 @@
       "id": "ceiling",
       "kept": true,
       "name": "Rooms share one consistent ceiling height",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "cohesion",
+      "kept": true,
+      "name": "Maximum cohesion gives contiguous room rows with shared walls",
       "relaxed": false,
       "relaxedBy": ""
     },
@@ -384,6 +392,14 @@
     },
     {
       "detail": "",
+      "id": "room-program",
+      "kept": true,
+      "name": "The requested departmental room program is realized",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
       "id": "service-access",
       "kept": true,
       "name": "Shared services open from a corridor",
@@ -441,15 +457,17 @@
   ],
   "source": {
     "dials": {
+      "cohesion": 100,
       "open": 100,
+      "rooms": 60,
       "size": 70,
       "sprawl": 0,
       "strange": 0,
       "wings": 20
     },
-    "lab": "exchange-4",
+    "lab": "exchange-5",
     "seed": 1,
-    "template": "offices-v2"
+    "template": "offices-v3"
   },
   "spaces": [
     {

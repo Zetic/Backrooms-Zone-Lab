@@ -29,9 +29,9 @@ Rule reports are regenerated from the accepted zone and recorded dials. Version 
 
 Physical checks always run first. `generateTemplate` defaults to the version 1 exchange validator; its fourth argument can supply a physical validator for another representation, returning `{valid, errors}`. The shared method preserves that representation and evaluates its rules with the requested dials. This extension point does not add a full-geometry import UI or establish new Unreal geometry support. Dials never permit overlap, invalid stairs, blocked required passages or loss of Human reach/return. Browser topology checks remain preliminary; Unreal's compiler and walking tests establish actual clearance, support and movement. For a richer geometry template, preserve the original representation and use its physical validator and a dedicated adapter; do not flatten it to satisfy version 1.
 
-## House v2 reference
+## House v3 and archived v2 reference
 
-House uses Size, Sprawl and Strangeness and the six local presets: Suburban, Family home, Ranch, Rambling, Not quite right and Backrooms house. `template-reference/ZoneLabHouse-v2.cpp` snapshots the local source used for this port. The optional native parity check compares accepted rectangles, floor/ceiling levels and physical join contracts with the local House generator, in addition to compiling the exports.
+House v3 uses Size, Sprawl, Cohesion, Room Count and Strangeness and the six local presets: Suburban, Family home, Ranch, Rambling, Not quite right and Backrooms house. `template-reference/ZoneLabHouse-v2.cpp` snapshots the local source used for this port. The native C++ source and [archived browser v2](template-reference/house-v2.js) remain historical parity references. Current House v3 requires a native generator port for parity; the optional physical compiler check can still consume its rectangular exports. [Cohesion](cohesion.md) describes the new interaction.
 
 Sprawl grows a wing at 30, moves the main bedroom downstairs at 40, turns the wing at 48, and switches from two storeys to one at **55**. This is a deliberate grammar switch. High sprawl adds turning halls and single-sided stretches; it is not a guarantee of a continuously increasing floor area.
 
@@ -72,3 +72,5 @@ npm run verify:unreal -- --core=C:/Dev/Backrooms/Source/Backrooms/Workshop --lab
 Without the local ZoneLab v2 sources, omit `--lab-parity=true` to verify compilation and Human traversal against the portable compiler alone. This harness is verification tooling; the runtime JSON loaders are still to be built.
 
 The exchange subset can also preserve a space’s optional `outline` as design data. Follow the path/arc convention in [the exchange contract](unreal-exchange.md#browser-implementation-notes--october-13-2026); actual Unreal outline realization remains adapter work. Compare nine seeds at intermediate dial settings and export preset gallery pictures for the handoff.
+
+Maximum cohesion is a geometry-derived rule, not a label attached to the chosen dial. Office checks consecutive room partitions and the requested departmental program count; House checks that every room shares a room partition. Strict audits set Cohesion to 100 explicitly.

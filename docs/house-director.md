@@ -1,5 +1,7 @@
 # Phase 3 house director
 
+The Sprawl/Cohesion/Room Count controls belong to the separate [rectangular House v3 template](cohesion.md). This full gallery-house director retains its existing input and generator identity.
+
 `house.js` produces finite `generated-house` plans with schema `br.zone/0.3` and generator version 3. The director selects intent and constructs candidates; physical validation reconstructs evidence from actual surfaces, doors, stairs, voids, and walker-clearance paths. An intended adjacency cannot substitute for a missing aperture.
 
 ## Input and deterministic search

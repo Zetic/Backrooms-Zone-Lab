@@ -1,0 +1,1405 @@
+{
+  "entrances": [
+    {
+      "at": 0,
+      "side": "s",
+      "space": "reception",
+      "title": "Visitor entrance"
+    },
+    {
+      "at": 215,
+      "side": "n",
+      "space": "wing-0-exit",
+      "title": "Wing 1 exit"
+    },
+    {
+      "at": -208,
+      "side": "s",
+      "space": "wing-1-exit",
+      "title": "Wing 2 exit"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "offices-7",
+  "joins": [
+    {
+      "a": "core-break",
+      "b": "hub-west",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "core-copy",
+      "b": "hub-east",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "core-server",
+      "b": "hub-east",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "core-store",
+      "b": "hub-east",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "core-washroom",
+      "b": "hub-west",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "hub-east",
+      "b": "hub-ne",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-east",
+      "b": "hub-se",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-east",
+      "b": "wing-0-hall-0",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-ne",
+      "b": "hub-north",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-north",
+      "b": "hub-nw",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-nw",
+      "b": "hub-west",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-se",
+      "b": "hub-south",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-south",
+      "b": "hub-sw",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-south",
+      "b": "reception",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-sw",
+      "b": "hub-west",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hub-west",
+      "b": "wing-1-hall-0",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "reception",
+      "b": "visitor-meeting-left",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "reception",
+      "b": "visitor-meeting-right",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-exit",
+      "b": "wing-0-junction",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-hall-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-0-0",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-1-0",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-0",
+      "b": "wing-0-room-1-1",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-hall-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-0-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-0-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-1-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-1",
+      "b": "wing-0-room-1-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-2",
+      "b": "wing-0-hall-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-2",
+      "b": "wing-0-room-0-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-2",
+      "b": "wing-0-room-0-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-2",
+      "b": "wing-0-room-1-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-3",
+      "b": "wing-0-hall-4",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-3",
+      "b": "wing-0-room-0-5",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-3",
+      "b": "wing-0-room-0-6",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-4",
+      "b": "wing-0-hall-5",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-4",
+      "b": "wing-0-room-0-7",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-5",
+      "b": "wing-0-junction",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-0-hall-5",
+      "b": "wing-0-room-0-8",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "wing-1-exit",
+      "b": "wing-1-junction",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-0",
+      "b": "wing-1-hall-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-0-0",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-1-0",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-0",
+      "b": "wing-1-room-1-1",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-1",
+      "b": "wing-1-hall-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-0-1",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-0-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-1",
+      "b": "wing-1-room-1-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-2",
+      "b": "wing-1-hall-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-2",
+      "b": "wing-1-room-0-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-2",
+      "b": "wing-1-room-0-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-2",
+      "b": "wing-1-room-1-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-2",
+      "b": "wing-1-room-1-4",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-3",
+      "b": "wing-1-hall-4",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-3",
+      "b": "wing-1-room-0-5",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-3",
+      "b": "wing-1-room-0-6",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-4",
+      "b": "wing-1-hall-5",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-4",
+      "b": "wing-1-room-0-7",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-4",
+      "b": "wing-1-room-0-8",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "wing-1-hall-5",
+      "b": "wing-1-junction",
+      "mode": "open",
+      "required": true
+    }
+  ],
+  "name": "Offices · seed 7",
+  "notes": "Office v3: central visitor/service hub, 2 independent department spines, role-specific room capacities, larger team rooms and exit lobbies. This rectangular exchange is a separate layout; the angled full design is available in office.html.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "arrival",
+      "kept": true,
+      "name": "Visitors start in reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "ceiling",
+      "kept": true,
+      "name": "Rooms share one consistent ceiling height",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "cohesion",
+      "kept": true,
+      "name": "Maximum cohesion gives contiguous room rows with shared walls",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "dead-ends",
+      "kept": true,
+      "name": "Corridors do not end beyond the last room",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "hall-share",
+      "kept": true,
+      "name": "Corridors take no more than 40% of the floor",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 35"
+    },
+    {
+      "detail": "",
+      "id": "hall-width",
+      "kept": true,
+      "name": "Corridors are a consistent 2–2.5 m wide",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "loop",
+      "kept": true,
+      "name": "Circulation has a loop without crossing staff rooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "meeting",
+      "kept": true,
+      "name": "Visitor meeting rooms open directly from reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "meeting-counts",
+      "kept": true,
+      "name": "There are one to three meeting rooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "program",
+      "kept": true,
+      "name": "The floor has workplaces and essential shared services",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "proportions",
+      "kept": true,
+      "name": "Work and meeting rooms have conventional proportions",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "room-program",
+      "kept": true,
+      "name": "The requested departmental room program is realized",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "service-access",
+      "kept": true,
+      "name": "Shared services open from a corridor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "service-counts",
+      "kept": true,
+      "name": "Shared services form one clear support group",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "single-level",
+      "kept": true,
+      "name": "The office floor occupies one level",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "visitor-buffer",
+      "kept": true,
+      "name": "Reception opens onto meetings or circulation, not staff services",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "visitor-entry",
+      "kept": true,
+      "name": "The visitor entrance opens into reception",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "wing-count",
+      "kept": true,
+      "name": "The requested number of independent wings is realized",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "work-access",
+      "kept": true,
+      "name": "Every workplace opens from circulation",
+      "relaxed": false,
+      "relaxedBy": ""
+    }
+  ],
+  "source": {
+    "dials": {
+      "cohesion": 0,
+      "open": 35,
+      "rooms": 100,
+      "size": 60,
+      "sprawl": 100,
+      "strange": 0,
+      "wings": 20
+    },
+    "lab": "exchange-5",
+    "seed": 7,
+    "template": "offices-v3"
+  },
+  "spaces": [
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "core-break",
+      "kind": "room",
+      "rect": [
+        -11,
+        -2,
+        0,
+        9
+      ],
+      "role": "break",
+      "title": "Break room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "core-copy",
+      "kind": "room",
+      "rect": [
+        0,
+        -5,
+        11,
+        -1
+      ],
+      "role": "copy",
+      "title": "Copy room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "core-server",
+      "kind": "room",
+      "rect": [
+        0,
+        -9,
+        11,
+        -5
+      ],
+      "role": "server",
+      "title": "Server room"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "core-store",
+      "kind": "room",
+      "rect": [
+        0,
+        -1,
+        11,
+        9
+      ],
+      "role": "store",
+      "title": "Supply store"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "core-washroom",
+      "kind": "room",
+      "rect": [
+        -11,
+        -9,
+        0,
+        -2
+      ],
+      "role": "washroom",
+      "title": "Washrooms"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-east",
+      "kind": "hall",
+      "rect": [
+        11,
+        -9,
+        15,
+        9
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-ne",
+      "kind": "hall",
+      "rect": [
+        11,
+        9,
+        15,
+        13
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-north",
+      "kind": "hall",
+      "rect": [
+        -11,
+        9,
+        11,
+        13
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-nw",
+      "kind": "hall",
+      "rect": [
+        -15,
+        9,
+        -11,
+        13
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-se",
+      "kind": "hall",
+      "rect": [
+        11,
+        -13,
+        15,
+        -9
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-south",
+      "kind": "hall",
+      "rect": [
+        -11,
+        -13,
+        11,
+        -9
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-sw",
+      "kind": "hall",
+      "rect": [
+        -15,
+        -13,
+        -11,
+        -9
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "hub-west",
+      "kind": "hall",
+      "rect": [
+        -15,
+        -9,
+        -11,
+        9
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "reception",
+      "kind": "room",
+      "rect": [
+        -6,
+        -19,
+        6,
+        -13
+      ],
+      "role": "reception",
+      "title": "Reception"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "visitor-meeting-left",
+      "kind": "room",
+      "rect": [
+        -16,
+        -22,
+        -6,
+        -13
+      ],
+      "role": "meeting",
+      "title": "Visitor meeting"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "visitor-meeting-right",
+      "kind": "room",
+      "rect": [
+        6,
+        -22,
+        16,
+        -13
+      ],
+      "role": "meeting",
+      "title": "Visitor meeting"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-exit",
+      "kind": "hall",
+      "rect": [
+        212,
+        -4,
+        218,
+        4
+      ],
+      "role": "exit",
+      "title": "Exit / stair lobby"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-0",
+      "kind": "hall",
+      "rect": [
+        15,
+        -2,
+        51,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-1",
+      "kind": "hall",
+      "rect": [
+        51,
+        -2,
+        87,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-2",
+      "kind": "hall",
+      "rect": [
+        87,
+        -2,
+        123,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-3",
+      "kind": "hall",
+      "rect": [
+        123,
+        -2,
+        159,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-4",
+      "kind": "hall",
+      "rect": [
+        159,
+        -2,
+        195,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-hall-5",
+      "kind": "hall",
+      "rect": [
+        195,
+        -2,
+        208,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-junction",
+      "kind": "hall",
+      "rect": [
+        208,
+        -2,
+        212,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-0",
+      "kind": "room",
+      "rect": [
+        27,
+        2,
+        45,
+        17
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-1",
+      "kind": "room",
+      "rect": [
+        53,
+        2,
+        69,
+        17
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-2",
+      "kind": "room",
+      "rect": [
+        77,
+        2,
+        86,
+        11
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-3",
+      "kind": "room",
+      "rect": [
+        94,
+        2,
+        102,
+        12
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-4",
+      "kind": "room",
+      "rect": [
+        110,
+        2,
+        119,
+        11
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-5",
+      "kind": "room",
+      "rect": [
+        127,
+        2,
+        145,
+        16
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-6",
+      "kind": "room",
+      "rect": [
+        153,
+        2,
+        162,
+        12
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-7",
+      "kind": "room",
+      "rect": [
+        170,
+        2,
+        186,
+        16
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-0-8",
+      "kind": "room",
+      "rect": [
+        194,
+        2,
+        208,
+        12
+      ],
+      "role": "conference",
+      "title": "Team meeting"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-1-0",
+      "kind": "room",
+      "rect": [
+        27,
+        -11,
+        38,
+        -2
+      ],
+      "role": "team",
+      "title": "Department lounge"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-1-1",
+      "kind": "room",
+      "rect": [
+        46,
+        -11,
+        56,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-1-2",
+      "kind": "room",
+      "rect": [
+        64,
+        -10,
+        74,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-1-3",
+      "kind": "room",
+      "rect": [
+        82,
+        -10,
+        91,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-0-room-1-4",
+      "kind": "room",
+      "rect": [
+        99,
+        -11,
+        108,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-exit",
+      "kind": "hall",
+      "rect": [
+        -211,
+        -4,
+        -205,
+        4
+      ],
+      "role": "exit",
+      "title": "Exit / stair lobby"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-0",
+      "kind": "hall",
+      "rect": [
+        -51,
+        -2,
+        -15,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-1",
+      "kind": "hall",
+      "rect": [
+        -87,
+        -2,
+        -51,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-2",
+      "kind": "hall",
+      "rect": [
+        -123,
+        -2,
+        -87,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-3",
+      "kind": "hall",
+      "rect": [
+        -159,
+        -2,
+        -123,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-4",
+      "kind": "hall",
+      "rect": [
+        -195,
+        -2,
+        -159,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-hall-5",
+      "kind": "hall",
+      "rect": [
+        -201,
+        -2,
+        -195,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-junction",
+      "kind": "hall",
+      "rect": [
+        -205,
+        -2,
+        -201,
+        2
+      ],
+      "role": "hall",
+      "title": "Corridor"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-0",
+      "kind": "room",
+      "rect": [
+        -35,
+        -12,
+        -27,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-1",
+      "kind": "room",
+      "rect": [
+        -60,
+        -17,
+        -43,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-2",
+      "kind": "room",
+      "rect": [
+        -77,
+        -10,
+        -68,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-3",
+      "kind": "room",
+      "rect": [
+        -95,
+        -10,
+        -85,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-4",
+      "kind": "room",
+      "rect": [
+        -112,
+        -10,
+        -103,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-5",
+      "kind": "room",
+      "rect": [
+        -129,
+        -11,
+        -120,
+        -2
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-6",
+      "kind": "room",
+      "rect": [
+        -154,
+        -17,
+        -137,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-7",
+      "kind": "room",
+      "rect": [
+        -180,
+        -18,
+        -162,
+        -2
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-0-8",
+      "kind": "room",
+      "rect": [
+        -201,
+        -13,
+        -188,
+        -2
+      ],
+      "role": "conference",
+      "title": "Team meeting"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-0",
+      "kind": "room",
+      "rect": [
+        -37,
+        2,
+        -27,
+        11
+      ],
+      "role": "team",
+      "title": "Department lounge"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-1",
+      "kind": "room",
+      "rect": [
+        -53,
+        2,
+        -45,
+        10
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-2",
+      "kind": "room",
+      "rect": [
+        -79,
+        2,
+        -61,
+        18
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-3",
+      "kind": "room",
+      "rect": [
+        -95,
+        2,
+        -87,
+        12
+      ],
+      "role": "office",
+      "title": "Private office"
+    },
+    {
+      "ceiling": 270,
+      "floor": 0,
+      "id": "wing-1-room-1-4",
+      "kind": "room",
+      "rect": [
+        -120,
+        2,
+        -103,
+        17
+      ],
+      "role": "work",
+      "title": "Team workplace"
+    }
+  ],
+  "start": {
+    "space": "reception",
+    "x": 0,
+    "y": -16
+  },
+  "theme": "backrooms",
+  "version": 1
+}

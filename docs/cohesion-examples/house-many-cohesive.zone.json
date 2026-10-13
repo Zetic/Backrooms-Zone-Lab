@@ -1,0 +1,687 @@
+{
+  "entrances": [
+    {
+      "at": -1.5,
+      "side": "s",
+      "space": "entry",
+      "title": "Front door"
+    },
+    {
+      "at": 19.5,
+      "side": "e",
+      "space": "kitchen",
+      "title": "Back door"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "house-7",
+  "joins": [
+    {
+      "a": "bath",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bath-2",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom",
+      "b": "hall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-2",
+      "b": "hall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-3",
+      "b": "hall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-4",
+      "b": "hall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "closet",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "den",
+      "b": "hall-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "den-2",
+      "b": "hall-3",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "den-3",
+      "b": "hall-4",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "hall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "utility",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "ensuite",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "family",
+      "b": "hall",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hall",
+      "b": "hall-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hall-2",
+      "b": "hall-3",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hall-2",
+      "b": "study-2",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hall-3",
+      "b": "hall-4",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hall-3",
+      "b": "study-3",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hall-3",
+      "b": "study-4",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hall-4",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "living",
+      "b": "study",
+      "mode": "wide",
+      "required": true
+    }
+  ],
+  "name": "House · seed 7",
+  "notes": "House v3: Room Count supplies bedrooms and additional study/den rooms; Sprawl arranges the program into branches; Cohesion suppresses unallocated row gaps without stretching rooms. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+  "rules": [
+    {
+      "detail": "",
+      "id": "baths",
+      "kept": true,
+      "name": "Bathrooms open off a hall, never onto the living room, dining room or kitchen",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "bedrooms",
+      "kept": true,
+      "name": "Every bedroom opens off a hall or landing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "cohesion",
+      "kept": true,
+      "name": "Maximum cohesion gives every room a shared room partition",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "41% of the bounds is occupied.",
+      "id": "compact",
+      "kept": false,
+      "name": "The house is a box, or a box with a wing",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 30"
+    },
+    {
+      "detail": "",
+      "id": "counts",
+      "kept": true,
+      "name": "One kitchen, one living room, and bathrooms to suit the bedrooms",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "dead-ends",
+      "kept": true,
+      "name": "No hall leads nowhere",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "entry",
+      "kept": true,
+      "name": "The front door opens into an entry hall",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "ground",
+      "kept": true,
+      "name": "The living room, dining room and kitchen are on the ground floor",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "halls",
+      "kept": true,
+      "name": "Halls take no more than a quarter of the floor",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 30"
+    },
+    {
+      "detail": "",
+      "id": "kitchen",
+      "kept": true,
+      "name": "The kitchen opens onto the dining room",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "living",
+      "kept": true,
+      "name": "The living and dining rooms open into each other, or off the same hall",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "Every route returns by the way it came.",
+      "id": "loop",
+      "kept": false,
+      "name": "The ground floor can be walked round in a loop",
+      "relaxed": true,
+      "relaxedBy": "Sprawl 55"
+    },
+    {
+      "detail": "",
+      "id": "private",
+      "kept": true,
+      "name": "No bedroom opens onto the entry, living room, dining room or kitchen",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "proportions",
+      "kept": true,
+      "name": "Every room is a usable size and shape for what it is",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "stair",
+      "kept": true,
+      "name": "The stair rises from a hall to a landing",
+      "relaxed": false,
+      "relaxedBy": ""
+    },
+    {
+      "detail": "",
+      "id": "suite",
+      "kept": true,
+      "name": "The main bathroom opens only from the main bedroom",
+      "relaxed": false,
+      "relaxedBy": ""
+    }
+  ],
+  "source": {
+    "dials": {
+      "cohesion": 100,
+      "rooms": 100,
+      "size": 60,
+      "sprawl": 100,
+      "strange": 0
+    },
+    "lab": "exchange-5",
+    "seed": 7,
+    "template": "house-v3"
+  },
+  "spaces": [
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bath",
+      "kind": "room",
+      "rect": [
+        -11,
+        30,
+        -3,
+        35
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bath-2",
+      "kind": "room",
+      "rect": [
+        0,
+        32,
+        8,
+        37
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bedroom",
+      "kind": "room",
+      "rect": [
+        -11,
+        23,
+        -3,
+        30
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bedroom-2",
+      "kind": "room",
+      "rect": [
+        0,
+        40,
+        8,
+        48
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bedroom-3",
+      "kind": "room",
+      "rect": [
+        8,
+        40,
+        15,
+        48
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "bedroom-4",
+      "kind": "room",
+      "rect": [
+        9,
+        29,
+        17,
+        37
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "closet",
+      "kind": "room",
+      "rect": [
+        32,
+        61,
+        36,
+        65
+      ],
+      "role": "closet",
+      "title": "Walk-in closet"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "den",
+      "kind": "room",
+      "rect": [
+        13,
+        48,
+        21,
+        54
+      ],
+      "role": "den",
+      "title": "Den"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "den-2",
+      "kind": "room",
+      "rect": [
+        13,
+        54,
+        21,
+        61
+      ],
+      "role": "den",
+      "title": "Den"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "den-3",
+      "kind": "room",
+      "rect": [
+        32,
+        50,
+        40,
+        58
+      ],
+      "role": "den",
+      "title": "Den"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "dining",
+      "kind": "room",
+      "rect": [
+        -6,
+        16,
+        3,
+        23
+      ],
+      "role": "dining",
+      "title": "Dining room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "ensuite",
+      "kind": "room",
+      "rect": [
+        32,
+        65,
+        36,
+        69
+      ],
+      "role": "ensuite",
+      "title": "Main bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "entry",
+      "kind": "hall",
+      "rect": [
+        -5,
+        0,
+        2,
+        4
+      ],
+      "role": "entry",
+      "title": "Entry hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "family",
+      "kind": "room",
+      "rect": [
+        0,
+        23,
+        9,
+        32
+      ],
+      "role": "family",
+      "title": "Family room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall",
+      "kind": "hall",
+      "rect": [
+        -3,
+        23,
+        0,
+        40
+      ],
+      "role": "hall",
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall-2",
+      "kind": "hall",
+      "rect": [
+        0,
+        37,
+        24,
+        40
+      ],
+      "role": "hall",
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall-3",
+      "kind": "hall",
+      "rect": [
+        21,
+        40,
+        24,
+        61
+      ],
+      "role": "hall",
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall-4",
+      "kind": "hall",
+      "rect": [
+        24,
+        58,
+        40,
+        61
+      ],
+      "role": "hall",
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "kitchen",
+      "kind": "room",
+      "rect": [
+        3,
+        16,
+        10,
+        23
+      ],
+      "role": "kitchen",
+      "title": "Kitchen"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "living",
+      "kind": "room",
+      "rect": [
+        -6,
+        4,
+        4,
+        16
+      ],
+      "role": "living",
+      "title": "Living room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "main",
+      "kind": "room",
+      "rect": [
+        24,
+        61,
+        32,
+        69
+      ],
+      "role": "main",
+      "title": "Main bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "study",
+      "kind": "room",
+      "rect": [
+        4,
+        4,
+        11,
+        16
+      ],
+      "role": "study",
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "study-2",
+      "kind": "room",
+      "rect": [
+        17,
+        29,
+        24,
+        37
+      ],
+      "role": "study",
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "study-3",
+      "kind": "room",
+      "rect": [
+        24,
+        40,
+        32,
+        46
+      ],
+      "role": "study",
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "study-4",
+      "kind": "room",
+      "rect": [
+        24,
+        46,
+        32,
+        53
+      ],
+      "role": "study",
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "utility",
+      "kind": "room",
+      "rect": [
+        -11,
+        16,
+        -6,
+        23
+      ],
+      "role": "utility",
+      "title": "Utility room"
+    }
+  ],
+  "start": {
+    "space": "entry",
+    "x": -1.5,
+    "y": 2
+  },
+  "theme": "residential",
+  "version": 1
+}

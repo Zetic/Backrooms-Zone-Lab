@@ -1,6 +1,14 @@
 # Implementation status
 
-Package 0.9.0 provides a full geometry prototype at `gallery.html` and a checked rectangular exchange subset at `index.html`. The [design handoff](design-handoff.md) records the owner's goal: preserve the intended prototype and extend Unreal where transfer exposes missing capabilities. The [exchange contract](unreal-exchange.md) governs version 1 files; [transfer workflow](transfer-workflow.md) explains both paths. The existing house studies remain intact; Office v2 adds its own full geometry workbench and checked fixtures.
+Package 0.10.0 provides a full geometry prototype at `gallery.html` and a checked rectangular exchange subset at `index.html`. The [design handoff](design-handoff.md) records the owner's goal: preserve the intended prototype and extend Unreal where transfer exposes missing capabilities. The [exchange contract](unreal-exchange.md) governs version 1 files; [transfer workflow](transfer-workflow.md) explains both paths. The existing house studies remain intact; Office v2 adds its own full geometry workbench and checked fixtures.
+
+## Cohesion and Room Count pass — October 13
+
+- House v3 and Office v3 add Cohesion and Room Count independently of room Size. Office Sprawl distributes available rooms into longer populated rows; House branch count is limited by the room program. Maximum cohesion suppresses row gaps and requires shared room partitions without stretching rooms. Ordinary presets use maximum cohesion. [Control semantics and same-seed comparisons](cohesion.md).
+- Office has 19 rules, including exact department room count and maximum-cohesion adjacency. House has 16 rules, including room-partition adjacency. Both previous v2 sources are archived; existing generator identities are not silently reinterpreted. The full gallery-house director remains unchanged.
+- Office geometry and 3D mesh preparation run in a cancellable module worker; the main thread uploads prepared buffers. Pending/failed requests preserve the accepted view and disable exports, and superseded requests cannot overwrite newer results. A real worker-thread test executes the browser worker, checks event-loop progress, buffer transfer, cancellation and error handling. Live browser/WebGL QA remains pending.
+- Dial-interaction matrices cover both archetypes, shared partitions, fixed office room dimensions under Cohesion, constrained reach with fewer rooms, bounds, repeatability and imported-rule refusal. Updated full Office examples and six same-seed rectangular comparisons accompany regenerated preset galleries and audits. **119/119 Node tests pass**, including the actual worker module. All three portable templates pass 120/120 acceptance and 40/40 strict cases; current full Office examples contain 53, 85 and 98 spaces, all reachable and returnable.
+- The optional Unreal physical harness continues to consume the rectangular subset. C++ generator parity remains a historical House v2 result; current House v3 needs a native port and rejects the old parity flag explicitly.
 
 ## Office v2 pass — October 13
 

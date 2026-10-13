@@ -27,10 +27,10 @@ export function generateOfficeDesign(spec, { angled = true, walls = true } = {})
   if (model.error) throw new Error(model.error);
   const { zone, layout } = model, thickness = .15, half = thickness / 2;
   const plan = { schemaVersion: 'br.zone/0.3', kind: 'generated-office', zoneId: zone.id,
-    input: { zoneId: zone.id, seed: String(spec.seed), generatorVersion: 2, profile: 'offices', config: { floorHeight: 3, wallThickness: thickness, angled, dials: zone.source.dials }, portRequirements: [] },
+    input: { zoneId: zone.id, seed: String(spec.seed), generatorVersion: 3, profile: 'offices', config: { floorHeight: 3, wallThickness: thickness, angled, dials: zone.source.dials }, portRequirements: [] },
     conventions: { units: 'metres', axes: { horizontal: ['X', 'Y'], vertical: 'Z', handedness: 'right' }, outerWinding: 'counterclockwise', holeWinding: 'clockwise', coordinateQuantum: 1e-6 },
     walker: { radius: .3, headroom: 2.1 }, floors: [{ id: 'floor:0', index: 0, elevation: 0 }], spaces: [], surfaces: [], openings: [], verticalTraversals: [], protectedVoids: [], externalPorts: [], walls: [], guards: [], localConnections: [],
-    layout: { signature: { upperFloorIndex: 0 }, wingCount: layout.wings.length, orientation: angled ? 'angled-independent-wings' : 'orthogonal-independent-wings', wings: [], architecturalRules: zone.rules, sourceTemplate: 'offices-v2' } };
+    layout: { signature: { upperFloorIndex: 0 }, wingCount: layout.wings.length, orientation: angled ? 'angled-independent-wings' : 'orthogonal-independent-wings', wings: [], architecturalRules: zone.rules, sourceTemplate: 'offices-v3' } };
   const transforms = new Map(), rootJoins = new Map();
   const headings = [45, 135, 0, 180], corners = ['hub-ne', 'hub-nw', 'hub-east', 'hub-west'];
   const signs = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
@@ -41,7 +41,7 @@ export function generateOfficeDesign(spec, { angled = true, walls = true } = {})
     else {
       const heading = headings[w.index] * Math.PI / 180, delta = heading - w.frame.dir * Math.PI / 2;
       const [sx, sy] = signs[w.index], gate = w.index < 2 ? [(layout.cx + .7 * layout.hw) * sx * .5, (layout.cy + .7 * layout.hw) * sy * .5] : [(layout.cx + layout.hw) * (w.index === 2 ? 1 : -1) * .5, 0];
-      const advance = Math.min(layout.wings.length, 4) >= 3 ? Math.max(...layout.wings.flatMap(w => w.rooms.map(r => r.depth))) + layout.hw : Math.floor(zone.source.dials.strange / 5);
+      const advance = Math.min(layout.wings.length, 4) >= 3 ? (w.index < 2 ? Math.max(...layout.wings.flatMap(w => w.rooms.map(r => r.depth))) + layout.hw : 0) : Math.floor(zone.source.dials.strange * (100 - zone.source.dials.cohesion) / 500);
       const origin = [gate[0] + Math.sin(heading) * layout.hw / 4, gate[1] - Math.cos(heading) * layout.hw / 4];
       transform = p => { const x = (p[0] - w.frame.x) * .5, y = (p[1] - w.frame.y) * .5;
         const u = x * Math.cos(w.frame.dir * Math.PI / 2) + y * Math.sin(w.frame.dir * Math.PI / 2), extra = u >= .25 ? advance * .5 : 0;
@@ -143,7 +143,7 @@ export function generateOfficeDesign(spec, { angled = true, walls = true } = {})
   Object.assign(hallRule, api.rule('hall-share', hallRule.name, hallArea / plan.diagnostics.metrics.netFootprintArea <= .4, Math.round(hallArea / plan.diagnostics.metrics.netFootprintArea * 100) + '% of the full clear floor is corridor.', [{ dial: 'sprawl', name: 'Sprawl', at: 35 }, { dial: 'strange', name: 'Strangeness', at: 30 }, { dial: 'wings', name: 'Wings', at: 40 }], zone.source.dials));
   if (plan.layout.architecturalRules.some(r => !r.kept && !r.relaxed)) throw new Error('Full office breaks an unrelaxed architectural rule.');
   plan.localConnections = structuredClone(plan.diagnostics.navigation.connections);
-  plan.diagnostics.scope = 'Office v2 actual rotated floors, apertures, walls and local walker navigation';
+  plan.diagnostics.scope = 'Office v3 actual rotated floors, apertures, walls and local walker navigation';
   plan.diagnostics.warnings = [{ code: 'UNREAL_ADAPTER_PENDING', message: 'This is full br.zone design geometry. Unreal import/adapter support is pending; exit lobbies reserve connection points, not generated vertical stair flights.' }];
   plan.fingerprint = fingerprint(plan); return plan;
 }
