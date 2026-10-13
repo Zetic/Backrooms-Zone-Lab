@@ -58,3 +58,7 @@ House is now `house-v2`, with `source.lab = "exchange-2"`: the local Unreal Hous
 Version 1 accepts optional `spaces[].outline` and zone-level `rules`. Outlines survive import/edit/export and are drawn over their allocations. Rectangular physical checks still use `rect`; their warnings identify the adapter requirement. Full geometry with walls, holes and openings must continue to use its original `br.zone` handoff. Rule reports are embedded in generated House/Office files and recomputed when a matching template is available; unknown reports remain unverified. This metadata does not add Unreal loader support.
 
 Use the nine-seed comparison beneath the plan at intermediate dial settings and each preset. Page groups, select a seed for full inspection, and export gallery SVGs. The batch handoff also includes preset gallery pictures, embedded reports and a separate strict audit.
+
+## Office v2
+
+The [Office workbench](../office.html) builds actual angled floors and walls; its full `br.zone/0.4` export requires an Unreal adapter. The rectangular exchange is a separately generated orthogonal layout from the same room program. Do not use its rectangles as a substitute for the selected angled plan. See the [Office guide](offices.md) and [full handoff manifest](office-examples/manifest.json). Export `offices.js` and shared core files for portable v2 generation. The previous v1 source is archived, and its files remain fixed imports.

@@ -138,11 +138,14 @@ export function signedArea(ring) {
 
 export function ringContains(ring, p) {
   if (ring.some(e => edgeDistance(e, p) <= EPS)) return 'boundary';
+  // Boundary distance was checked above. A sub-tolerance ray offset avoids
+  // counting mismatched quantized line/arc endpoints at the same ray height.
+  const rayY = p[1] + EPS / 4;
   let crossings = 0;
   for (const e of ring) {
     if (e.kind === 'line') {
-      if ((e.from[1] > p[1]) !== (e.to[1] > p[1])) {
-        const x = e.from[0] + (p[1] - e.from[1]) * (e.to[0] - e.from[0]) / (e.to[1] - e.from[1]);
+      if ((e.from[1] > rayY) !== (e.to[1] > rayY)) {
+        const x = e.from[0] + (rayY - e.from[1]) * (e.to[0] - e.from[0]) / (e.to[1] - e.from[1]);
         if (x > p[0]) crossings++;
       }
     } else {
@@ -153,14 +156,14 @@ export function ringContains(ring, p) {
         if (t > EPS && t < 1 - EPS) cuts.push(t);
       }
       cuts.sort((a, b) => a - b);
-      const dy = p[1] - e.center[1];
-      if (Math.abs(dy) > e.radius) continue;
+      const dy = rayY - e.center[1];
+      if (Math.abs(dy) > e.radius + EPS) continue;
       const dx = Math.sqrt(Math.max(0, e.radius ** 2 - dy ** 2));
       for (let i = 1; i < cuts.length; i++) {
         const lo = cuts[i - 1], hi = cuts[i];
-        if ((q(at(e, lo)[1]) > p[1]) === (q(at(e, hi)[1]) > p[1])) continue;
+        if ((q(at(e, lo)[1]) > rayY) === (q(at(e, hi)[1]) > rayY)) continue;
         for (const x of [e.center[0] - dx, e.center[0] + dx]) {
-          const t = arcParameter(e, [x, p[1]]);
+          const t = arcParameter(e, [x, rayY]);
           if (t >= lo - EPS && t <= hi + EPS && x > p[0]) { crossings++; break; }
         }
       }

@@ -1,0 +1,66 @@
+{
+  "format": "office-v2-full-handoff",
+  "version": 1,
+  "template": "offices-v2",
+  "examples": [
+    {
+      "id": "reference",
+      "seed": 1,
+      "dials": {
+        "size": 65,
+        "wings": 20,
+        "open": 15,
+        "sprawl": 20,
+        "strange": 0
+      },
+      "file": "reference.zone.json",
+      "plan": "reference.svg",
+      "sha256": "252307ba96dfdb7dac40392e37ab859f98b2e39bffbab010f1138dc6123201dc",
+      "wingCount": 2,
+      "spaces": 50,
+      "reachable": 50,
+      "returnable": 50
+    },
+    {
+      "id": "departments",
+      "seed": 7,
+      "dials": {
+        "size": 70,
+        "wings": 60,
+        "open": 45,
+        "sprawl": 40,
+        "strange": 0
+      },
+      "file": "departments.zone.json",
+      "plan": "departments.svg",
+      "sha256": "e6b3ecc0d4d0614e8fbccde9c9a3c51cb9c76446592e2741fecc4cd155e349a8",
+      "wingCount": 4,
+      "spaces": 81,
+      "reachable": 81,
+      "returnable": 81
+    },
+    {
+      "id": "six-wings",
+      "seed": 7,
+      "dials": {
+        "size": 65,
+        "wings": 100,
+        "open": 35,
+        "sprawl": 20,
+        "strange": 0
+      },
+      "file": "six-wings.zone.json",
+      "plan": "six-wings.svg",
+      "sha256": "bde98d94de06c51194bb6d7af29387f371032de3db5b5cc8037924243ac0dba0",
+      "wingCount": 6,
+      "spaces": 110,
+      "reachable": 110,
+      "returnable": 110
+    }
+  ],
+  "limitations": [
+    "Full br.zone geometry requires an Unreal adapter.",
+    "Exit / stair lobbies reserve connections; no vertical stairs are generated.",
+    "The rectangular exchange is a separate orthogonal composition; the full design also adds its central shared boardroom/focus cluster."
+  ]
+}

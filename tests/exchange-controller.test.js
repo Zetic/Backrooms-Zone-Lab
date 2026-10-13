@@ -93,9 +93,9 @@ test('known imported reports are recomputed, unknown reports and outlines round 
 
 test('Offices selection, presets, exports and imports keep the same accepted design and policy', async () => {
   const c = controller(), get = c.get; get('template').value = 'offices'; await get('template').emit('change');
-  assert.equal(get('status').textContent, 'PASS'); assert.ok(get('rules').innerHTML.includes('16 of 16'));
+  assert.equal(get('status').textContent, 'PASS'); assert.ok(get('rules').innerHTML.includes('17 of 17'));
   assert.ok(get('dials').innerHTML.includes('dial-open')); await get('preset-5').click();
-  const bytes = get('editor').value, z = JSON.parse(bytes); assert.equal(z.source.template, 'offices-v1');
+  const bytes = get('editor').value, z = JSON.parse(bytes); assert.equal(z.source.template, 'offices-v2');
   assert.equal(z.source.dials.strange, 95); assert.ok(get('rules').innerHTML.includes('let go from'));
   await get('export').click(); assert.equal(await (await fetch(c.downloads.at(-1).href)).text(), bytes);
   await get('template-export').click();
@@ -106,7 +106,7 @@ test('Offices selection, presets, exports and imports keep the same accepted des
   get('import').files = [{ size: bytes.length, text: async () => bytes }]; await get('import').emit('change');
   assert.equal(get('template').value, 'offices'); assert.equal(get('editor').value, bytes);
   await get('report').click(); const r = JSON.parse(await (await fetch(c.downloads.at(-1).href)).text());
-  assert.equal(r.architecturalRules.rules.length, 16); assert.ok(r.architecturalRules.valid); assert.equal(r.templateAudit.passed, 120);
+  assert.equal(r.architecturalRules.rules.length, 17); assert.ok(r.architecturalRules.valid); assert.equal(r.templateAudit.passed, 120);
 });
 test('exchange controller exports the shown zone, keeps invalid proposals and round-trips imports', async () => {
   const c = controller(), get = c.get, initial = get('editor').value;

@@ -1,66 +1,56 @@
-# Offices
+# Office v2: functional rooms and independent wings
 
-Select **Offices** in the default workbench. The **Standard office** preset generates reception and visitor meetings at the front, a circulation loop around shared services, and staff workplaces outside the corridors. Washrooms, a break room, a copy room, a server room and a supply store form a clear support group. The start and visitor entrance belong to reception; a staff entrance is recorded where a free stretch of the rear wall allows it.
+Office v2 replaces the repeated room-strip layout with a visitor/service hub and independently attached department spines. The reference photograph guides the two angled arms, central shared facilities and a boardroom/focus cluster, small offices beside larger team rooms, and exit lobbies. It is a procedural interpretation, not a traced replica.
 
-This is an architectural room/circulation prototype. The rooms have stable functional roles; furniture and detailed presentation can follow. It uses the current rectangular exchange subset and the existing Backrooms finish fallback. It does not alter the retained full geometry workbench or require future office designs to stay rectangular.
+## Inspect the reference
 
-## Dials
+Open [the angled Office workbench](../office.html). It defaults to **Reference floor**, seed 1. The plan and 3D cutaway use actual angled room footprints, clear floors, 15 cm wall mass and supported apertures. Room selection reports clear floor area. The same controls are available in the [rectangular exchange](../index.html), which produces a separate orthogonal layout for the tested version 1 transfer path.
 
-| Dial | Effect |
+The full workbench uses ES modules: serve it with `node scripts/serve.mjs` or GitHub Pages. The classic rectangular exchange still runs directly from a file. The full page exports original `br.zone/0.4` geometry, an embedded-style SVG and a physical validation report. It also offers the separate rectangular layout; it never exports bounding rectangles as if they realize the angled design.
+
+## Controls
+
+| Dial | Architectural effect |
 | --- | --- |
-| Size | Five to eight workplace/service bays, with larger room allocations as it rises |
-| Openness | Private offices become workplace bays; neighbouring open bays join without walls. Direct corridor access remains unless Strangeness permits a chain |
-| Sprawl | A department wing at 35, a turning second leg at 65, a third at 85. Turns fit against actual accepted footprints and preserve useful gaps |
-| Strangeness | Progressively permits elongation, excess circulation, interrupted loops and empty corridor ends, repeated support rooms, misplaced functions, room-to-room access and ceiling changes |
+| Size | Department room counts and role-specific capacity/dimension ranges |
+| Wings | Exactly 1 at 0–19, 2 at 20–39, 3 at 40–59, 4 at 60–79, 5 at 80–99, 6 at 100 |
+| Openness | Changes enclosed offices into larger team workplaces, including their floor allocation |
+| Sprawl | Increases approach length and spacing between room groups independently of wing count |
+| Strangeness | Permits named convention breaks; never permits overlap or disconnected required movement |
 
-Each result comes from the seed and these four dials. A preset supplies dial values rather than another generator. The six starting points are Standard office, Private practice, Open workplace, Department wings, After hours and Wrong workplace. The first four keep every architectural rule when Strangeness is zero. Sprawl alone creates a larger but still understandable workplace.
+A wing is an independently organized department spine, not a turn in an existing corridor. The first four arms attach at distinct hub gates. Wings five and six branch from outer junctions of the first two arms. Wing count is a required architectural rule. The central circulation loop does not count as another wing. One wing yields one department spine attached to that hub.
 
-## How it becomes wrong
+The angled layout uses northeast/northwest arms first, resembling the reference. Further independent arms leave east and west gates; outer branches inherit their parent’s orientation. Larger multi-arm layouts reserve additional clear approach length before rooms begin, avoiding collisions between full angled footprints. High Sprawl therefore does not select the wing count.
 
-At 20, proportions may stray. At 30, corridor widths and empty stretches may grow. At 40, an unexpected wing can appear, the circulation loop can be interrupted and a hall can run beyond the last room. At 50, support rooms can repeat. At 65, meeting rooms can appear inside staff areas and a server room can take a visitor-facing position. At 75, workplaces can be reached through other workplaces. At 85, ceilings may vary between rooms.
+## Room program and geometry
 
-A permission is not a demand: different seeds may keep different conventions at the same dial setting. Before a later permission is reached, earlier mutations preserve that rule. In particular, repeating rooms at 50 does not move meeting rooms into staff areas before 65, and moving the server room preserves the supply store.
+The central cluster contains washrooms, break room, copy room, server room and supply storage. Reception buffers visitor meetings from staff circulation. The full design extends the shared core into the space between angled arms, with a boardroom/training room and focus/interview rooms. This additional program and the separate rectangular variant are recorded explicitly in the full export. Departments mix private offices, team workplaces, team meetings and a lounge; each side is laid independently.
 
-**Wrong workplace** combines high Sprawl and Strangeness. Seed 1 keeps six of the sixteen rules: the workplace still has reception, essential functions and a usable connected floor, but conventional access, proportions, circulation and repetition have changed. The sidebar names each broken convention and the threshold that permits it. **After hours** provides an intermediate comparison.
-
-## Architectural rules
-
-These are this template's conventions, distinct from the physical validator.
-
-| Rule | Permission to break |
+| Function | Ordinary allocation range before bounded seed variation |
 | --- | --- |
-| Start belongs to reception | Never |
-| Visitor entrance opens into reception | Never |
-| Workplaces and all five shared services exist | Never |
-| Visitor meetings open directly from reception | Strangeness 65 |
-| Reception connects to meetings/circulation, not staff services | Strangeness 65 |
-| Each workplace opens from circulation | Strangeness 75 |
-| Shared services open from a corridor | Strangeness 65 |
-| One clear group of shared services | Strangeness 50 |
-| One to three meeting rooms | Strangeness 50 |
-| Work/meeting rooms have conventional proportions | Strangeness 20 |
-| Corridors occupy no more than 30% of floor allocation | Sprawl 35 or Strangeness 30 |
-| Corridor widths remain at 2–2.5 m | Strangeness 30 |
-| No empty corridor end beyond the last room | Strangeness 40 |
-| Circulation has a loop without crossing workplaces | Strangeness 40 |
-| Consistent ceiling heights | Strangeness 85 |
-| The office occupies one floor level | Never |
+| Private office | 3–4.5 m frontage × 3–5 m depth |
+| Team workplace | 6–9 m frontage × 5–8 m depth |
+| Team meeting | 4.5–7 m frontage × 4–6 m depth |
+| Department lounge | 4–6 m frontage × 3.5–5.5 m depth |
+| Repeated copy/storage, when permitted | Smaller 2–3 m frontages and 2–4 m depths |
 
-All planned joins are required. The generator either fits the complete candidate or reports a named failure; dials do not permit overlaps, disconnected rooms, loss of Human reach/return or an invalid opening. A wing tries two complete orientations and rolls back a rejected proposal without moving accepted architecture. Twelve bounded attempts and a 12,000-step budget limit work.
+Named draws can add up to 1 m to these dimensions. These are allocations on the rectangular exchange; full geometry reports actual clear floor after walls. Room capacity is represented by dimensional profiles, not furniture placement or a code-compliant occupancy calculation.
 
-## Examples and transfer
+Opposite room rows can have different cuts, depths and program mixes. Long corridors split only where every required room retains at least 2 m of opening frontage. Larger team rooms change the footprint itself. End lobbies provide independent external connection opportunities. **No vertical stair flights are generated in this pass:** the exit/stair lobby is a reserved interface.
 
-The handoff includes three office examples: [Standard office](exchange-examples/offices-1.zone.json), [Open workplace](exchange-examples/offices-1-open.zone.json) and [Wrong workplace](exchange-examples/offices-1-wrong.zone.json), each with a floor plan and diagnostic rules in the [manifest](exchange-examples/manifest.json). Their fixed ids/names identify the review examples; source seed/dials reproduce their geometry.
+The checked model remains a bounded grammar. It does not implement a general shell-fitting solver, arbitrary departmental adjacency graph, furniture layout, or the infinite world graph.
 
-`source.template` is `offices-v1`, distinct from exchange schema version 1. Export `offices.js` with `stream.js`, `checks.js` and `method.js`. Semantic roles and original design intent cross to the future Unreal loader; named convention reports are now embedded in optional `rules` as well as the manifest; they do not change physical geometry. There is no local C++ Office generator or runtime JSON loader yet. The physical integration check compiles the exported room and opening data through the existing portable core.
+## Presets and conventions
 
-Validation covers 120 acceptance configurations, all presets across multiple seeds, 256 mixed configurations at every dial threshold, repeatability, list order, translated coordinates/heights, physical refusal, and downloaded-template/controller round trips. The native check covers 164 cases: 120 Office configurations, 36 mixed cases, six presets, a negative-coordinate/height Office and the documented flat. Every join is accepted, Human outward/return traversal passes, compiled digests ignore listing order and all six stream draws match.
+Seven presets: Standard office, Private practice, Open workplace, Department wings, After hours, Wrong workplace and Reference floor. Ordinary presets retain all **17 rules**. Wrong workplace seed 1 keeps seven; every broken convention is explicitly permitted.
 
-```powershell
-npm test
-npm run batch:exchange
-npm run build
-npm run verify:unreal -- --core=C:/Dev/Backrooms/Source/Backrooms/Workshop --templates=offices
-```
+Rules cover visitor arrival and buffering, essential services, visitor meetings, circulation access, repetition, room proportions, a conventional corridor share of at most 40%, corridor width, empty ends, the circulation loop, ceiling/floor consistency, and the exact wing count. Increased Wings may permit a higher corridor share from 40; Sprawl from 35 and Strangeness from 30 also permit it. Full geometry recomputes its actual clear-floor corridor share after angled approach reservation.
 
-`--templates` restricts the optional native harness to the named comma-separated template ids; omit it to include all templates. To create another archetype, follow [template authoring](template-authoring.md).
+## Handoff and verification
+
+- [Full examples](office-examples/manifest.json): reference (2 wings), departments (4), and six-wing composition. All actual spaces have outward and return walker paths, solid walls, supported door passages, per-side finishes, explicit clear floors, and required ports. Their self-contained plans are [reference.svg](office-examples/reference.svg), [departments.svg](office-examples/departments.svg), and [six-wings.svg](office-examples/six-wings.svg).
+- [Rectangular examples](exchange-examples/manifest.json): current Office v2 files and seven nine-seed preset galleries, with 120/120 acceptance and 40/40 strict reports.
+- `offices-v2` is distinct from exchange schema version 1. The previous [Office v1 source](template-reference/offices-v1.js) remains archived. Old files remain fixed imports; v2 does not claim to regenerate their geometry or recompute their v1 rules.
+- Tests cover explicit wing counts, independent roots, room-size diversity, functional size separation, canonical repeatability, bounds, physical refusal, angled full-floor movement, wall reconstruction, actual overlaps, 3D mesh construction and controller exports/fallback.
+
+Run `npm test`, `npm run batch:exchange`, `npm run examples:offices`, and `npm run build`. The optional portable C++ harness consumes the rectangular v2 cases; it was generated here, but native compilation was not rerun because local Unreal sources are unavailable. The earlier 164-case native Office v1 evidence remains historical and does not verify this v2 generator. Full geometry still requires an Unreal adapter. Live browser/WebGL QA remains unavailable in this environment.
