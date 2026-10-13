@@ -1,0 +1,38 @@
+{
+  "format": "zone-template-method-verification",
+  "version": 1,
+  "testedAt": "2026-10-13T03:53:35.544Z",
+  "package": "0.6.0",
+  "nodeTests": {
+    "passed": 92,
+    "failed": 0
+  },
+  "acceptance": {
+    "house-v2": "120/120",
+    "level0-v1": "120/120",
+    "starter": "120/120"
+  },
+  "physicalLayouts": 440,
+  "physicalPassed": true,
+  "localHouseParity": true,
+  "localHouseCases": 318,
+  "parityChecks": [
+    "accepted rectangle identities/coordinates",
+    "floor and ceiling levels",
+    "physical joins and opening contracts"
+  ],
+  "cppReferenceSha256Utf8Lf": "ca28c18bf74df8b4cc38cfde6ab1be9807bdb646d0615227307d1196f725104c",
+  "browserChecks": [
+    "Suburban 15/15 rules, two storeys",
+    "Backrooms house 10/15 rules with permitted breaks, one storey",
+    "storey switching",
+    "actual template download reproduces preset",
+    "actual rule-report download, 120/120 audit",
+    "no console warnings/errors"
+  ],
+  "limits": [
+    "Runtime Unreal JSON loaders are not implemented.",
+    "Native check covers rectangular exchange, not arbitrary full br.zone geometry.",
+    "Deployed Pages and narrow-screen browser acceptance are unverified."
+  ]
+}

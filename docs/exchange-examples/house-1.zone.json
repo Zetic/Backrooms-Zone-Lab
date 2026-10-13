@@ -1,0 +1,483 @@
+{
+  "entrances": [
+    {
+      "at": -12,
+      "side": "s",
+      "space": "entry",
+      "title": "Front door"
+    },
+    {
+      "at": -4.5,
+      "side": "n",
+      "space": "kitchen",
+      "title": "Back door"
+    }
+  ],
+  "format": "backrooms-zone",
+  "id": "house-1",
+  "joins": [
+    {
+      "a": "backhall",
+      "b": "hall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "backhall",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "bath",
+      "b": "uphall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom",
+      "b": "uphall",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "bedroom-2",
+      "b": "uphall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "closet",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "den",
+      "b": "entry",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "kitchen",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "dining",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "ensuite",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "hall",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "living",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "entry",
+      "b": "stair",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "hall",
+      "b": "study",
+      "mode": "wide",
+      "required": true
+    },
+    {
+      "a": "hall",
+      "b": "utility",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "hall",
+      "b": "wc",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "main",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "stair",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "landing",
+      "b": "uphall-2",
+      "mode": "open",
+      "required": true
+    },
+    {
+      "a": "store",
+      "b": "uphall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "study-2",
+      "b": "uphall-2",
+      "mode": "door",
+      "required": true
+    },
+    {
+      "a": "uphall",
+      "b": "uphall-2",
+      "mode": "open",
+      "required": true
+    }
+  ],
+  "name": "House · seed 1",
+  "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+  "source": {
+    "dials": {
+      "size": 40,
+      "sprawl": 0,
+      "strange": 0
+    },
+    "lab": "exchange-2",
+    "seed": 1,
+    "template": "house-v2"
+  },
+  "spaces": [
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "backhall",
+      "kind": "hall",
+      "rect": [
+        -12,
+        20,
+        -9,
+        25
+      ],
+      "role": "backhall",
+      "title": "Back hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "bath",
+      "kind": "room",
+      "rect": [
+        -24,
+        7,
+        -15,
+        12
+      ],
+      "role": "bath",
+      "title": "Bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "bedroom",
+      "kind": "room",
+      "rect": [
+        -9,
+        0,
+        0,
+        9
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "bedroom-2",
+      "kind": "room",
+      "rect": [
+        -24,
+        0,
+        -15,
+        7
+      ],
+      "role": "bedroom",
+      "title": "Bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "closet",
+      "kind": "room",
+      "rect": [
+        -4,
+        9,
+        0,
+        15
+      ],
+      "role": "closet",
+      "title": "Walk-in closet"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "den",
+      "kind": "room",
+      "rect": [
+        -24,
+        0,
+        -15,
+        9
+      ],
+      "role": "den",
+      "title": "Den"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "dining",
+      "kind": "room",
+      "rect": [
+        -9,
+        11,
+        0,
+        17
+      ],
+      "role": "dining",
+      "title": "Dining room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "ensuite",
+      "kind": "room",
+      "rect": [
+        -9,
+        9,
+        -4,
+        15
+      ],
+      "role": "ensuite",
+      "title": "Main bathroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "entry",
+      "kind": "hall",
+      "rect": [
+        -15,
+        0,
+        -9,
+        6
+      ],
+      "role": "entry",
+      "title": "Entry hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "hall",
+      "kind": "hall",
+      "rect": [
+        -15,
+        6,
+        -12,
+        25
+      ],
+      "role": "hall",
+      "title": "Hallway"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "kitchen",
+      "kind": "room",
+      "rect": [
+        -9,
+        17,
+        0,
+        25
+      ],
+      "role": "kitchen",
+      "title": "Kitchen"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "landing",
+      "kind": "hall",
+      "rect": [
+        -12,
+        20,
+        -9,
+        25
+      ],
+      "role": "landing",
+      "title": "Landing"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "living",
+      "kind": "room",
+      "rect": [
+        -9,
+        0,
+        0,
+        11
+      ],
+      "role": "living",
+      "title": "Living room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "main",
+      "kind": "room",
+      "rect": [
+        -9,
+        15,
+        0,
+        25
+      ],
+      "role": "main",
+      "title": "Main bedroom"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "foot": "s",
+      "id": "stair",
+      "kind": "stair",
+      "rect": [
+        -12,
+        6,
+        -9,
+        20
+      ],
+      "rise": 290,
+      "role": "stair",
+      "title": "Stairs"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "store",
+      "kind": "room",
+      "rect": [
+        -24,
+        20,
+        -15,
+        25
+      ],
+      "role": "store",
+      "title": "Store room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "study",
+      "kind": "room",
+      "rect": [
+        -24,
+        18,
+        -15,
+        25
+      ],
+      "role": "study",
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "study-2",
+      "kind": "room",
+      "rect": [
+        -24,
+        12,
+        -15,
+        20
+      ],
+      "role": "study",
+      "title": "Study"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "uphall",
+      "kind": "hall",
+      "rect": [
+        -12,
+        0,
+        -9,
+        6
+      ],
+      "role": "uphall",
+      "title": "Upstairs hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 290,
+      "id": "uphall-2",
+      "kind": "hall",
+      "rect": [
+        -15,
+        0,
+        -12,
+        25
+      ],
+      "role": "uphall",
+      "title": "Upstairs hall"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "utility",
+      "kind": "room",
+      "rect": [
+        -24,
+        13,
+        -15,
+        18
+      ],
+      "role": "utility",
+      "title": "Utility room"
+    },
+    {
+      "ceiling": 250,
+      "floor": 0,
+      "id": "wc",
+      "kind": "room",
+      "rect": [
+        -24,
+        9,
+        -15,
+        13
+      ],
+      "role": "wc",
+      "title": "WC"
+    }
+  ],
+  "start": {
+    "space": "entry",
+    "x": -12,
+    "y": 3
+  },
+  "theme": "residential",
+  "version": 1
+}

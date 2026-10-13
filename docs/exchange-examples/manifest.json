@@ -1,0 +1,493 @@
+{
+  "format": "backrooms-zone-handoff",
+  "version": 1,
+  "contract": "../unreal-exchange.md",
+  "templates": [
+    {
+      "template": "house-v2",
+      "passed": 120,
+      "total": 120,
+      "failures": []
+    },
+    {
+      "template": "level0-v1",
+      "passed": 120,
+      "total": 120,
+      "failures": []
+    }
+  ],
+  "zones": [
+    {
+      "file": "house-1.zone.json",
+      "sha256": "5d7fd7b3a5a3016c28222b98e710404041169edf7c9a3d943def5d8ce534e73c",
+      "plans": [
+        "house-1-floor-0.svg",
+        "house-1-floor-290.svg"
+      ],
+      "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+      "architecturalRules": {
+        "template": "house-v2",
+        "rules": [
+          {
+            "id": "entry",
+            "name": "The front door opens into an entry hall",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "stair",
+            "name": "The stair rises from a hall to a landing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "ground",
+            "name": "The living room, dining room and kitchen are on the ground floor",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "kitchen",
+            "name": "The kitchen opens onto the dining room",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "living",
+            "name": "The living and dining rooms open into each other, or off the same hall",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "bedrooms",
+            "name": "Every bedroom opens off a hall or landing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "private",
+            "name": "No bedroom opens onto the entry, living room, dining room or kitchen",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "baths",
+            "name": "Bathrooms open off a hall, never onto the living room, dining room or kitchen",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "suite",
+            "name": "The main bathroom opens only from the main bedroom",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "counts",
+            "name": "One kitchen, one living room, and bathrooms to suit the bedrooms",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "proportions",
+            "name": "Every room is a usable size and shape for what it is",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "halls",
+            "name": "Halls take no more than a quarter of the floor",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "dead-ends",
+            "name": "No hall leads nowhere",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "compact",
+            "name": "The house is a box, or a box with a wing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "loop",
+            "name": "The ground floor can be walked round in a loop",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          }
+        ],
+        "kept": 15,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "house-7.zone.json",
+      "sha256": "5e40472316f0b16b77c31a55adf8d54e7d59c0901c606ffdff42f930cccc8939",
+      "plans": [
+        "house-7-floor-0.svg",
+        "house-7-floor-290.svg"
+      ],
+      "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+      "architecturalRules": {
+        "template": "house-v2",
+        "rules": [
+          {
+            "id": "entry",
+            "name": "The front door opens into an entry hall",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "stair",
+            "name": "The stair rises from a hall to a landing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "ground",
+            "name": "The living room, dining room and kitchen are on the ground floor",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "kitchen",
+            "name": "The kitchen opens onto the dining room",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "living",
+            "name": "The living and dining rooms open into each other, or off the same hall",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "bedrooms",
+            "name": "Every bedroom opens off a hall or landing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "private",
+            "name": "No bedroom opens onto the entry, living room, dining room or kitchen",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "baths",
+            "name": "Bathrooms open off a hall, never onto the living room, dining room or kitchen",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "suite",
+            "name": "The main bathroom opens only from the main bedroom",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "counts",
+            "name": "One kitchen, one living room, and bathrooms to suit the bedrooms",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "proportions",
+            "name": "Every room is a usable size and shape for what it is",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "halls",
+            "name": "Halls take no more than a quarter of the floor",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "dead-ends",
+            "name": "No hall leads nowhere",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "compact",
+            "name": "The house is a box, or a box with a wing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "loop",
+            "name": "The ground floor can be walked round in a loop",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          }
+        ],
+        "kept": 15,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "house-29.zone.json",
+      "sha256": "952824b264d18fed2a7e28c0daed9bb873b47d7743349ea3c873deda9f7ef055",
+      "plans": [
+        "house-29-floor-0.svg",
+        "house-29-floor-290.svg"
+      ],
+      "notes": "House v2: program and circulation spine, with explicit rule relaxation. Sprawl 55 changes to one storey. Stairs remain ramps in Unreal.",
+      "architecturalRules": {
+        "template": "house-v2",
+        "rules": [
+          {
+            "id": "entry",
+            "name": "The front door opens into an entry hall",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "stair",
+            "name": "The stair rises from a hall to a landing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "ground",
+            "name": "The living room, dining room and kitchen are on the ground floor",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "kitchen",
+            "name": "The kitchen opens onto the dining room",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "living",
+            "name": "The living and dining rooms open into each other, or off the same hall",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "bedrooms",
+            "name": "Every bedroom opens off a hall or landing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "private",
+            "name": "No bedroom opens onto the entry, living room, dining room or kitchen",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "baths",
+            "name": "Bathrooms open off a hall, never onto the living room, dining room or kitchen",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "suite",
+            "name": "The main bathroom opens only from the main bedroom",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "counts",
+            "name": "One kitchen, one living room, and bathrooms to suit the bedrooms",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "proportions",
+            "name": "Every room is a usable size and shape for what it is",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "halls",
+            "name": "Halls take no more than a quarter of the floor",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "dead-ends",
+            "name": "No hall leads nowhere",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "compact",
+            "name": "The house is a box, or a box with a wing",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          },
+          {
+            "id": "loop",
+            "name": "The ground floor can be walked round in a loop",
+            "kept": true,
+            "detail": "",
+            "relaxed": false,
+            "relaxedBy": ""
+          }
+        ],
+        "kept": 15,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "level0-1.zone.json",
+      "sha256": "aa667da8b26ae0e80c9affdafbf5eb6c8474631d70515cd49cc27abc955e6e0c",
+      "plans": [
+        "level0-1-floor-0.svg"
+      ],
+      "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision.",
+      "architecturalRules": {
+        "template": "level0-v1",
+        "rules": [],
+        "kept": 0,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "level0-7.zone.json",
+      "sha256": "0f69936b797e2c23f9401703731102bee2e099ba6ca15974b699c972788b5959",
+      "plans": [
+        "level0-7-floor-0.svg"
+      ],
+      "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision.",
+      "architecturalRules": {
+        "template": "level0-v1",
+        "rules": [],
+        "kept": 0,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "level0-29.zone.json",
+      "sha256": "0a0d8efc595e2c8147e76fdfa66b7ee9f82c41492baa13588e1c3f5046c8fbc8",
+      "plans": [
+        "level0-29-floor-0.svg"
+      ],
+      "notes": "Broad rectangular spaces run together through wide and open joins. Unbuilt patches are solid masses. Feature dressing is left to a later physically checked template revision.",
+      "architecturalRules": {
+        "template": "level0-v1",
+        "rules": [],
+        "kept": 0,
+        "valid": true,
+        "broken": []
+      }
+    },
+    {
+      "file": "flat.zone.json",
+      "sha256": "d8b3896242e02269fc1da307fa87ea222701850ff2b56ab941db0357b6c1fa73",
+      "plans": [
+        "flat-floor-0.svg",
+        "flat-floor-290.svg"
+      ],
+      "notes": "A narrow two-storey flat. The kitchen is reached only through the front room.",
+      "architecturalRules": null
+    }
+  ],
+  "limitations": [
+    "Unreal file loader is not implemented.",
+    "Browser checks do not resolve feature-dependent physical openings.",
+    "Plan floor allocation includes walls; Unreal measures usable support.",
+    "Full br.zone geometry preserves design intent for a dedicated Unreal adapter."
+  ]
+}

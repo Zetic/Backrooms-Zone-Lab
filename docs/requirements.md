@@ -1,5 +1,7 @@
 # Backrooms Zone Lab — Product Requirements and Architectural Design Brief
 
+This brief governs the **full geometry prototype** at `gallery.html`. The owner's clarified goal is to transfer the intended prototype and extend the Unreal lab where it exposes missing capabilities; see [design handoff](design-handoff.md). The October 12 [rectangular exchange contract](unreal-exchange.md) defines the currently tested subset at `index.html`, not the ceiling for architectural design. Full `br.zone` designs retain their geometry for a dedicated adapter; they must not be relabelled as version 1 exchange files.
+
 **Audience:** Autonomous implementation/work agent, technical reviewer, and future game-engine integrators  
 **Status:** Initial project brief / implementation requirements  
 **Proposed repository:** `Zetic/Backrooms-Zone-Lab` (new repository)  
