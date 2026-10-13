@@ -1,0 +1,78 @@
+{
+  "source": {
+    "name": "ResPlan",
+    "authors": "The ResPlan Authors",
+    "repository": "https://github.com/m-agour/ResPlan",
+    "revision": "e2b78fe069aee1ab1e1828a612743f308e3c32a7",
+    "archiveSha256": "f718de8865e51bbe93b49b584798e3c536ed6b4b8a5d32f01b56812f389aeb46",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "upstreamLicenseUrl": "https://github.com/m-agour/ResPlan/blob/e2b78fe069aee1ab1e1828a612743f308e3c32a7/LICENSE",
+    "modifications": "JSON conversion; explicit area calibration; display contours simplified within 0.1 mm; original coordinates retained."
+  },
+  "plans": [
+    {
+      "id": "66",
+      "rooms": 7,
+      "bedrooms": 2,
+      "estimatedAreaM2": 107.395868,
+      "fingerprint": "08ae54181d35f946"
+    },
+    {
+      "id": "1619",
+      "rooms": 12,
+      "bedrooms": 3,
+      "estimatedAreaM2": 135.63838,
+      "fingerprint": "28a10f9af01aae35"
+    },
+    {
+      "id": "4867",
+      "rooms": 7,
+      "bedrooms": 2,
+      "estimatedAreaM2": 60.201144,
+      "fingerprint": "c721d098d9757faa"
+    },
+    {
+      "id": "6237",
+      "rooms": 8,
+      "bedrooms": 3,
+      "estimatedAreaM2": 91.97397,
+      "fingerprint": "4706595d8f5166f4"
+    },
+    {
+      "id": "8137",
+      "rooms": 8,
+      "bedrooms": 2,
+      "estimatedAreaM2": 106.83845,
+      "fingerprint": "8ee2550712f57beb"
+    },
+    {
+      "id": "9515",
+      "rooms": 9,
+      "bedrooms": 3,
+      "estimatedAreaM2": 131.92226,
+      "fingerprint": "e09b87bb3fa757a6"
+    },
+    {
+      "id": "12088",
+      "rooms": 7,
+      "bedrooms": 2,
+      "estimatedAreaM2": 87.32882,
+      "fingerprint": "5c5ca17e2f813a6e"
+    },
+    {
+      "id": "14146",
+      "rooms": 12,
+      "bedrooms": 4,
+      "estimatedAreaM2": 162.713057,
+      "fingerprint": "50a9732bd9beaba7"
+    },
+    {
+      "id": "916232",
+      "rooms": 14,
+      "bedrooms": 3,
+      "estimatedAreaM2": 450.115035,
+      "fingerprint": "3552bec3dc9fbfb6"
+    }
+  ]
+}
